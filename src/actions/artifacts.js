@@ -45,11 +45,11 @@ const artifactsAction = {
     type: FETCH_ARTIFACTS_FAILURE,
     payload: error
   }),
-  artifactPreview: item => ({
+  showArtifactsPreview: item => ({
     type: ARTIFACT_PREVIEW,
     payload: item
   }),
-  artifactPreviewClose: item => ({
+  closeArtifactsPreview: item => ({
     type: ARTIFACT_PREVIEW_CLOSE,
     payload: item
   })
