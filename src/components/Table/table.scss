@@ -9,6 +9,11 @@
   border-top: $tableBorder;
   position: relative;
   min-height: 600px;
+  &_opened {
+    height: 72vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
   &__content {
     width: 100%;
     .jobs_medium {
@@ -58,7 +63,7 @@
       &_medium,
       &_small,
       &_big {
-        span {
+        .hover {
           min-width: 100%;
           max-width: 50px;
           text-overflow: ellipsis;
@@ -74,6 +79,16 @@
       @include tableDet;
       @include tableHeader;
       flex: 1;
+    }
+    .functions {
+      &_small {
+        &:last-child {
+          padding-right: 15px;
+        }
+      }
+      &_big {
+        padding-right: 10px;
+      }
     }
   }
   &-body {
@@ -120,6 +135,16 @@
         &.active {
           background-color: $alabaster;
         }
+        .functions {
+          &_small {
+            &:nth-child(7) {
+              padding-right: 15px;
+            }
+          }
+          &_big {
+            padding-right: 10px;
+          }
+        }
       }
     }
     .row__actions {
@@ -137,12 +162,17 @@
       font-weight: 400;
       flex-wrap: wrap;
       a {
+        position: relative;
         text-decoration: none;
         color: $cornflowerBlue;
         margin: 0;
         display: flex;
         flex: 1;
         flex-direction: column;
+        .status {
+          position: absolute;
+          left: -34px;
+        }
         span {
           display: block;
           color: $topaz;
@@ -159,7 +189,7 @@
       }
       .expand-arrow {
         position: absolute;
-        left: 30px;
+        left: 10px;
         cursor: pointer;
       }
       &_path {
@@ -191,10 +221,6 @@
     flex: 1;
     span {
       margin-left: 10px;
-    }
-    .status {
-      margin-left: auto;
-      margin-right: 10%;
     }
   }
   .date__uid_row {

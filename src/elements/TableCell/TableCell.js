@@ -106,7 +106,7 @@ const TableCell = ({
         <button
           onClick={() => {
             dispatch(
-              artifactAction.artifactPreview({
+              artifactAction.showArtifactsPreview({
                 isPreview: true,
                 item
               })
@@ -153,7 +153,12 @@ const TableCell = ({
   } else {
     return (
       <div className={`table-body__cell ${data.size}`}>
-        <span>{data.value}</span>
+        <Tooltip
+          className="hover"
+          template={<TextTooltipTemplate text={data.value} />}
+        >
+          {data.value}
+        </Tooltip>
       </div>
     )
   }

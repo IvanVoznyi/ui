@@ -25,21 +25,19 @@ const TableLinkCell = ({
       }`}
     >
       <Link to={link} onClick={() => selectItem(item)} className="link">
-        <div className="name_status_row">
-          {data.value}
-          {item.state && (
-            <Tooltip
-              className="status"
-              template={
-                <TextTooltipTemplate
-                  text={`${item.state[0].toUpperCase()}${item.state.slice(1)}`}
-                />
-              }
-            >
-              <i className={item.state} />
-            </Tooltip>
-          )}
-        </div>
+        {item.state && (
+          <Tooltip
+            className="status"
+            template={
+              <TextTooltipTemplate
+                text={`${item.state[0].toUpperCase()}${item.state.slice(1)}`}
+              />
+            }
+          >
+            <i className={item.state} />
+          </Tooltip>
+        )}
+        <div className="name_status_row">{data.value}</div>
         {link.match(/jobs|functions/) &&
           Object.values(selectedItem).length !== 0 && (
             <div className="date__uid_row">
