@@ -1,0 +1,40 @@
+@import '../../scss/colors.scss';
+
+.schedule {
+  &_container {
+    margin: 0 40px;
+    button {
+      background-color: #869cff;
+      padding: 10px 16px;
+      margin-top: 16px;
+      margin-left: auto;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      display: flex;
+      align-items: center;
+      color: $white;
+      svg {
+        margin-right: 8px;
+      }
+    }
+  }
+  &_tabs {
+    display: flex;
+    flex: 1;
+    &_item {
+      padding: 10px 24px;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 18px;
+      color: $topaz;
+      cursor: pointer;
+      &.active {
+        color: #6279e7;
+        border-bottom: 3px solid #6279e7;
+      }
+    }
+  }
+}

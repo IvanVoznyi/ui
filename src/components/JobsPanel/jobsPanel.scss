@@ -39,6 +39,23 @@
     flex: 1;
     flex-direction: column;
   }
+  .schedule-panel {
+    &-container {
+      display: flex;
+      flex: 1;
+      margin-bottom: 32.5px;
+      svg {
+        margin-right: 18px;
+        cursor: pointer;
+      }
+    }
+    &__name {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 23px;
+      color: $primary;
+    }
+  }
   &__buttons-container {
     justify-content: flex-end;
     display: flex;
@@ -151,7 +168,7 @@
   .select {
     height: auto;
     border: none;
-    flex: .6;
+    flex: 0.6;
     margin: 0;
     padding-left: 10px;
   }
