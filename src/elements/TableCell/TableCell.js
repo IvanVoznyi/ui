@@ -45,7 +45,7 @@ const TableCell = ({
     )
   } else if (data.type === 'uid') {
     return (
-      <div className={`table-body__cell ${data.size}`}>
+      <div className={`table-body__cell ${data.class}`}>
         <Tooltip
           textShow={true}
           template={<TextTooltipTemplate text={data.value} />}
@@ -56,7 +56,7 @@ const TableCell = ({
     )
   } else if (firstRow) {
     return (
-      <div className={`table-body__cell ${data.size}`}>
+      <div className={`table-body__cell ${data.class}`}>
         {data && data.value}
         <Arrow
           onClick={e => handleExpandRow(e, item)}
@@ -68,7 +68,7 @@ const TableCell = ({
     return <TableTypeCell data={data} />
   } else if (Array.isArray(data.value)) {
     return (
-      <div className={`table-body__cell ${data.size}`}>
+      <div className={`table-body__cell ${data.class}`}>
         <ChipCell
           className={`table-body__${data.type}`}
           elements={data.value}
@@ -78,7 +78,7 @@ const TableCell = ({
     )
   } else if (data.type === 'producer') {
     return (
-      <div className={`table-body__cell ${data.size}`}>
+      <div className={`table-body__cell ${data.class}`}>
         {data.value.uri && (
           <Tooltip
             template={
@@ -102,7 +102,7 @@ const TableCell = ({
     )
   } else if (data.type === 'buttonPopout') {
     return (
-      <div className={`table-body__cell ${data.size}`}>
+      <div className={`table-body__cell ${data.class}`}>
         <button
           onClick={() => {
             dispatch(
@@ -113,23 +113,27 @@ const TableCell = ({
             )
           }}
         >
-          <ArtifactView />
+          <Tooltip template={<TextTooltipTemplate text="Artifact Preview" />}>
+            <ArtifactView />
+          </Tooltip>
         </button>
       </div>
     )
   } else if (data.type === 'buttonDownload') {
     return (
-      <div className={`table-body__cell ${data.size}`}>
-        <Download
-          path={item?.target_path.path}
-          schema={item?.target_path.schema}
-          user={item?.producer?.owner}
-        />
+      <div className={`table-body__cell ${data.class}`}>
+        <Tooltip template={<TextTooltipTemplate text="Download" />}>
+          <Download
+            path={item?.target_path.path}
+            schema={item?.target_path.schema}
+            user={item?.producer?.owner}
+          />
+        </Tooltip>
       </div>
     )
   } else if (data.type === 'path') {
     return (
-      <div className={`table-body__cell ${data.size}`}>
+      <div className={`table-body__cell ${data.class}`}>
         <Tooltip
           className="table-body__cell_path"
           template={<TextTooltipTemplate text={data.value.path} />}
@@ -142,7 +146,7 @@ const TableCell = ({
     )
   } else if (data.type === 'hash') {
     return (
-      <div className={`table-body__cell ${data.size}`}>
+      <div className={`table-body__cell ${data.class}`}>
         <Tooltip template={<TextTooltipTemplate text={data.value} />}>
           <span>{truncateUid(data.value)}</span>
         </Tooltip>
@@ -152,9 +156,9 @@ const TableCell = ({
     return null
   } else {
     return (
-      <div className={`table-body__cell ${data.size}`}>
+      <div className={`table-body__cell ${data.class}`}>
         <Tooltip
-          className="hover"
+          className="data_ellipsis"
           template={<TextTooltipTemplate text={data.value} />}
         >
           {data.value}

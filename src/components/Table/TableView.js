@@ -33,7 +33,7 @@ const TableView = ({
         <div className="table-head">
           {tableHeaders.map((item, index) => (
             <div
-              className={`table-head__item ${item.size}`}
+              className={`table-head__item ${item.class}`}
               key={item.header + index}
             >
               <span>{item.header}</span>

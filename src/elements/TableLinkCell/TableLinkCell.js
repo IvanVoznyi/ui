@@ -21,7 +21,7 @@ const TableLinkCell = ({
   return (
     <div
       className={`table-body__cell ${
-        data.type === 'date' ? 'jobs_medium' : data.size
+        data.type === 'date' ? 'jobs_medium' : data.class
       }`}
     >
       <Link to={link} onClick={() => selectItem(item)} className="link">

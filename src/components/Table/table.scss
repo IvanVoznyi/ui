@@ -37,18 +37,17 @@
     .artifacts_date {
       @include tableColumnFlex(1, 80px);
     }
-    .artifacts_small:nth-child(3) {
+    .artifacts_kind {
       padding-left: 20px;
-    }
-    .artifacts_small:nth-child(5) {
-      @include tableColumnFlex(1, 80px);
-    }
-    .artifacts_small:nth-child(6) {
-      flex: 0.5;
-    }
-    .artifacts_small:nth-child(9),
-    .artifacts_small:nth-child(10) {
       @include tableColumnFlex(0.5, 80px);
+    }
+    .artifacts_owner {
+      @include tableColumnFlex(0.5, 80px);
+    }
+    .artifacts_popout,
+    .artifacts_download {
+      @include tableColumnFlex(0.5, 80px);
+      justify-content: center;
     }
     .functions {
       &_medium {
@@ -60,17 +59,6 @@
       &_big {
         @include tableColumnFlex(2, 80px);
       }
-      &_medium,
-      &_small,
-      &_big {
-        .hover {
-          min-width: 100%;
-          max-width: 50px;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow-x: hidden;
-        }
-      }
     }
   }
   &-head {
@@ -79,6 +67,10 @@
       @include tableDet;
       @include tableHeader;
       flex: 1;
+      &.buttonPopout,
+      &.buttonDownload {
+        @include tableColumnFlex(0.5, 80px);
+      }
     }
     .functions {
       &_small {
@@ -102,8 +94,10 @@
         &:not(.parent-row-expanded) {
           &:hover {
             background-color: $alabaster;
-            .row__actions {
-              display: block;
+            .action_cell {
+              .table-actions-container {
+                display: block;
+              }
             }
           }
         }
@@ -145,13 +139,6 @@
         }
       }
     }
-    .row__actions {
-      display: none;
-      position: absolute;
-      right: -10px;
-      top: 15%;
-      border-bottom: none;
-    }
     &__cell {
       @include tableDet;
       padding: 8px 0;
@@ -159,6 +146,13 @@
       line-height: 18px;
       font-weight: 400;
       flex-wrap: wrap;
+      .data_ellipsis {
+        min-width: 100%;
+        max-width: 50px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow-x: hidden;
+      }
       a {
         position: relative;
         text-decoration: none;
@@ -180,10 +174,12 @@
         margin: 0 17px;
       }
       button {
+        display: flex;
         border: none;
         background-color: transparent;
         cursor: pointer;
-        margin-left: 10%;
+        padding: 0;
+        font-size: 15px;
       }
       .expand-arrow {
         position: absolute;
@@ -232,5 +228,10 @@
     span:last-child {
       margin-left: 10px;
     }
+  }
+  .action_cell {
+    position: relative;
+    width: 20px;
+    max-width: 20px;
   }
 }
