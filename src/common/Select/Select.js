@@ -26,7 +26,7 @@ const Select = ({ option, label, match, onClick, page, value }) => {
   }
 
   const handleSelectOption = item => {
-    if (match.params.jobId || match.params.name) {
+    if (match?.params?.jobId || match?.params?.name) {
       history.push(
         `/projects/${match.params.projectName}/${page.toLowerCase()}`
       )

@@ -8,14 +8,13 @@
       padding: 24px;
       border: $tableFilterBorder;
       background-color: $white;
+      h3 {
+        color: $primary;
+        text-transform: uppercase;
+      }
       .input {
         &_container {
           display: flex;
-          .input-wrapper {
-            border: $tableFilterBorder;
-            border-radius: 4px;
-            margin-right: 15px;
-          }
         }
       }
       .checkbox_container {
@@ -24,7 +23,7 @@
         span {
           display: flex;
           align-items: center;
-          color: #4B4760;
+          color: $primary;
           cursor: pointer;
           svg {
             margin-right: 11px;
@@ -35,12 +34,52 @@
             }
             &.unchecked {
               path {
-                fill: #adabb0;
+                fill: $spunPearl;
               }
             }
           }
         }
       }
+      .recurring_container {
+        user-select: none;
+        margin-top: 23px;
+        span {
+          color: $primary;
+        }
+        .repeat_container {
+          margin: 15px 0;
+          display: flex;
+        }
+        .select {
+          height: 56px;
+          max-width: 228px;
+          padding: 0;
+          border-radius: 4px;
+          background-color: transparent;
+          border: $tableFilterBorder;
+          .select__value {
+            padding-left: 15px;
+            min-width: 190px;
+          }
+          .select__body {
+            top: 65px;
+          }
+        }
+        .repeat_end_container {
+          margin: 15px 0;
+        }
+      }
+      .input-wrapper {
+        border: $tableFilterBorder;
+        border-radius: 4px;
+        margin-right: 15px;
+      }
     }
   }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

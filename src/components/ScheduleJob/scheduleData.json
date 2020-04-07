@@ -1,3 +1,6 @@
 {
-  "tabs": ["Normal", "Cronstring"]
+  "tabs": [
+    { "title": "normal", "id": "b6671a54-64a9-414f-a38f-b24d9850a620" },
+    { "title": "cronstring", "id": "060ffda3-1963-462d-8730-cb333f9e7634" }
+  ]
 }

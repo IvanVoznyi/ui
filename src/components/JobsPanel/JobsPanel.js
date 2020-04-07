@@ -130,7 +130,7 @@ const JobsPanel = ({
             </div>
           </div>
         ) : (
-          <ScheduleJob />
+          <ScheduleJob match={match} />
         )}
       </div>
     </div>

@@ -4,7 +4,7 @@
   &_container {
     margin: 0 40px;
     button {
-      background-color: #869cff;
+      background-color: $cornflowerBlue;
       padding: 10px 16px;
       margin-top: 16px;
       margin-left: auto;
@@ -31,9 +31,10 @@
       line-height: 18px;
       color: $topaz;
       cursor: pointer;
+      text-transform: capitalize;
       &.active {
-        color: #6279e7;
-        border-bottom: 3px solid #6279e7;
+        color: $cornflowerBlue;
+        border-bottom: 3px solid $cornflowerBlue;
       }
     }
   }

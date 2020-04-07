@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ReactComponent as Arrow } from '../../images/dropdown.svg'
+
 import './input.scss'
 
 const Input = ({
@@ -17,7 +19,6 @@ const Input = ({
   onKeyDown
 }) => {
   const [labelToTop, setLabelToTop] = useState(false)
-
   const handleClick = e => {
     if (e.target.value.length > 0) {
       setLabelToTop(true)
@@ -27,24 +28,41 @@ const Input = ({
     onChange(e.target.value)
   }
 
+  const handleIncrease = () => {
+    onChange(++value)
+  }
+
+  const handleDecrease = () => {
+    onChange(--value)
+  }
+
   return (
     <div className="input-wrapper">
       <input
         type={type}
+        onInput={e => onChange(e.target.value)}
         className={`input ${className}`}
         onChange={e => handleClick(e)}
         disabled={disabled}
-        value={value && value}
+        value={value}
         placeholder={placeholder}
         onKeyDown={onKeyDown}
       />
-      <label
-        className={`input__label ${labelToTop &&
-          floatingLabel &&
-          'active'} ${floatingLabel && 'input__label-floating'}`}
-      >
-        {label}
-      </label>
+      {type !== 'number' && (
+        <label
+          className={`input__label ${labelToTop &&
+            floatingLabel &&
+            'active'} ${floatingLabel && 'input__label-floating'}`}
+        >
+          {label}:
+        </label>
+      )}
+      {type === 'number' && (
+        <div className="arrow_container">
+          <Arrow className="arrow_up" onClick={() => handleIncrease()} />
+          <Arrow className="arrow_down" onClick={() => handleDecrease()} />
+        </div>
+      )}
       {inputIcon && <span className={iconCLass}>{inputIcon}</span>}
     </div>
   )
