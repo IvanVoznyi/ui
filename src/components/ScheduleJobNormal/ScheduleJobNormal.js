@@ -17,9 +17,33 @@ const ScheduleJobNormal = ({ match }) => {
   const [scheduleRepeatStep, setScheduleRepeatStep] = useState(1)
   const [time, setTime] = useState('')
 
-  const onSchedule = useCallback(data => {
-    console.log(data)
-  }, [])
+  const daysOfWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+
+  const convertDate = date => {
+    const _date = new Date(Date.parse(date))
+    return {
+      day: _date.getDay(),
+      month: _date.getMonth(),
+      year: _date.getFullYear()
+    }
+  }
+
+  const convertTime = time => {
+    const [hour, minutes] = time.split(':')
+    return {
+      hour: parseInt(hour),
+      minutes: parseInt(minutes)
+    }
+  }
+
+  const onSchedule = useCallback(
+    data => {
+      console.log(convertDate(date))
+      console.log(convertTime(time))
+      console.log(data)
+    },
+    [date, time]
+  )
 
   return (
     <>
@@ -62,6 +86,7 @@ const ScheduleJobNormal = ({ match }) => {
             setScheduleRepeatEnd={setScheduleRepeatEnd}
             setScheduleRepeatInterval={setScheduleRepeatInterval}
             setScheduleRepeatStep={setScheduleRepeatStep}
+            daysOfWeek={daysOfWeek}
           />
         )}
       </div>

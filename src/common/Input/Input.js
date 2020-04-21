@@ -12,6 +12,7 @@ const Input = ({
   label,
   onChange,
   onKeyDown,
+  pattern,
   placeholder,
   type,
   value
@@ -44,6 +45,7 @@ const Input = ({
         disabled={disabled}
         value={value && value}
         placeholder={placeholder}
+        pattern={pattern}
         onKeyDown={onKeyDown}
         ref={input}
       />
