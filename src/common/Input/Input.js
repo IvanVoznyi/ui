@@ -12,6 +12,7 @@ const Input = ({
   label,
   onChange,
   onKeyDown,
+  onKeyPress,
   pattern,
   placeholder,
   type,
@@ -47,6 +48,7 @@ const Input = ({
         placeholder={placeholder}
         pattern={pattern}
         onKeyDown={onKeyDown}
+        onKeyPress={onKeyPress}
         ref={input}
       />
       <label

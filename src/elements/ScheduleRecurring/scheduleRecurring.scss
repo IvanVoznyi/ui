@@ -17,32 +17,10 @@
       margin-right: 15px;
     }
 
-    .schedule-repeat {
-      &-week {
-        display: flex;
-        align-items: center;
-
-        &_day {
-          width: 32px;
-          height: 32px;
-          border-radius: 16px;
-          line-height: 32px;
-          text-align: center;
-          color: $white;
-          background: $purple;
-          margin-right: 4px;
-
-          &:first-child {
-            margin-left: 16px;
-          }
-        }
-
-        .S {
-          background: transparent;
-          color: $spunPearl;
-          border: $spunPearlBorder;
-        }
-      }
+    .input-week {
+      border: $greyBorder;
+      border-radius: 4px;
+      margin-right: 15px;
     }
   }
 
@@ -50,8 +28,6 @@
     height: 56px;
     max-width: 228px;
     padding: 0;
-    border-radius: 4px;
-    background-color: transparent;
     border: $greyBorder;
 
     .select__value {
