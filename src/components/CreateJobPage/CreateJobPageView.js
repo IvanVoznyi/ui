@@ -53,7 +53,7 @@ const CreateJobPageView = ({
           <div className="data-wrapper__list">
             {functions.map((func, index) => (
               <CreateJobCardTemplate
-                key={func?.metadata?.hash + index}
+                key={func.name}
                 func={func}
                 handleSelectFunction={handleSelectFunction}
               />

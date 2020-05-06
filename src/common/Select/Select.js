@@ -23,7 +23,11 @@ const Select = ({
   const [isOpen, setOpen] = useState(false)
   const history = useHistory()
 
-  const selectOption = options[option].find(item => item.id === value)
+  const selectValue = Array.isArray(option)
+    ? option.find(item => item.id === value)
+    : options[option].find(item => item.id === value)
+
+  const selectOption = Array.isArray(option) ? option : options[option]
 
   useEffect(() => {
     window.addEventListener('scroll', handlerScroll)
@@ -50,39 +54,40 @@ const Select = ({
 
   return (
     <div
-      className={`select${isOpen ? ' active' : ''} ${className}`}
+      className={`select ${className}${isOpen ? ' active' : ''}`}
       onClick={() => toggleOpen(disabled)}
     >
       <div className="select__header">
         {label && <div className="select__label">{label}</div>}
         <div className="select__value">
-          {value && selectOption.label}
-          {selectOption?.subLabel && (
-            <span className="sub-label">{selectOption.subLabel}</span>
+          {value && selectValue?.label}
+          {selectValue?.subLabel && (
+            <span className="sub-label">{selectValue.subLabel}</span>
           )}
         </div>
         <Caret className="select__caret" />
       </div>
-      {isOpen && [
-        <div className="overall" key={isOpen} />,
-        <div
-          className="select__body"
-          onClick={() => {
-            setOpen(false)
-          }}
-          key={!isOpen}
-        >
-          {options[option].map(item => (
-            <SelectOption
-              key={item.id}
-              item={item}
-              selectedId={value}
-              status={option === 'status'}
-              onClick={handleSelectOption}
-            />
-          ))}
-        </div>
-      ]}
+      {selectOption.length > 0 &&
+        isOpen && [
+          <div className="overall" key={isOpen} />,
+          <div
+            className="select__body"
+            onClick={() => {
+              setOpen(false)
+            }}
+            key={!isOpen}
+          >
+            {selectOption.map(item => (
+              <SelectOption
+                key={item.id}
+                item={item}
+                selectedId={value}
+                status={option === 'status'}
+                onClick={handleSelectOption}
+              />
+            ))}
+          </div>
+        ]}
     </div>
   )
 }
@@ -101,7 +106,7 @@ Select.propTypes = {
   label: PropTypes.string,
   match: PropTypes.shape({}).isRequired,
   onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-  option: PropTypes.string.isRequired,
+  option: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   page: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 }

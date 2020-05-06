@@ -29,11 +29,15 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     color: $mulledWine;
+    padding-right: 25px;  
   }
 
   .sub-label {
     color: $topaz;
     margin-left: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   &__caret {
@@ -66,7 +70,7 @@
     align-items: center;
     height: 49px;
     background-color: $white;
-    padding-left: 15px;
+    padding: 0 15px;
 
     .checkbox {
       flex: 1;

@@ -38,10 +38,25 @@ const JobsPanel = ({
     nvidia_gpu: ''
   })
   const [cpuUnit, setCpuUnit] = useState('')
+  const [initialJobInfo, setInitialJobInfo] = useState({
+    name: '',
+    version: '',
+    method: ''
+  })
+
   const history = useHistory()
 
+  const handleInitialJobInfo = data => {
+    setInitialJobInfo(data)
+  }
+
   const handleRunJob = () => {
+    let selectedFunction = func.functions.find(
+      item => item.metadata.tag === initialJobInfo.version
+    )
+
     const postData = {
+      schedule: jobsStore.newJob.schedule,
       ...jobsStore.newJob,
       function: {
         ...jobsStore.newJob.function,
@@ -59,7 +74,7 @@ const JobsPanel = ({
           ...jobsStore.newJob.task.spec,
           output_path: outputPath,
           input_path: inputPath,
-          function: `${match.params.projectName}/${func.metadata.name}:${func.metadata.hash}`
+          function: `${match.params.projectName}/${selectedFunction.metadata.name}:${selectedFunction.metadata.hash}`
         }
       }
     }
@@ -90,6 +105,7 @@ const JobsPanel = ({
       close={close}
       cpuUnit={cpuUnit}
       func={func}
+      handleInitialJobInfo={handleInitialJobInfo}
       handleRunJob={handleRunJob}
       jobsStore={jobsStore}
       limits={limits}
@@ -116,7 +132,15 @@ const JobsPanel = ({
 JobsPanel.propTypes = {
   close: PropTypes.func.isRequired,
   func: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired
+  jobsStore: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
+  runNewJob: PropTypes.func.isRequired,
+  setNewJob: PropTypes.func.isRequired,
+  setNewJobHyperParameters: PropTypes.func.isRequired,
+  setNewJobInputs: PropTypes.func.isRequired,
+  setNewJobParameters: PropTypes.func.isRequired,
+  setNewJobVolumeMounts: PropTypes.func.isRequired,
+  setNewJobVolumes: PropTypes.func.isRequired
 }
 
 export default connect(jobsStore => jobsStore, jobsActions)(JobsPanel)

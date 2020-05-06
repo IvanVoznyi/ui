@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import CheckBox from '../../common/CheckBox/CheckBox'
+import Tooltip from '../../common/Tooltip/Tooltip'
+import TextTooltipTemplate from '../TooltipTemplate/TextTooltipTemplate'
 
 const SelectOption = ({ item, onClick, selectedId, status }) => {
   return status ? (
@@ -13,7 +15,14 @@ const SelectOption = ({ item, onClick, selectedId, status }) => {
   ) : (
     <div className="select__item" onClick={() => onClick(item.id)}>
       {item.label}
-      {item.subLabel && <span className="sub-label">{item.subLabel}</span>}
+      {item.subLabel && (
+        <Tooltip
+          className="sub-label"
+          template={<TextTooltipTemplate text={item.subLabel} />}
+        >
+          {item.subLabel}
+        </Tooltip>
+      )}
     </div>
   )
 }

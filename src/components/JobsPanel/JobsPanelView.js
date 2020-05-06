@@ -8,14 +8,15 @@ import JobsPanelResources from '../JobsPanelResources/JobsPanelResources'
 import ScheduleJob from '../ScheduleJob/ScheduleJob'
 
 import { ReactComponent as Arrow } from '../../images/arrow.svg'
-import { ReactComponent as BackArrow } from '../../images/back-arrow.svg'
-import { ReactComponent as Close } from '../../images/close.svg'
 import { ReactComponent as Run } from '../../images/run.svg'
+
+import JobTitle from '../JobTitle/JobTitle'
 
 const JobsPanelView = ({
   close,
   cpuUnit,
   func,
+  handleInitialJobInfo,
   handleRunJob,
   jobsStore,
   limits,
@@ -38,20 +39,14 @@ const JobsPanelView = ({
 }) => (
   <div className="job-panel-container">
     <div className="job-panel">
-      <div className="job-panel__title">
-        <div className="job-panel__title_wrapper">
-          {openScheduleJob && (
-            <div className="job-schedule-container">
-              <BackArrow onClick={() => setOpenScheduleJob(false)} />
-              <span className="job-schedule__title">Schedule Job</span>
-            </div>
-          )}
-          <div className="job-panel__name">{func?.metadata?.name}</div>
-        </div>
-        <button onClick={() => close({})} className="job-panel__close-button">
-          <Close />
-        </button>
-      </div>
+      <JobTitle
+        close={close}
+        func={func}
+        handleInitialJobInfo={handleInitialJobInfo}
+        match={match}
+        openScheduleJob={openScheduleJob}
+        setOpenScheduleJob={setOpenScheduleJob}
+      />
       {!openScheduleJob ? (
         <div className="job_panel__body">
           <Accordion icon={<Arrow />} iconClassName="job-panel__expand-icon">
@@ -103,7 +98,7 @@ const JobsPanelView = ({
           </div>
         </div>
       ) : (
-        <ScheduleJob match={match} />
+        <ScheduleJob setOpenScheduleJob={setOpenScheduleJob} match={match} />
       )}
     </div>
   </div>
@@ -113,6 +108,7 @@ JobsPanelView.propTypes = {
   close: PropTypes.func.isRequired,
   cpuUnit: PropTypes.string.isRequired,
   func: PropTypes.shape({}).isRequired,
+  handleInitialJobInfo: PropTypes.func.isRequired,
   handleRunJob: PropTypes.func.isRequired,
   jobsStore: PropTypes.shape({}).isRequired,
   limits: PropTypes.shape({}).isRequired,
