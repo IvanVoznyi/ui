@@ -13,6 +13,7 @@ import './select.scss'
 const Select = ({
   className,
   disabled,
+  floatingLabel,
   label,
   match,
   onClick,
@@ -58,8 +59,20 @@ const Select = ({
       onClick={() => toggleOpen(disabled)}
     >
       <div className="select__header">
-        {label && <div className="select__label">{label}</div>}
-        <div className="select__value">
+        {label && (
+          <div
+            className={`select__label ${value &&
+              floatingLabel &&
+              'select__label_floating'}`}
+          >
+            {label}
+          </div>
+        )}
+        <div
+          className={`select__value ${value &&
+            floatingLabel &&
+            'select__value_floating'}`}
+        >
           {value && selectValue?.label}
           {selectValue?.subLabel && (
             <span className="sub-label">{selectValue.subLabel}</span>
@@ -103,6 +116,7 @@ Select.defaultProps = {
 Select.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  floatingLabel: PropTypes.bool,
   label: PropTypes.string,
   match: PropTypes.shape({}).isRequired,
   onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),

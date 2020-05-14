@@ -43,15 +43,20 @@ const JobTitle = ({
     }
 
     let versionOptions = func.functions
-      .map(item => ({
-        label: item.metadata.tag,
-        id: item.metadata.tag
-      }))
+      .map(item => {
+        return {
+          label:
+            item.metadata.tag === 'latest'
+              ? `$${item.metadata.tag}`
+              : item.metadata.tag,
+          id: item.metadata.tag
+        }
+      })
       .filter(item => item.label !== '')
 
     versionOptions =
       versionOptions.length === 0
-        ? [{ label: 'latest', id: 'latest' }]
+        ? [{ label: '$latest', id: 'latest' }]
         : versionOptions
 
     const methodOptions = uniqBy(
@@ -121,7 +126,8 @@ const JobTitle = ({
               {!openScheduleJob && (
                 <div className="job-panel__container">
                   <div className="job-panel__version">
-                    Version: ${functionVersion}
+                    Version: {functionVersion === 'latest' && '$'}
+                    {functionVersion}
                   </div>
                   {functionMethod && (
                     <div className="job-panel__method">
@@ -150,20 +156,24 @@ const JobTitle = ({
             />
             <div className="job-panel__select-container">
               <Select
-                className="select_left"
+                className={methodOptions.length !== 0 ? 'select_left' : ''}
                 label="Version"
+                floatingLabel
                 match={match}
                 onClick={setFunctionVersion}
                 option={versionOptions}
                 value={functionVersion}
               />
-              <Select
-                label="Method"
-                match={match}
-                onClick={setFunctionMethod}
-                option={methodOptions}
-                value={functionMethod}
-              />
+              {methodOptions.length !== 0 && (
+                <Select
+                  label="Method"
+                  match={match}
+                  floatingLabel
+                  onClick={setFunctionMethod}
+                  option={methodOptions}
+                  value={functionMethod}
+                />
+              )}
             </div>
             <button
               className="btn btn_primary"
