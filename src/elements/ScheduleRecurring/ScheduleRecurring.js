@@ -15,7 +15,8 @@ const ScheduleRecurring = ({
   handleDaysOfWeek,
   match,
   recurringDispatch,
-  recurringState
+  recurringState,
+  selectOptions
 }) => {
   const {
     scheduleRepeat: { activeOption: scheduleRepeatActiveOption, week },
@@ -56,7 +57,7 @@ const ScheduleRecurring = ({
               payload: item
             })
           }}
-          option="repeatInterval"
+          options={selectOptions.repeatInterval}
           page="jobs"
           value={scheduleRepeatActiveOption}
         />
@@ -86,7 +87,7 @@ const ScheduleRecurring = ({
               payload: item
             })
           }
-          option="repeatEnd"
+          options={selectOptions.repeatEnd}
           page="jobs"
           value={scheduleRepeatEndActiveOption}
         />
@@ -126,7 +127,8 @@ PropTypes.propTypes = {
   handleDaysOfWeek: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
   recurringDispatch: PropTypes.func.isRequired,
-  recurringState: PropTypes.shape({}).isRequired
+  recurringState: PropTypes.shape({}).isRequired,
+  selectOptions: PropTypes.shape({}).isRequired
 }
 
 export default React.memo(ScheduleRecurring)

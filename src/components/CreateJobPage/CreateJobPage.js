@@ -27,7 +27,22 @@ const CreateJobPage = ({
         func => !includes(['', 'handler', 'local'], func.kind)
       )
 
-      return setFunctions(filteredFunctions)
+      const groupedFunctions = Object.values(
+        filteredFunctions.reduce((prev, curr) => {
+          if (!prev[curr.metadata.name]) {
+            prev[curr.metadata.name] = {
+              name: curr.metadata.name,
+              functions: []
+            }
+          }
+
+          prev[curr.metadata.name].functions.push(curr)
+
+          return prev
+        }, {})
+      )
+
+      return setFunctions(groupedFunctions)
     })
 
     if (functionsStore.templates.length === 0) {
@@ -72,7 +87,7 @@ const CreateJobPage = ({
         match={match}
         templates={templatesArray}
       />
-      {Object.values(selectedFunction)?.length !== 0 && (
+      {Object.values(selectedFunction).length !== 0 && (
         <JobsPanel
           func={selectedFunction}
           close={handleSelectFunction}

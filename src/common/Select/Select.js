@@ -4,8 +4,6 @@ import { useHistory } from 'react-router-dom'
 
 import SelectOption from '../../elements/SelectOption/SelectOption'
 
-import options from './selectData'
-
 import { ReactComponent as Caret } from '../../images/dropdown.svg'
 
 import './select.scss'
@@ -13,17 +11,19 @@ import './select.scss'
 const Select = ({
   className,
   disabled,
+  floatingLabel,
   label,
   match,
   onClick,
-  option,
+  status,
+  options,
   page,
   value
 }) => {
   const [isOpen, setOpen] = useState(false)
   const history = useHistory()
 
-  const selectOption = options[option].find(item => item.id === value)
+  const selectValue = options.find(item => item.id === value)
 
   useEffect(() => {
     window.addEventListener('scroll', handlerScroll)
@@ -50,39 +50,52 @@ const Select = ({
 
   return (
     <div
-      className={`select${isOpen ? ' active' : ''} ${className}`}
+      className={`select ${className}${isOpen ? ' active' : ''}`}
       onClick={() => toggleOpen(disabled)}
     >
       <div className="select__header">
-        {label && <div className="select__label">{label}</div>}
-        <div className="select__value">
-          {value && selectOption.label}
-          {selectOption?.subLabel && (
-            <span className="sub-label">{selectOption.subLabel}</span>
+        {label && (
+          <div
+            className={`select__label ${value &&
+              floatingLabel &&
+              'select__label_floating'}`}
+          >
+            {label}
+          </div>
+        )}
+        <div
+          className={`select__value ${value &&
+            floatingLabel &&
+            'select__value_floating'}`}
+        >
+          {value && selectValue?.label}
+          {selectValue?.subLabel && (
+            <span className="sub-label">{selectValue.subLabel}</span>
           )}
         </div>
         <Caret className="select__caret" />
       </div>
-      {isOpen && [
-        <div className="overall" key={isOpen} />,
-        <div
-          className="select__body"
-          onClick={() => {
-            setOpen(false)
-          }}
-          key={!isOpen}
-        >
-          {options[option].map(item => (
-            <SelectOption
-              key={item.id}
-              item={item}
-              selectedId={value}
-              status={option === 'status'}
-              onClick={handleSelectOption}
-            />
-          ))}
-        </div>
-      ]}
+      {isOpen && (
+        <>
+          <div className="overall" key={isOpen} />
+          <div
+            className="select__body"
+            onClick={() => {
+              setOpen(false)
+            }}
+          >
+            {options.map(item => (
+              <SelectOption
+                key={item.id}
+                item={item}
+                selectedId={value}
+                status={status}
+                onClick={handleSelectOption}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
@@ -98,11 +111,13 @@ Select.defaultProps = {
 Select.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  floatingLabel: PropTypes.bool,
   label: PropTypes.string,
   match: PropTypes.shape({}).isRequired,
   onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-  option: PropTypes.string.isRequired,
+  option: PropTypes.array.isRequired,
   page: PropTypes.string,
+  status: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 }
 
