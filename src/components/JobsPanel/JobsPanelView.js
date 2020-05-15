@@ -6,17 +6,16 @@ import JobsPanelParameters from '../JobsPanelParameters/JobsPanelParameters'
 import JobsPanelDataInputs from '../JobsPanelDataInputs/JobsPanelDataInputs'
 import JobsPanelResources from '../JobsPanelResources/JobsPanelResources'
 import ScheduleJob from '../ScheduleJob/ScheduleJob'
+import JobsPanelTitle from '../JobsPanelTitle/JobsPanelTitle'
 
 import { ReactComponent as Arrow } from '../../images/arrow.svg'
 import { ReactComponent as Run } from '../../images/run.svg'
-
-import JobTitle from '../JobTitle/JobTitle'
 
 const JobsPanelView = ({
   close,
   cpuUnit,
   func,
-  handleInitialJobInfo,
+  handleEditJob,
   handleRunJob,
   jobsStore,
   limits,
@@ -39,10 +38,10 @@ const JobsPanelView = ({
 }) => (
   <div className="job-panel-container">
     <div className="job-panel">
-      <JobTitle
+      <JobsPanelTitle
         close={close}
         func={func}
-        handleInitialJobInfo={handleInitialJobInfo}
+        handleEditJob={handleEditJob}
         match={match}
         openScheduleJob={openScheduleJob}
         setOpenScheduleJob={setOpenScheduleJob}
@@ -108,7 +107,7 @@ JobsPanelView.propTypes = {
   close: PropTypes.func.isRequired,
   cpuUnit: PropTypes.string.isRequired,
   func: PropTypes.shape({}).isRequired,
-  handleInitialJobInfo: PropTypes.func.isRequired,
+  handleEditJob: PropTypes.func.isRequired,
   handleRunJob: PropTypes.func.isRequired,
   jobsStore: PropTypes.shape({}).isRequired,
   limits: PropTypes.shape({}).isRequired,

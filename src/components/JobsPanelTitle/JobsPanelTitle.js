@@ -8,14 +8,14 @@ import { ReactComponent as BackArrow } from '../../images/back-arrow.svg'
 import { ReactComponent as Close } from '../../images/close.svg'
 import { ReactComponent as Edit } from '../../images/edit.svg'
 
-import { uniqBy } from 'lodash'
+import { uniqBy, isEmpty } from 'lodash'
 
-import './jobTitle.scss'
+import './jobsPanelTitle.scss'
 
-const JobTitle = ({
+const JobsPanelTitle = ({
   close,
   func,
-  handleInitialJobInfo,
+  handleEditJob,
   match,
   openScheduleJob,
   setOpenScheduleJob
@@ -25,8 +25,8 @@ const JobTitle = ({
   const [functionName, setFunctionName] = useState(func.name)
   const [functionMethod, setFunctionMethod] = useState('')
 
-  const handleClickJobTitleEdit = () => {
-    handleInitialJobInfo({
+  const handleEditJobTitle = () => {
+    handleEditJob({
       method: functionMethod,
       name: functionName,
       version: functionVersion
@@ -35,7 +35,7 @@ const JobTitle = ({
   }
 
   const { methodOptions, versionOptions } = useMemo(() => {
-    if (func.functions === undefined) {
+    if (isEmpty(func.functions)) {
       return {
         versionOptions: '',
         methodOptions: ''
@@ -175,10 +175,7 @@ const JobTitle = ({
                 />
               )}
             </div>
-            <button
-              className="btn btn_primary"
-              onClick={handleClickJobTitleEdit}
-            >
+            <button className="btn btn_primary" onClick={handleEditJobTitle}>
               Done
             </button>
           </>
@@ -191,7 +188,7 @@ const JobTitle = ({
   )
 }
 
-JobTitle.propTypes = {
+JobsPanelTitle.propTypes = {
   close: PropTypes.func.isRequired,
   func: PropTypes.shape({}).isRequired,
   handleInitialJobInfo: PropTypes.func.isRequired,
@@ -200,4 +197,4 @@ JobTitle.propTypes = {
   setOpenScheduleJob: PropTypes.func.isRequired
 }
 
-export default JobTitle
+export default JobsPanelTitle

@@ -15,9 +15,9 @@ const Select = ({
   label,
   match,
   onClick,
-  status,
   options,
   page,
+  status,
   value
 }) => {
   const [isOpen, setOpen] = useState(false)
