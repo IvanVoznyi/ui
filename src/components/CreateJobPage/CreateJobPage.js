@@ -89,8 +89,8 @@ const CreateJobPage = ({
       />
       {Object.values(selectedFunction).length !== 0 && (
         <JobsPanel
-          func={selectedFunction}
-          close={handleSelectFunction}
+          groupedFunctions={selectedFunction}
+          closePanel={handleSelectFunction}
           match={match}
         />
       )}

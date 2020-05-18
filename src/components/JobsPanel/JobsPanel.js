@@ -10,8 +10,8 @@ import jobsActions from '../../actions/jobs'
 import './jobsPanel.scss'
 
 const JobsPanel = ({
-  close,
-  func,
+  closePanel,
+  groupedFunctions,
   jobsStore,
   match,
   runNewJob,
@@ -51,7 +51,7 @@ const JobsPanel = ({
   }
 
   const handleRunJob = () => {
-    let selectedFunction = func.functions.find(
+    let selectedFunction = groupedFunctions.functions.find(
       item => item.metadata.tag === jobInfo.version
     )
 
@@ -102,9 +102,9 @@ const JobsPanel = ({
 
   return (
     <JobsPanelView
-      close={close}
+      closePanel={closePanel}
       cpuUnit={cpuUnit}
-      func={func}
+      func={groupedFunctions}
       handleEditJob={handleEditJob}
       handleRunJob={handleRunJob}
       jobsStore={jobsStore}
@@ -130,9 +130,8 @@ const JobsPanel = ({
 }
 
 JobsPanel.propTypes = {
-  close: PropTypes.func.isRequired,
-  func: PropTypes.shape({}).isRequired,
-  jobsStore: PropTypes.shape({}).isRequired,
+  closePanel: PropTypes.func.isRequired,
+  groupedFunctions: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   runNewJob: PropTypes.func.isRequired,
   setNewJob: PropTypes.func.isRequired,

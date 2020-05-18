@@ -109,10 +109,12 @@ const ScheduleJob = ({ match, setOpenScheduleJob }) => {
 
   const onSchedule = useCallback(() => {
     const generateCron = generateCronString(cron)
+
     dispatch({
       type: SET_NEW_JOB_SCHEDULE,
       payload: generateCron
     })
+
     setOpenScheduleJob(false)
   }, [cron, dispatch, setOpenScheduleJob])
 

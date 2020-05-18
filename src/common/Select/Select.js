@@ -17,13 +17,13 @@ const Select = ({
   onClick,
   options,
   page,
-  status,
-  value
+  selectType,
+  selectedId
 }) => {
   const [isOpen, setOpen] = useState(false)
   const history = useHistory()
 
-  const selectValue = options.find(item => item.id === value)
+  const selectValue = options.find(item => item.id === selectedId)
 
   useEffect(() => {
     window.addEventListener('scroll', handlerScroll)
@@ -50,13 +50,13 @@ const Select = ({
 
   return (
     <div
-      className={`select ${className}${isOpen ? ' active' : ''}`}
+      className={`select ${className} ${isOpen ? ' active' : ''}`}
       onClick={() => toggleOpen(disabled)}
     >
       <div className="select__header">
         {label && (
           <div
-            className={`select__label ${value &&
+            className={`select__label ${selectedId &&
               floatingLabel &&
               'select__label_floating'}`}
           >
@@ -64,11 +64,11 @@ const Select = ({
           </div>
         )}
         <div
-          className={`select__value ${value &&
+          className={`select__value ${selectedId &&
             floatingLabel &&
             'select__value_floating'}`}
         >
-          {value && selectValue?.label}
+          {selectedId && selectValue?.label}
           {selectValue?.subLabel && (
             <span className="sub-label">{selectValue.subLabel}</span>
           )}
@@ -86,11 +86,11 @@ const Select = ({
           >
             {options.map(item => (
               <SelectOption
-                key={item.id}
                 item={item}
-                selectedId={value}
-                status={status}
+                key={item.id}
                 onClick={handleSelectOption}
+                selectType={selectType}
+                selectedId={selectedId}
               />
             ))}
           </div>
@@ -103,9 +103,11 @@ const Select = ({
 Select.defaultProps = {
   className: '',
   disabled: false,
-  onClick: null,
   label: '',
-  page: ''
+  onClick: null,
+  page: '',
+  selectType: '',
+  selectedId: ''
 }
 
 Select.propTypes = {
@@ -115,10 +117,10 @@ Select.propTypes = {
   label: PropTypes.string,
   match: PropTypes.shape({}).isRequired,
   onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-  option: PropTypes.array.isRequired,
+  options: PropTypes.array.isRequired,
   page: PropTypes.string,
-  status: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+  selectType: PropTypes.string,
+  selectedId: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 }
 
 export default React.memo(Select)

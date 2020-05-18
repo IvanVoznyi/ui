@@ -12,7 +12,7 @@ import { ReactComponent as Arrow } from '../../images/arrow.svg'
 import { ReactComponent as Run } from '../../images/run.svg'
 
 const JobsPanelView = ({
-  close,
+  closePanel,
   cpuUnit,
   func,
   handleEditJob,
@@ -39,7 +39,7 @@ const JobsPanelView = ({
   <div className="job-panel-container">
     <div className="job-panel">
       <JobsPanelTitle
-        close={close}
+        closePanel={closePanel}
         func={func}
         handleEditJob={handleEditJob}
         match={match}
@@ -104,7 +104,7 @@ const JobsPanelView = ({
 )
 
 JobsPanelView.propTypes = {
-  close: PropTypes.func.isRequired,
+  closePanel: PropTypes.func.isRequired,
   cpuUnit: PropTypes.string.isRequired,
   func: PropTypes.shape({}).isRequired,
   handleEditJob: PropTypes.func.isRequired,

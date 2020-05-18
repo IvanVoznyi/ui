@@ -59,7 +59,7 @@ const ScheduleRecurring = ({
           }}
           options={selectOptions.repeatInterval}
           page="jobs"
-          value={scheduleRepeatActiveOption}
+          selectedId={scheduleRepeatActiveOption}
         />
         {scheduleRepeatActiveOption === 'week' && (
           <div className="schedule-repeat-week">
@@ -89,7 +89,7 @@ const ScheduleRecurring = ({
           }
           options={selectOptions.repeatEnd}
           page="jobs"
-          value={scheduleRepeatEndActiveOption}
+          selectedId={scheduleRepeatEndActiveOption}
         />
         {scheduleRepeatEndActiveOption === 'onDate' && (
           <DatePicker

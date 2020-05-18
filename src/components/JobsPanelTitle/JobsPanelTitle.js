@@ -1,19 +1,14 @@
 import React, { useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import Select from '../../common/Select/Select'
-import Input from '../../common/Input/Input'
+import JobsPanelTitleView from './JobsPanelTitleView'
 
-import { ReactComponent as BackArrow } from '../../images/back-arrow.svg'
-import { ReactComponent as Close } from '../../images/close.svg'
-import { ReactComponent as Edit } from '../../images/edit.svg'
-
-import { uniqBy, isEmpty } from 'lodash'
+import { uniqBy, isEmpty, flattenDeep } from 'lodash'
 
 import './jobsPanelTitle.scss'
 
 const JobsPanelTitle = ({
-  close,
+  closePanel,
   func,
   handleEditJob,
   match,
@@ -37,8 +32,8 @@ const JobsPanelTitle = ({
   const { methodOptions, versionOptions } = useMemo(() => {
     if (isEmpty(func.functions)) {
       return {
-        versionOptions: '',
-        methodOptions: ''
+        versionOptions: [],
+        methodOptions: []
       }
     }
 
@@ -59,30 +54,30 @@ const JobsPanelTitle = ({
         ? [{ label: '$latest', id: 'latest' }]
         : versionOptions
 
-    const methodOptions = uniqBy(
-      func.functions
-        .map(item => {
-          let methodObject = []
-          for (const key in item.spec.entry_points) {
-            if (
-              Object.prototype.hasOwnProperty.call(item.spec.entry_points, key)
-            ) {
-              methodObject.push({
-                name: item.spec.entry_points[key].name,
-                doc: item.spec.entry_points[key].doc
-              })
-            }
-          }
-          return methodObject
-        })
-        .reduce((prev, curr) => {
-          return [...prev, ...curr]
-        }, []),
-      item => item.name
-    ).map(item => ({
-      label: item.name,
-      subLabel: item.doc,
-      id: item.name
+    const arrayOfMethods = func.functions.map(item => {
+      if (!item.spec.entry_points) {
+        return []
+      }
+
+      return Object.keys(item.spec.entry_points).map(key => {
+        return {
+          name: item.spec.entry_points[key].name,
+          doc: item.spec.entry_points[key].doc
+        }
+      })
+    })
+
+    const flattenArrayOfMethods = flattenDeep(arrayOfMethods)
+
+    const uniqElementOfArrayMethodsByName = uniqBy(
+      flattenArrayOfMethods,
+      'name'
+    )
+
+    const methodOptions = uniqElementOfArrayMethodsByName.map(func => ({
+      label: func.name,
+      subLabel: func.doc,
+      id: func.name
     }))
 
     if (methodOptions.length === 1) {
@@ -102,96 +97,31 @@ const JobsPanelTitle = ({
   }, [func.functions])
 
   return (
-    <div className="job-panel__title">
-      <div
-        className={`job-panel__title-wrapper ${isEdit &&
-          'job-panel__title-wrapper_width'}`}
-      >
-        {openScheduleJob && (
-          <div className="job-schedule-container">
-            <BackArrow onClick={() => setOpenScheduleJob(false)} />
-            <span className="job-schedule__title">Schedule Job</span>
-          </div>
-        )}
-        {!isEdit && (
-          <div
-            className={`job-panel__container ${openScheduleJob !== true &&
-              isEdit !== true &&
-              'job-panel__container_hover'}`}
-          >
-            <div className="job-panel__name-wrapper">
-              <div className="job-panel__name">
-                {functionName || func?.metadata?.name}
-              </div>
-              {!openScheduleJob && (
-                <div className="job-panel__container">
-                  <div className="job-panel__version">
-                    Version: {functionVersion === 'latest' && '$'}
-                    {functionVersion}
-                  </div>
-                  {functionMethod && (
-                    <div className="job-panel__method">
-                      Method: {functionMethod}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-            <div className="job-panel__edit">
-              <Edit
-                className="job-panel__icon"
-                onClick={() => {
-                  setIsEdit(true)
-                }}
-              />
-            </div>
-          </div>
-        )}
-        {isEdit && (
-          <>
-            <Input
-              onChange={setFunctionName}
-              type="string"
-              value={functionName}
-            />
-            <div className="job-panel__select-container">
-              <Select
-                className={methodOptions.length !== 0 ? 'select_left' : ''}
-                label="Version"
-                floatingLabel
-                match={match}
-                onClick={setFunctionVersion}
-                options={versionOptions}
-                value={functionVersion}
-              />
-              {methodOptions.length !== 0 && (
-                <Select
-                  label="Method"
-                  match={match}
-                  floatingLabel
-                  onClick={setFunctionMethod}
-                  options={methodOptions}
-                  value={functionMethod}
-                />
-              )}
-            </div>
-            <button className="btn btn_primary" onClick={handleEditJobTitle}>
-              Done
-            </button>
-          </>
-        )}
-      </div>
-      <button onClick={() => close({})} className="job-panel__close-button">
-        <Close />
-      </button>
-    </div>
+    <JobsPanelTitleView
+      closePanel={closePanel}
+      func={func}
+      functionMethod={functionMethod}
+      functionName={functionName}
+      functionVersion={functionVersion}
+      handleEditJobTitle={handleEditJobTitle}
+      isEdit={isEdit}
+      match={match}
+      methodOptions={methodOptions}
+      openScheduleJob={openScheduleJob}
+      setFunctionMethod={setFunctionMethod}
+      setFunctionName={setFunctionName}
+      setFunctionVersion={setFunctionVersion}
+      setIsEdit={setIsEdit}
+      setOpenScheduleJob={setOpenScheduleJob}
+      versionOptions={versionOptions}
+    />
   )
 }
 
 JobsPanelTitle.propTypes = {
-  close: PropTypes.func.isRequired,
+  closePanel: PropTypes.func.isRequired,
   func: PropTypes.shape({}).isRequired,
-  handleInitialJobInfo: PropTypes.func.isRequired,
+  handleEditJob: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
   openScheduleJob: PropTypes.bool.isRequired,
   setOpenScheduleJob: PropTypes.func.isRequired

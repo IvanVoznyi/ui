@@ -70,7 +70,7 @@ const JobsPanelParametersView = ({
                       ]).label
                     })
                   }
-                  options={selectOptions.parametersValueTypeOptions}
+                  options={selectOptions.parametersValueType}
                 />
                 <Input
                   onChange={value =>

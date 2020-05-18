@@ -28,7 +28,7 @@ const JobsPanelParameters = ({
       { label: 'Simple', id: 'Simple' },
       { label: 'Hyper', id: 'Hyper' }
     ],
-    parametersValueTypeOptions: [
+    parametersValueType: [
       {
         label: 'string',
         id: 'string'

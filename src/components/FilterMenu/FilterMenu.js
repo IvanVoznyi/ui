@@ -111,11 +111,11 @@ const FilterMenu = ({
               options={selectOptions[filter]}
               label={`${filter}:`}
               key={filter}
-              value={
+              selectedId={
                 (filter === 'status' && stateFilter) ||
                 (filter === 'groupBy' && groupFilter)
               }
-              status={filter === 'status' ? 'status' : ''}
+              selectType={filter === 'status' ? 'checkbox' : ''}
               match={match}
               onClick={
                 (filter === 'status' && setStateFilter) ||

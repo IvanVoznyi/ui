@@ -27,7 +27,7 @@ const JobsPanelResourcesView = ({
         match={match}
         options={selectOptions.unitMemory}
         onClick={value => handleSelectMemoryUnit(value)}
-        value={memoryUnit}
+        selectedId={memoryUnit}
       />
       <RangeInput
         floatingLabel
@@ -59,7 +59,7 @@ const JobsPanelResourcesView = ({
         match={match}
         options={selectOptions.unitCpu}
         onClick={value => handleSelectСpuUnit(value)}
-        value={cpuUnit}
+        selectedId={cpuUnit}
       />
       <RangeInput
         floatingLabel

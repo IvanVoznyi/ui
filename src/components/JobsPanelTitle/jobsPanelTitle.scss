@@ -23,13 +23,6 @@
             cursor: pointer;
           }
         }
-
-        &__title {
-          font-weight: 500;
-          font-size: 20px;
-          line-height: 23px;
-          color: $primary;
-        }
       }
 
       &_hover {
@@ -42,7 +35,7 @@
         margin-left: auto;
       }
 
-      &_width {
+      &_edit {
         width: 100%;
       }
 
@@ -72,6 +65,8 @@
 
         .job-panel__edit {
           display: flex;
+          margin: 20px 16px 16px 0;
+          align-items: center;
         }
       }
     }
@@ -79,8 +74,6 @@
 
   &__edit {
     display: none;
-    margin: 20px 16px 16px 0;
-    align-items: center;
   }
 
   &__icon {
@@ -116,9 +109,11 @@
 
       .select {
         width: 100%;
+
         &_left {
           margin-right: 16px;
         }
+
         &__header {
           .sub-label {
             display: none;
@@ -126,7 +121,7 @@
         }
       }
 
-      .tooltip__container{
+      .tooltip {
         max-width: 300px;
         white-space: inherit;
       }
