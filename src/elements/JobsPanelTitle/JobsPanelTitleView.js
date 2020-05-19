@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import JobsPanelTitleEdit from '../../elements/JobsPanelTitleEdit/JobsPanelTitleEdit'
+import JobsPanelTitleEdit from '../JobsPanelTitleEdit/JobsPanelTitleEdit'
 
 import { ReactComponent as BackArrow } from '../../images/back-arrow.svg'
 import { ReactComponent as Close } from '../../images/close.svg'
@@ -10,9 +10,9 @@ import { ReactComponent as Edit } from '../../images/edit.svg'
 const JobsPanelTitleView = ({
   closePanel,
   currentFunction,
+  groupedFunctions,
   handleEditJobTitle,
   isEdit,
-  listOfFunctions,
   match,
   methodOptions,
   openScheduleJob,
@@ -39,7 +39,7 @@ const JobsPanelTitleView = ({
           <>
             <div className="job-panel__wrapper">
               <div className="job-panel__name">
-                {currentFunction.name || listOfFunctions?.metadata.name}
+                {currentFunction.name || groupedFunctions?.metadata.name}
               </div>
               {!openScheduleJob && (
                 <>
@@ -90,9 +90,9 @@ const JobsPanelTitleView = ({
 JobsPanelTitleView.propTypes = {
   closePanel: PropTypes.func.isRequired,
   currentFunction: PropTypes.shape({}).isRequired,
+  groupedFunctions: PropTypes.shape({}).isRequired,
   handleEditJobTitle: PropTypes.func.isRequired,
   isEdit: PropTypes.bool.isRequired,
-  listOfFunctions: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   methodOptions: PropTypes.array.isRequired,
   openScheduleJob: PropTypes.bool.isRequired,

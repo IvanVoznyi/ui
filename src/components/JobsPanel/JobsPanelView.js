@@ -6,7 +6,7 @@ import JobsPanelParameters from '../JobsPanelParameters/JobsPanelParameters'
 import JobsPanelDataInputs from '../JobsPanelDataInputs/JobsPanelDataInputs'
 import JobsPanelResources from '../JobsPanelResources/JobsPanelResources'
 import ScheduleJob from '../ScheduleJob/ScheduleJob'
-import JobsPanelTitle from '../JobsPanelTitle/JobsPanelTitle'
+import JobsPanelTitle from '../../elements/JobsPanelTitle/JobsPanelTitle'
 
 import { ReactComponent as Arrow } from '../../images/arrow.svg'
 import { ReactComponent as Run } from '../../images/run.svg'

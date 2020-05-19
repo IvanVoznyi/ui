@@ -23,7 +23,6 @@ const JobsPanelTitleEdit = ({
       />
       <div className="job-panel__select-container">
         <Select
-          className={methodOptions.length !== 0 ? 'select_margin-right' : ''}
           floatingLabel
           label="Version"
           match={match}
@@ -33,9 +32,9 @@ const JobsPanelTitleEdit = ({
           options={versionOptions}
           selectedId={currentFunction.version}
         />
-        <div></div>
         {methodOptions.length !== 0 && (
           <Select
+            className="select_margin"
             floatingLabel
             label="Method"
             match={match}
