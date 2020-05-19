@@ -23,7 +23,7 @@ const Select = ({
   const [isOpen, setOpen] = useState(false)
   const history = useHistory()
 
-  const selectValue = options.find(item => item.id === selectedId)
+  const selectedOption = options.find(option => option.id === selectedId)
 
   useEffect(() => {
     window.addEventListener('scroll', handlerScroll)
@@ -68,9 +68,9 @@ const Select = ({
             floatingLabel &&
             'select__value_floating'}`}
         >
-          {selectedId && selectValue?.label}
-          {selectValue?.subLabel && (
-            <span className="sub-label">{selectValue.subLabel}</span>
+          {selectedId && selectedOption?.label}
+          {selectedOption?.subLabel && (
+            <span className="sub-label">{selectedOption.subLabel}</span>
           )}
         </div>
         <Caret className="select__caret" />

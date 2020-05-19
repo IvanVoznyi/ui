@@ -14,16 +14,16 @@ import { ReactComponent as Run } from '../../images/run.svg'
 const JobsPanelView = ({
   closePanel,
   cpuUnit,
-  handleCurrentEditFunc,
+  groupedFunctions,
   handleRunJob,
   jobsStore,
   limits,
-  listOfFunctions,
   match,
   memoryUnit,
   openScheduleJob,
   requests,
   setCpuUnit,
+  setCurrentFunctionInfo,
   setInputPath,
   setLimits,
   setMemoryUnit,
@@ -40,10 +40,10 @@ const JobsPanelView = ({
     <div className="job-panel">
       <JobsPanelTitle
         closePanel={closePanel}
-        handleCurrentEditFunc={handleCurrentEditFunc}
-        listOfFunctions={listOfFunctions}
+        groupedFunctions={groupedFunctions}
         match={match}
         openScheduleJob={openScheduleJob}
+        setCurrentFunctionInfo={setCurrentFunctionInfo}
         setOpenScheduleJob={setOpenScheduleJob}
       />
       {!openScheduleJob ? (
@@ -106,16 +106,16 @@ const JobsPanelView = ({
 JobsPanelView.propTypes = {
   closePanel: PropTypes.func.isRequired,
   cpuUnit: PropTypes.string.isRequired,
-  handleCurrentEditFunc: PropTypes.func.isRequired,
+  groupedFunctions: PropTypes.shape({}).isRequired,
   handleRunJob: PropTypes.func.isRequired,
   jobsStore: PropTypes.shape({}).isRequired,
   limits: PropTypes.shape({}).isRequired,
-  listOfFunctions: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   memoryUnit: PropTypes.string.isRequired,
   openScheduleJob: PropTypes.bool.isRequired,
   requests: PropTypes.shape({}).isRequired,
   setCpuUnit: PropTypes.func.isRequired,
+  setCurrentFunctionInfo: PropTypes.func.isRequired,
   setInputPath: PropTypes.func.isRequired,
   setLimits: PropTypes.func.isRequired,
   setMemoryUnit: PropTypes.func.isRequired,

@@ -10,13 +10,13 @@ import { ReactComponent as Edit } from '../../images/edit.svg'
 const JobsPanelTitleView = ({
   closePanel,
   currentFunction,
-  handleCurrentFunction,
   handleEditJobTitle,
   isEdit,
   listOfFunctions,
   match,
   methodOptions,
   openScheduleJob,
+  setCurrentFunction,
   setIsEdit,
   setOpenScheduleJob,
   versionOptions
@@ -69,10 +69,10 @@ const JobsPanelTitleView = ({
         ) : (
           <JobsPanelTitleEdit
             currentFunction={currentFunction}
-            handleCurrentFunction={handleCurrentFunction}
             handleEditJobTitle={handleEditJobTitle}
             match={match}
             methodOptions={methodOptions}
+            setCurrentFunction={setCurrentFunction}
             versionOptions={versionOptions}
           />
         )}
@@ -90,13 +90,13 @@ const JobsPanelTitleView = ({
 JobsPanelTitleView.propTypes = {
   closePanel: PropTypes.func.isRequired,
   currentFunction: PropTypes.shape({}).isRequired,
-  handleCurrentFunction: PropTypes.func.isRequired,
   handleEditJobTitle: PropTypes.func.isRequired,
   isEdit: PropTypes.bool.isRequired,
   listOfFunctions: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   methodOptions: PropTypes.array.isRequired,
   openScheduleJob: PropTypes.bool.isRequired,
+  setCurrentFunction: PropTypes.func.isRequired,
   setIsEdit: PropTypes.func.isRequired,
   setOpenScheduleJob: PropTypes.func.isRequired,
   versionOptions: PropTypes.array.isRequired

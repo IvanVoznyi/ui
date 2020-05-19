@@ -55,7 +55,7 @@ const CreateJobPage = ({
     match.params.projectName
   ])
 
-  const handleSelectedGroupFunction = item => {
+  const handleSelectGroupFunctions = item => {
     setSelectedGroupFunctions(item)
 
     if (Object.keys(item).length === 0) {
@@ -83,14 +83,14 @@ const CreateJobPage = ({
     <>
       <CreateJobPageView
         functions={functions}
-        handleSelectFunction={handleSelectedGroupFunction}
+        handleSelectGroupFunctions={handleSelectGroupFunctions}
         match={match}
         templates={templatesArray}
       />
       {Object.values(selectedGroupFunctions).length !== 0 && (
         <JobsPanel
           groupedFunctions={selectedGroupFunctions}
-          closePanel={handleSelectedGroupFunction}
+          closePanel={handleSelectGroupFunctions}
           match={match}
         />
       )}

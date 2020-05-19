@@ -6,35 +6,42 @@ import Select from '../../common/Select/Select'
 
 const JobsPanelTitleEdit = ({
   currentFunction,
-  handleCurrentFunction,
   handleEditJobTitle,
   match,
   methodOptions,
+  setCurrentFunction,
   versionOptions
 }) => {
   return (
     <>
       <Input
-        onChange={name => handleCurrentFunction({ name })}
+        onChange={name =>
+          setCurrentFunction(prevState => ({ ...prevState, name }))
+        }
         type="text"
         value={currentFunction.name}
       />
       <div className="job-panel__select-container">
         <Select
-          className={methodOptions.length !== 0 ? 'select_left' : ''}
+          className={methodOptions.length !== 0 ? 'select_margin-right' : ''}
           floatingLabel
           label="Version"
           match={match}
-          onClick={version => handleCurrentFunction({ version })}
+          onClick={version =>
+            setCurrentFunction(prevState => ({ ...prevState, version }))
+          }
           options={versionOptions}
           selectedId={currentFunction.version}
         />
+        <div></div>
         {methodOptions.length !== 0 && (
           <Select
             floatingLabel
             label="Method"
             match={match}
-            onClick={method => handleCurrentFunction({ method })}
+            onClick={method =>
+              setCurrentFunction(prevState => ({ ...prevState, method }))
+            }
             options={methodOptions}
             selectedId={currentFunction.method}
           />
@@ -49,10 +56,10 @@ const JobsPanelTitleEdit = ({
 
 JobsPanelTitleEdit.propTypes = {
   currentFunction: PropTypes.shape({}).isRequired,
-  handleCurrentFunction: PropTypes.func.isRequired,
   handleEditJobTitle: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
   methodOptions: PropTypes.array.isRequired,
+  setCurrentFunction: PropTypes.func.isRequired,
   versionOptions: PropTypes.array.isRequired
 }
 

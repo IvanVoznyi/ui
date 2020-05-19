@@ -8,9 +8,12 @@ import { truncateUid } from '../../utils'
 
 import './createJobCardTemplate.scss'
 
-const CreateJobCardTemplate = ({ func, handleSelectFunction }) => {
+const CreateJobCardTemplate = ({ func, handleSelectGroupFunctions }) => {
   return (
-    <div className="card-template" onClick={() => handleSelectFunction(func)}>
+    <div
+      className="card-template"
+      onClick={() => handleSelectGroupFunctions(func)}
+    >
       <h6 className="card-template__header">
         {func.name || func?.metadata.name}
       </h6>
@@ -39,7 +42,7 @@ CreateJobCardTemplate.defaultProps = {
 
 CreateJobCardTemplate.propTypes = {
   func: PropTypes.shape({}).isRequired,
-  handleSelectFunction: PropTypes.func.isRequired
+  handleSelectGroupFunctions: PropTypes.func.isRequired
 }
 
 export default CreateJobCardTemplate

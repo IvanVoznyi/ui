@@ -3,27 +3,27 @@ import PropTypes from 'prop-types'
 
 import JobsPanelTitleView from './JobsPanelTitleView'
 
-import { isEmpty, unionBy, map } from 'lodash'
+import { isEmpty, map, reduce } from 'lodash'
 
 import './jobsPanelTitle.scss'
 
 const JobsPanelTitle = ({
   closePanel,
-  handleCurrentEditFunc,
-  listOfFunctions,
+  groupedFunctions,
   match,
   openScheduleJob,
+  setCurrentFunctionInfo,
   setOpenScheduleJob
 }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [currentFunction, setCurrentFunction] = useState({
     method: '',
-    name: listOfFunctions.name || listOfFunctions.metadata.name,
+    name: groupedFunctions.name || groupedFunctions.metadata.name,
     version: 'latest'
   })
 
   const handleEditJobTitle = () => {
-    handleCurrentEditFunc({
+    setCurrentFunctionInfo({
       method: currentFunction.method,
       name: currentFunction.name,
       version: currentFunction.version
@@ -31,22 +31,15 @@ const JobsPanelTitle = ({
     setIsEdit(false)
   }
 
-  const handleCurrentFunction = prop => {
-    setCurrentFunction(prevState => ({
-      ...prevState,
-      ...prop
-    }))
-  }
-
   const { methodOptions, versionOptions } = useMemo(() => {
-    if (isEmpty(listOfFunctions.functions)) {
+    if (isEmpty(groupedFunctions.functions)) {
       return {
         versionOptions: [],
         methodOptions: []
       }
     }
 
-    let versionOptions = listOfFunctions.functions
+    let versionOptions = groupedFunctions.functions
       .map(func => {
         return {
           label:
@@ -61,17 +54,22 @@ const JobsPanelTitle = ({
         ? [{ label: '$latest', id: 'latest' }]
         : versionOptions
 
-    let methodOptions = unionBy(
-      map(listOfFunctions.functions, 'spec.entry_points').flatMap(
-        objectOfMethods =>
-          map(objectOfMethods, method => ({
+    let ObjectOfMethods = reduce(
+      groupedFunctions.functions,
+      (prev, curr) => {
+        return {
+          ...prev,
+          ...map(curr.spec.entry_points, method => ({
             label: method.name,
             id: method.name,
             subLabel: method.doc
           }))
-      ),
-      'label'
+        }
+      },
+      {}
     )
+
+    let methodOptions = map(ObjectOfMethods, method => ({ ...method }))
 
     if (methodOptions.length === 1) {
       setCurrentFunction(prevState => ({
@@ -79,7 +77,7 @@ const JobsPanelTitle = ({
         method: methodOptions[0].id
       }))
     } else {
-      const defaultMethod = listOfFunctions.functions.find(
+      const defaultMethod = groupedFunctions.functions.find(
         item => item.metadata.tag === 'latest'
       )?.spec.default_handler
 
@@ -94,19 +92,19 @@ const JobsPanelTitle = ({
       methodOptions,
       versionOptions
     }
-  }, [listOfFunctions.functions])
+  }, [groupedFunctions.functions])
 
   return (
     <JobsPanelTitleView
       closePanel={closePanel}
       currentFunction={currentFunction}
-      handleCurrentFunction={handleCurrentFunction}
       handleEditJobTitle={handleEditJobTitle}
       isEdit={isEdit}
-      listOfFunctions={listOfFunctions}
+      listOfFunctions={groupedFunctions}
       match={match}
       methodOptions={methodOptions}
       openScheduleJob={openScheduleJob}
+      setCurrentFunction={setCurrentFunction}
       setIsEdit={setIsEdit}
       setOpenScheduleJob={setOpenScheduleJob}
       versionOptions={versionOptions}
@@ -116,10 +114,10 @@ const JobsPanelTitle = ({
 
 JobsPanelTitle.propTypes = {
   closePanel: PropTypes.func.isRequired,
-  handleCurrentEditFunc: PropTypes.func.isRequired,
-  listOfFunctions: PropTypes.shape({}).isRequired,
+  groupedFunctions: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   openScheduleJob: PropTypes.bool.isRequired,
+  setCurrentFunctionInfo: PropTypes.func.isRequired,
   setOpenScheduleJob: PropTypes.func.isRequired
 }
 

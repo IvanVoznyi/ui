@@ -45,7 +45,6 @@
 
       &_hover {
         display: flex;
-        flex-direction: row;
         border: $transparentBorder;
         border-radius: 4px;
 
@@ -99,14 +98,14 @@
       .select {
         width: 100%;
 
-        &_left {
-          margin-right: 16px;
-        }
-
         &__header {
           .sub-label {
             display: none;
           }
+        }
+
+        &_margin-right {
+          margin-right: 16px;
         }
       }
 

@@ -134,7 +134,7 @@ const JobsPanelDataInputsView = ({
                   onClick={type =>
                     setNewVolume({
                       ...newVolume,
-                      type: find(selectOptions.volumeType, ['id', type]).label
+                      type: find(selectOptions.volumeType, ['id', type]).id
                     })
                   }
                   options={selectOptions.volumeType}
