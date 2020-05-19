@@ -4,8 +4,6 @@
 .job-panel {
   &__title {
     display: flex;
-    flex: 0.1;
-    flex-direction: row;
     justify-content: space-between;
     margin: 25px 40px 16px 40px;
 
@@ -23,12 +21,6 @@
             cursor: pointer;
           }
         }
-      }
-
-      &_hover {
-        border: $primaryBorder;
-        border-radius: 4px;
-        margin: -1px;
       }
 
       button.btn {
@@ -50,29 +42,27 @@
           border-radius: 4px;
         }
       }
-    }
-  }
 
-  &__container {
-    display: flex;
-    flex-direction: row;
-    border: $transparentBorder;
-    border-radius: 4px;
+      &_hover {
+        display: flex;
+        flex-direction: row;
+        border: $transparentBorder;
+        border-radius: 4px;
 
-    &_hover {
-      &:hover {
-        border: $primaryBorder;
+        &:hover {
+          border: $primaryBorder;
 
-        .job-panel__edit {
-          display: flex;
-          margin: 20px 16px 16px 0;
-          align-items: center;
+          .job-panel__button {
+            display: flex;
+            margin: 20px 16px 16px 0;
+            align-items: center;
+          }
         }
       }
     }
   }
 
-  &__edit {
+  &__button {
     display: none;
   }
 
@@ -84,11 +74,10 @@
     font-weight: 300;
     font-size: 36px;
     line-height: 42px;
-
-    &-wrapper {
-      color: $mulledWineTwo;
-      padding: 16px;
-    }
+  }
+  &__wrapper {
+    color: $mulledWineTwo;
+    padding: 16px;
   }
 
   &__version,

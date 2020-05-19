@@ -14,11 +14,11 @@ import { ReactComponent as Run } from '../../images/run.svg'
 const JobsPanelView = ({
   closePanel,
   cpuUnit,
-  func,
-  handleEditJob,
+  handleCurrentEditFunc,
   handleRunJob,
   jobsStore,
   limits,
+  listOfFunctions,
   match,
   memoryUnit,
   openScheduleJob,
@@ -40,8 +40,8 @@ const JobsPanelView = ({
     <div className="job-panel">
       <JobsPanelTitle
         closePanel={closePanel}
-        func={func}
-        handleEditJob={handleEditJob}
+        handleCurrentEditFunc={handleCurrentEditFunc}
+        listOfFunctions={listOfFunctions}
         match={match}
         openScheduleJob={openScheduleJob}
         setOpenScheduleJob={setOpenScheduleJob}
@@ -106,11 +106,11 @@ const JobsPanelView = ({
 JobsPanelView.propTypes = {
   closePanel: PropTypes.func.isRequired,
   cpuUnit: PropTypes.string.isRequired,
-  func: PropTypes.shape({}).isRequired,
-  handleEditJob: PropTypes.func.isRequired,
+  handleCurrentEditFunc: PropTypes.func.isRequired,
   handleRunJob: PropTypes.func.isRequired,
   jobsStore: PropTypes.shape({}).isRequired,
   limits: PropTypes.shape({}).isRequired,
+  listOfFunctions: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   memoryUnit: PropTypes.string.isRequired,
   openScheduleJob: PropTypes.bool.isRequired,

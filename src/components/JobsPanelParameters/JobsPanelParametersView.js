@@ -67,7 +67,7 @@ const JobsPanelParametersView = ({
                       type: find(selectOptions.parametersValueType, [
                         'id',
                         value
-                      ]).label
+                      ]).id
                     })
                   }
                   options={selectOptions.parametersValueType}
@@ -86,7 +86,7 @@ const JobsPanelParametersView = ({
                   match={match}
                   onClick={value =>
                     setNewParameterType(
-                      find(selectOptions.parameterType, ['id', value]).label
+                      find(selectOptions.parameterType, ['id', value]).id
                     )
                   }
                   options={selectOptions.parameterType}

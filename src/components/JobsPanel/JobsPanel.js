@@ -38,7 +38,7 @@ const JobsPanel = ({
     nvidia_gpu: ''
   })
   const [cpuUnit, setCpuUnit] = useState('')
-  const [jobInfo, setJobInfo] = useState({
+  const [currentFunctionInfo, setCurrentFunctionInfo] = useState({
     name: '',
     version: '',
     method: ''
@@ -46,13 +46,9 @@ const JobsPanel = ({
 
   const history = useHistory()
 
-  const handleEditJob = data => {
-    setJobInfo(data)
-  }
-
   const handleRunJob = () => {
     let selectedFunction = groupedFunctions.functions.find(
-      item => item.metadata.tag === jobInfo.version
+      func => func.metadata.tag === currentFunctionInfo.version
     )
 
     const postData = {
@@ -104,11 +100,11 @@ const JobsPanel = ({
     <JobsPanelView
       closePanel={closePanel}
       cpuUnit={cpuUnit}
-      func={groupedFunctions}
-      handleEditJob={handleEditJob}
+      handleCurrentEditFunc={setCurrentFunctionInfo}
       handleRunJob={handleRunJob}
       jobsStore={jobsStore}
       limits={limits}
+      listOfFunctions={groupedFunctions}
       match={match}
       memoryUnit={memoryUnit}
       openScheduleJob={openScheduleJob}

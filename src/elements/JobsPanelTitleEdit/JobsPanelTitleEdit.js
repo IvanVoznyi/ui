@@ -5,38 +5,38 @@ import Input from '../../common/Input/Input'
 import Select from '../../common/Select/Select'
 
 const JobsPanelTitleEdit = ({
-  functionMethod,
-  functionName,
-  functionVersion,
+  currentFunction,
+  handleCurrentFunction,
   handleEditJobTitle,
   match,
   methodOptions,
-  setFunctionMethod,
-  setFunctionName,
-  setFunctionVersion,
   versionOptions
 }) => {
   return (
     <>
-      <Input onChange={setFunctionName} type="text" value={functionName} />
+      <Input
+        onChange={name => handleCurrentFunction({ name })}
+        type="text"
+        value={currentFunction.name}
+      />
       <div className="job-panel__select-container">
         <Select
           className={methodOptions.length !== 0 ? 'select_left' : ''}
-          label="Version"
           floatingLabel
+          label="Version"
           match={match}
-          onClick={setFunctionVersion}
+          onClick={version => handleCurrentFunction({ version })}
           options={versionOptions}
-          selectedId={functionVersion}
+          selectedId={currentFunction.version}
         />
         {methodOptions.length !== 0 && (
           <Select
+            floatingLabel
             label="Method"
             match={match}
-            floatingLabel
-            onClick={setFunctionMethod}
+            onClick={method => handleCurrentFunction({ method })}
             options={methodOptions}
-            selectedId={functionMethod}
+            selectedId={currentFunction.method}
           />
         )}
       </div>
@@ -48,15 +48,11 @@ const JobsPanelTitleEdit = ({
 }
 
 JobsPanelTitleEdit.propTypes = {
-  functionMethod: PropTypes.string.isRequired,
-  functionName: PropTypes.string.isRequired,
-  functionVersion: PropTypes.string.isRequired,
+  currentFunction: PropTypes.shape({}).isRequired,
+  handleCurrentFunction: PropTypes.func.isRequired,
   handleEditJobTitle: PropTypes.func.isRequired,
   match: PropTypes.shape({}).isRequired,
   methodOptions: PropTypes.array.isRequired,
-  setFunctionMethod: PropTypes.func.isRequired,
-  setFunctionName: PropTypes.func.isRequired,
-  setFunctionVersion: PropTypes.func.isRequired,
   versionOptions: PropTypes.array.isRequired
 }
 

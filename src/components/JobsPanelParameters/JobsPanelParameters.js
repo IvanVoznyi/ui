@@ -55,7 +55,7 @@ const JobsPanelParameters = ({
     if (isEmptyParameter) {
       setNewParameter({
         name: '',
-        type: selectOptions.parametersValueType[0].label,
+        type: selectOptions.parametersValueType[0].id,
         value: ''
       })
       return setAddNewParameter(false)
@@ -84,7 +84,7 @@ const JobsPanelParameters = ({
     setAddNewParameter(false)
     setNewParameter({
       name: '',
-      type: selectOptions.parametersValueType[0].label,
+      type: selectOptions.parametersValueType[0].id,
       value: ''
     })
     setNewParameterType(panelData.newParameterType[0].id)

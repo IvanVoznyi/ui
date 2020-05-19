@@ -3,48 +3,55 @@ import PropTypes from 'prop-types'
 
 import JobsPanelTitleView from './JobsPanelTitleView'
 
-import { uniqBy, isEmpty, flattenDeep } from 'lodash'
+import { isEmpty, unionBy, map } from 'lodash'
 
 import './jobsPanelTitle.scss'
 
 const JobsPanelTitle = ({
   closePanel,
-  func,
-  handleEditJob,
+  handleCurrentEditFunc,
+  listOfFunctions,
   match,
   openScheduleJob,
   setOpenScheduleJob
 }) => {
   const [isEdit, setIsEdit] = useState(false)
-  const [functionVersion, setFunctionVersion] = useState('latest')
-  const [functionName, setFunctionName] = useState(func.name)
-  const [functionMethod, setFunctionMethod] = useState('')
+  const [currentFunction, setCurrentFunction] = useState({
+    method: '',
+    name: listOfFunctions.name || listOfFunctions.metadata.name,
+    version: 'latest'
+  })
 
   const handleEditJobTitle = () => {
-    handleEditJob({
-      method: functionMethod,
-      name: functionName,
-      version: functionVersion
+    handleCurrentEditFunc({
+      method: currentFunction.method,
+      name: currentFunction.name,
+      version: currentFunction.version
     })
     setIsEdit(false)
   }
 
+  const handleCurrentFunction = prop => {
+    setCurrentFunction(prevState => ({
+      ...prevState,
+      ...prop
+    }))
+  }
+
   const { methodOptions, versionOptions } = useMemo(() => {
-    if (isEmpty(func.functions)) {
+    if (isEmpty(listOfFunctions.functions)) {
       return {
         versionOptions: [],
         methodOptions: []
       }
     }
 
-    let versionOptions = func.functions
-      .map(item => {
+    let versionOptions = listOfFunctions.functions
+      .map(func => {
         return {
           label:
-            item.metadata.tag === 'latest'
-              ? `$${item.metadata.tag}`
-              : item.metadata.tag,
-          id: item.metadata.tag
+            (func.metadata.tag === 'latest' ? '$' : '') + func.metadata.tag,
+          id: func.metadata.tag
         }
       })
       .filter(item => item.label !== '')
@@ -54,63 +61,52 @@ const JobsPanelTitle = ({
         ? [{ label: '$latest', id: 'latest' }]
         : versionOptions
 
-    const arrayOfMethods = func.functions.map(item => {
-      if (!item.spec.entry_points) {
-        return []
-      }
-
-      return Object.keys(item.spec.entry_points).map(key => {
-        return {
-          name: item.spec.entry_points[key].name,
-          doc: item.spec.entry_points[key].doc
-        }
-      })
-    })
-
-    const flattenArrayOfMethods = flattenDeep(arrayOfMethods)
-
-    const uniqElementOfArrayMethodsByName = uniqBy(
-      flattenArrayOfMethods,
-      'name'
+    let methodOptions = unionBy(
+      map(listOfFunctions.functions, 'spec.entry_points').flatMap(
+        objectOfMethods =>
+          map(objectOfMethods, method => ({
+            label: method.name,
+            id: method.name,
+            subLabel: method.doc
+          }))
+      ),
+      'label'
     )
 
-    const methodOptions = uniqElementOfArrayMethodsByName.map(func => ({
-      label: func.name,
-      subLabel: func.doc,
-      id: func.name
-    }))
-
     if (methodOptions.length === 1) {
-      setFunctionMethod(methodOptions[0].label)
+      setCurrentFunction(prevState => ({
+        ...prevState,
+        method: methodOptions[0].id
+      }))
     } else {
-      const defaultMethod = func.functions.find(
+      const defaultMethod = listOfFunctions.functions.find(
         item => item.metadata.tag === 'latest'
       )?.spec.default_handler
 
-      defaultMethod && setFunctionMethod(defaultMethod)
+      defaultMethod &&
+        setCurrentFunction(prevState => ({
+          ...prevState,
+          method: defaultMethod
+        }))
     }
 
     return {
       methodOptions,
       versionOptions
     }
-  }, [func.functions])
+  }, [listOfFunctions.functions])
 
   return (
     <JobsPanelTitleView
       closePanel={closePanel}
-      func={func}
-      functionMethod={functionMethod}
-      functionName={functionName}
-      functionVersion={functionVersion}
+      currentFunction={currentFunction}
+      handleCurrentFunction={handleCurrentFunction}
       handleEditJobTitle={handleEditJobTitle}
       isEdit={isEdit}
+      listOfFunctions={listOfFunctions}
       match={match}
       methodOptions={methodOptions}
       openScheduleJob={openScheduleJob}
-      setFunctionMethod={setFunctionMethod}
-      setFunctionName={setFunctionName}
-      setFunctionVersion={setFunctionVersion}
       setIsEdit={setIsEdit}
       setOpenScheduleJob={setOpenScheduleJob}
       versionOptions={versionOptions}
@@ -120,8 +116,8 @@ const JobsPanelTitle = ({
 
 JobsPanelTitle.propTypes = {
   closePanel: PropTypes.func.isRequired,
-  func: PropTypes.shape({}).isRequired,
-  handleEditJob: PropTypes.func.isRequired,
+  handleCurrentEditFunc: PropTypes.func.isRequired,
+  listOfFunctions: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   openScheduleJob: PropTypes.bool.isRequired,
   setOpenScheduleJob: PropTypes.func.isRequired
