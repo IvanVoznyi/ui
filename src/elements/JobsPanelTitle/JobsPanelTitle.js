@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import JobsPanelTitleView from './JobsPanelTitleView'
 
-import _, { isEmpty, map } from 'lodash'
+import _, { isEmpty } from 'lodash'
 
 import './jobsPanelTitle.scss'
 
@@ -54,19 +54,16 @@ const JobsPanelTitle = ({
         ? [{ label: '$latest', id: 'latest' }]
         : versionOptions
 
-    let listOfMethods = _.map(
-      groupedFunctions.functions,
-      object => object.spec.entry_points
-    ).reduce((prev, curr) => {
-      let methods = map(curr, method => ({
-        label: method.name,
-        id: method.name,
-        subLabel: method.doc
+    let methodOptions = _.chain(groupedFunctions.functions)
+      .map(func => Object.values(func.spec.entry_points))
+      .flatten()
+      .map(entry_point => ({
+        label: entry_point.name,
+        id: entry_point.name,
+        subLabel: entry_point.doc
       }))
-      return [...prev, ...methods]
-    }, [])
-
-    let methodOptions = _.uniqBy(listOfMethods, 'label')
+      .uniqBy('label')
+      .value()
 
     if (methodOptions.length === 1) {
       setCurrentFunction(prevState => ({

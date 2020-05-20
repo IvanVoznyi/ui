@@ -34,7 +34,7 @@ const JobsPanelTitleEdit = ({
         />
         {methodOptions.length !== 0 && (
           <Select
-            className="select_margin"
+            className="job-methods"
             floatingLabel
             label="Method"
             match={match}
