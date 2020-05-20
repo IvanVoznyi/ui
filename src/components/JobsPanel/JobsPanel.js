@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import yaml from 'js-yaml'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import JobsPanelView from './JobsPanelView'
 
 import jobsActions from '../../actions/jobs'
+import functionsApi from '../../api/functions-api'
 
 import './jobsPanel.scss'
 
@@ -25,7 +27,7 @@ const JobsPanel = ({
   const [openScheduleJob, setOpenScheduleJob] = useState(false)
   const [inputPath, setInputPath] = useState('')
   const [outputPath, setOutputPath] = useState('')
-
+  const [objectFunctions, setObjectFunctions] = useState(groupedFunctions)
   const [requests, setRequests] = useState({
     cpu: '',
     memory: ''
@@ -45,6 +47,21 @@ const JobsPanel = ({
   })
 
   const history = useHistory()
+
+  useEffect(() => {
+    if (groupedFunctions.metadata) {
+      functionsApi
+        .getFunctionTemplate(groupedFunctions.metadata.versions.latest)
+        .then(response => {
+          let parsedData = yaml.safeLoad(response.data)
+
+          setObjectFunctions({
+            name: parsedData.metadata.name,
+            functions: parsedData.spec.entry_point ? [] : [parsedData]
+          })
+        })
+    }
+  }, [groupedFunctions, setObjectFunctions])
 
   const handleRunJob = () => {
     let selectedFunction = groupedFunctions.functions.find(
@@ -100,12 +117,12 @@ const JobsPanel = ({
     <JobsPanelView
       closePanel={closePanel}
       cpuUnit={cpuUnit}
-      groupedFunctions={groupedFunctions}
       handleRunJob={handleRunJob}
       jobsStore={jobsStore}
       limits={limits}
       match={match}
       memoryUnit={memoryUnit}
+      objectFunctions={objectFunctions}
       openScheduleJob={openScheduleJob}
       requests={requests}
       setCpuUnit={setCpuUnit}
