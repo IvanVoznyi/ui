@@ -28,6 +28,7 @@ const JobsPanel = ({
   const [inputPath, setInputPath] = useState('')
   const [outputPath, setOutputPath] = useState('')
   const [objectFunctions, setObjectFunctions] = useState(groupedFunctions)
+  const [isLoader, setIsLoader] = useState(false)
   const [requests, setRequests] = useState({
     cpu: '',
     memory: ''
@@ -50,6 +51,7 @@ const JobsPanel = ({
 
   useEffect(() => {
     if (groupedFunctions.metadata) {
+      setIsLoader(true)
       functionsApi
         .getFunctionTemplate(groupedFunctions.metadata.versions.latest)
         .then(response => {
@@ -59,6 +61,8 @@ const JobsPanel = ({
             name: parsedData.metadata.name,
             functions: parsedData.spec.entry_point ? [] : [parsedData]
           })
+
+          setIsLoader(false)
         })
     }
   }, [groupedFunctions, setObjectFunctions])
@@ -118,6 +122,7 @@ const JobsPanel = ({
       closePanel={closePanel}
       cpuUnit={cpuUnit}
       handleRunJob={handleRunJob}
+      isLoader={isLoader}
       jobsStore={jobsStore}
       limits={limits}
       match={match}

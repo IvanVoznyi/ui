@@ -7,6 +7,7 @@ import JobsPanelDataInputs from '../JobsPanelDataInputs/JobsPanelDataInputs'
 import JobsPanelResources from '../JobsPanelResources/JobsPanelResources'
 import ScheduleJob from '../ScheduleJob/ScheduleJob'
 import JobsPanelTitle from '../../elements/JobsPanelTitle/JobsPanelTitle'
+import Loader from '../../common/Loader/Loader'
 
 import { ReactComponent as Arrow } from '../../images/arrow.svg'
 import { ReactComponent as Run } from '../../images/run.svg'
@@ -15,6 +16,7 @@ const JobsPanelView = ({
   closePanel,
   cpuUnit,
   handleRunJob,
+  isLoader,
   jobsStore,
   limits,
   match,
@@ -37,6 +39,7 @@ const JobsPanelView = ({
   setRequests
 }) => (
   <div className="job-panel-container">
+    {isLoader && <Loader />}
     <div className="job-panel">
       <JobsPanelTitle
         closePanel={closePanel}
