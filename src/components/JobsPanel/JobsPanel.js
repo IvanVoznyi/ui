@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import JobsPanelView from './JobsPanelView'
-import Loader from '../../common/Loader/Loader'
 
 import jobsActions from '../../actions/jobs'
 import functionActions from '../../actions/functions'
@@ -113,9 +112,7 @@ const JobsPanel = ({
     })
   }
 
-  return functionsStore.loading ? (
-    <Loader />
-  ) : (
+  return (
     <JobsPanelView
       closePanel={closePanel}
       cpuUnit={cpuUnit}
