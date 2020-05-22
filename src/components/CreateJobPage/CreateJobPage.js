@@ -19,7 +19,9 @@ const CreateJobPage = ({
 }) => {
   const [functions, setFunctions] = useState([])
   const [selectedGroupFunctions, setSelectedGroupFunctions] = useState({})
-  const [templatesArray, setTemplatesArray] = useState(functionsStore.templates)
+  const [templatesArray, setTemplatesArray] = useState(
+    functionsStore.templatesCatalog
+  )
 
   useEffect(() => {
     fetchFunctions(match.params.projectName).then(functions => {
@@ -45,13 +47,13 @@ const CreateJobPage = ({
       return setFunctions(groupedFunctions)
     })
 
-    if (functionsStore.templates.length === 0) {
+    if (functionsStore.templatesCatalog.length === 0) {
       fetchFunctionsTemplates().then(setTemplatesArray)
     }
   }, [
     fetchFunctions,
     fetchFunctionsTemplates,
-    functionsStore.templates.length,
+    functionsStore.templatesCatalog.length,
     match.params.projectName
   ])
 

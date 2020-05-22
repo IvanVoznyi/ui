@@ -50,8 +50,6 @@ const JobsPanelTitle = ({
       })
       .filter(item => item.label !== '')
 
-    console.log(versionOptions)
-
     versionOptions =
       versionOptions.length === 0
         ? [{ label: '$latest', id: 'latest' }]

@@ -16,7 +16,7 @@ const JobsPanelView = ({
   closePanel,
   cpuUnit,
   handleRunJob,
-  isLoader,
+  isLoading,
   jobsStore,
   limits,
   match,
@@ -39,7 +39,7 @@ const JobsPanelView = ({
   setRequests
 }) => (
   <div className="job-panel-container">
-    {isLoader && <Loader />}
+    {isLoading && <Loader />}
     <div className="job-panel">
       <JobsPanelTitle
         closePanel={closePanel}
