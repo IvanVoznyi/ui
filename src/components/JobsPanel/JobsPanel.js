@@ -162,12 +162,6 @@ JobsPanel.propTypes = {
 }
 
 export default connect(
-  state => ({
-    jobsStore: state.jobsStore,
-    functionsStore: state.functionsStore
-  }),
-  {
-    ...jobsActions,
-    ...functionActions
-  }
+  ({ jobsStore, functionsStore }) => ({ jobsStore, functionsStore }),
+  { ...jobsActions, ...functionActions }
 )(JobsPanel)
