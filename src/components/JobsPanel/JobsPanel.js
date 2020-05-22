@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { connect, useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import JobsPanelView from './JobsPanelView'
+import Loader from '../../common/Loader/Loader'
 
 import jobsActions from '../../actions/jobs'
 import functionActions from '../../actions/functions'
 
 import './jobsPanel.scss'
-import functionsActions from '../../actions/functions'
 
 const JobsPanel = ({
   closePanel,
+  fetchFunctionTemplate,
+  functionsStore,
   groupedFunctions,
   jobsStore,
   match,
+  removeFunctionTemplate,
   runNewJob,
   setNewJob,
   setNewJobHyperParameters,
@@ -47,23 +50,18 @@ const JobsPanel = ({
 
   const history = useHistory()
 
-  const dispatchSelectFunction = useDispatch()
-  const { selectedFunction, loading } = useSelector(
-    state => state.functionsStore
-  )
-
   useEffect(() => {
-    if (!selectedFunction.name) {
-      dispatchSelectFunction(
-        functionActions.fetchSelectFunction(
-          groupedFunctions.metadata.versions.latest
-        )
-      )
+    if (!functionsStore.selectedFunction.name) {
+      fetchFunctionTemplate(groupedFunctions.metadata.versions.latest)
     }
     return () =>
-      selectedFunction.name &&
-      dispatchSelectFunction(functionsActions.removeSelectFunction())
-  }, [groupedFunctions, dispatchSelectFunction, selectedFunction])
+      functionsStore.selectedFunction.name && removeFunctionTemplate()
+  }, [
+    fetchFunctionTemplate,
+    functionsStore,
+    groupedFunctions,
+    removeFunctionTemplate
+  ])
 
   const handleRunJob = () => {
     let selectedFunction = groupedFunctions.functions.find(
@@ -115,19 +113,22 @@ const JobsPanel = ({
     })
   }
 
-  return (
+  return functionsStore.loading ? (
+    <Loader />
+  ) : (
     <JobsPanelView
       closePanel={closePanel}
       cpuUnit={cpuUnit}
+      functionsObject={
+        functionsStore.selectedFunction.name
+          ? functionsStore.selectedFunction
+          : groupedFunctions
+      }
       handleRunJob={handleRunJob}
-      isLoading={loading}
       jobsStore={jobsStore}
       limits={limits}
       match={match}
       memoryUnit={memoryUnit}
-      objectFunctions={
-        selectedFunction.name ? selectedFunction : groupedFunctions
-      }
       openScheduleJob={openScheduleJob}
       requests={requests}
       setCpuUnit={setCpuUnit}
@@ -160,4 +161,13 @@ JobsPanel.propTypes = {
   setNewJobVolumes: PropTypes.func.isRequired
 }
 
-export default connect(jobsStore => jobsStore, jobsActions)(JobsPanel)
+export default connect(
+  state => ({
+    jobsStore: state.jobsStore,
+    functionsStore: state.functionsStore
+  }),
+  {
+    ...jobsActions,
+    ...functionActions
+  }
+)(JobsPanel)

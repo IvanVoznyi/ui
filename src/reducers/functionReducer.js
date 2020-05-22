@@ -2,11 +2,11 @@ import {
   FETCH_FUNCTIONS_BEGIN,
   FETCH_FUNCTIONS_FAILURE,
   FETCH_FUNCTIONS_SUCCESS,
-  SET_FUNCTIONS_TEMPLATES,
-  FETCH_SELECT_FUNCTION_BEGIN,
-  FETCH_SELECT_FUNCTION_SUCCESS,
-  REMOVE_SELECT_FUNCTION,
-  FETCH_SELECT_FUNCTION_FAILURE
+  FETCH_FUNCTION_TEMPLATE_BEGIN,
+  FETCH_FUNCTION_TEMPLATE_FAILURE,
+  FETCH_FUNCTION_TEMPLATE_SUCCESS,
+  REMOVE_FUNCTION_TEMPLATE,
+  SET_FUNCTIONS_TEMPLATES
 } from '../constants'
 
 const initialState = {
@@ -42,25 +42,25 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         templates: payload
       }
-    case FETCH_SELECT_FUNCTION_BEGIN:
+    case FETCH_FUNCTION_TEMPLATE_BEGIN:
       return {
         ...state,
         loading: true
       }
-    case FETCH_SELECT_FUNCTION_SUCCESS:
+    case FETCH_FUNCTION_TEMPLATE_SUCCESS:
       return {
         ...state,
         loading: false,
         selectedFunction: payload
       }
-    case FETCH_SELECT_FUNCTION_FAILURE:
+    case FETCH_FUNCTION_TEMPLATE_FAILURE:
       return {
         ...state,
         loading: false,
         selectedFunction: {},
         error: payload
       }
-    case REMOVE_SELECT_FUNCTION:
+    case REMOVE_FUNCTION_TEMPLATE:
       return {
         ...state,
         selectedFunction: {}

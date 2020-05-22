@@ -4,11 +4,11 @@ import {
   FETCH_FUNCTIONS_BEGIN,
   FETCH_FUNCTIONS_FAILURE,
   FETCH_FUNCTIONS_SUCCESS,
-  SET_FUNCTIONS_TEMPLATES,
-  FETCH_SELECT_FUNCTION_BEGIN,
-  FETCH_SELECT_FUNCTION_SUCCESS,
-  REMOVE_SELECT_FUNCTION,
-  FETCH_SELECT_FUNCTION_FAILURE
+  FETCH_FUNCTION_TEMPLATE_BEGIN,
+  FETCH_FUNCTION_TEMPLATE_FAILURE,
+  FETCH_FUNCTION_TEMPLATE_SUCCESS,
+  REMOVE_FUNCTION_TEMPLATE,
+  SET_FUNCTIONS_TEMPLATES
 } from '../constants'
 
 const functionsActions = {
@@ -61,34 +61,38 @@ const functionsActions = {
       })
       .catch(error => dispatch(functionsActions.fetchJobLogsFailure(error)))
   },
-  fetchSelectFunction: path => dispatch => {
-    dispatch(functionsActions.fetchSelectFunctionBegin())
+  fetchFunctionTemplate: path => dispatch => {
+    dispatch(functionsActions.fetchFunctionTemplateBegin())
+
     return functionsApi
       .getFunctionTemplate(path)
       .then(response => {
         let parsedData = yaml.safeLoad(response.data)
+
         dispatch(
-          functionsActions.fetchSelectFunctionSuccess({
+          functionsActions.fetchFunctionTemplateSuccess({
             name: parsedData.metadata.name,
             functions: parsedData.spec.entry_point ? [] : [parsedData]
           })
         )
       })
-      .catch(err => dispatch(functionsActions.fetchSelectFunctionFailure(err)))
+      .catch(err =>
+        dispatch(functionsActions.fetchFunctionTemplateFailure(err))
+      )
   },
-  fetchSelectFunctionSuccess: selectFunction => ({
-    type: FETCH_SELECT_FUNCTION_SUCCESS,
+  fetchFunctionTemplateSuccess: selectFunction => ({
+    type: FETCH_FUNCTION_TEMPLATE_SUCCESS,
     payload: selectFunction
   }),
-  fetchSelectFunctionBegin: () => ({
-    type: FETCH_SELECT_FUNCTION_BEGIN
+  fetchFunctionTemplateBegin: () => ({
+    type: FETCH_FUNCTION_TEMPLATE_BEGIN
   }),
-  fetchSelectFunctionFailure: err => ({
-    type: FETCH_SELECT_FUNCTION_FAILURE,
+  fetchFunctionTemplateFailure: err => ({
+    type: FETCH_FUNCTION_TEMPLATE_FAILURE,
     payload: err
   }),
-  removeSelectFunction: () => ({
-    type: REMOVE_SELECT_FUNCTION
+  removeFunctionTemplate: () => ({
+    type: REMOVE_FUNCTION_TEMPLATE
   }),
   setFunctionsTemplates: templates => ({
     type: SET_FUNCTIONS_TEMPLATES,
