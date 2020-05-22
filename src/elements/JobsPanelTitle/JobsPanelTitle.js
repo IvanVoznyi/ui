@@ -9,7 +9,7 @@ import './jobsPanelTitle.scss'
 
 const JobsPanelTitle = ({
   closePanel,
-  functionsObject,
+  functionsData,
   match,
   openScheduleJob,
   setCurrentFunctionInfo,
@@ -18,7 +18,7 @@ const JobsPanelTitle = ({
   const [isEdit, setIsEdit] = useState(false)
   const [currentFunction, setCurrentFunction] = useState({
     method: '',
-    name: functionsObject.name || functionsObject.metadata.name,
+    name: functionsData.name || functionsData.metadata.name,
     version: 'latest'
   })
 
@@ -32,14 +32,14 @@ const JobsPanelTitle = ({
   }
 
   const { methodOptions, versionOptions } = useMemo(() => {
-    if (isEmpty(functionsObject.functions)) {
+    if (isEmpty(functionsData.functions)) {
       return {
         versionOptions: [],
         methodOptions: []
       }
     }
 
-    let versionOptions = functionsObject.functions
+    let versionOptions = functionsData.functions
       .map(func => {
         return {
           label:
@@ -55,7 +55,7 @@ const JobsPanelTitle = ({
         ? [{ label: '$latest', id: 'latest' }]
         : versionOptions
 
-    let methodOptions = _.chain(functionsObject.functions)
+    let methodOptions = _.chain(functionsData.functions)
       .map(func =>
         func.spec.entry_points ? Object.values(func.spec.entry_points) : []
       )
@@ -74,7 +74,7 @@ const JobsPanelTitle = ({
         method: methodOptions[0].id
       }))
     } else {
-      const defaultMethod = functionsObject.functions.find(
+      const defaultMethod = functionsData.functions.find(
         item => item.metadata.tag === 'latest'
       )?.spec.default_handler
 
@@ -89,7 +89,7 @@ const JobsPanelTitle = ({
       methodOptions,
       versionOptions
     }
-  }, [functionsObject.functions])
+  }, [functionsData.functions])
 
   return (
     <JobsPanelTitleView
@@ -110,7 +110,7 @@ const JobsPanelTitle = ({
 
 JobsPanelTitle.propTypes = {
   closePanel: PropTypes.func.isRequired,
-  functionsObject: PropTypes.shape({}).isRequired,
+  functionsData: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   openScheduleJob: PropTypes.bool.isRequired,
   setCurrentFunctionInfo: PropTypes.func.isRequired,

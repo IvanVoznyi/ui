@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -50,7 +50,7 @@ const JobsPanel = ({
 
   const history = useHistory()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!functionsStore.selectedFunction.name) {
       fetchFunctionTemplate(groupedFunctions.metadata.versions.latest)
     }
@@ -113,15 +113,13 @@ const JobsPanel = ({
     })
   }
 
-  return (groupedFunctions.metadata &&
-    functionsStore.selectedFunction.name === undefined) ||
-    functionsStore.loading ? (
+  return functionsStore.loading ? (
     <Loader />
   ) : (
     <JobsPanelView
       closePanel={closePanel}
       cpuUnit={cpuUnit}
-      functionsObject={
+      functionsData={
         functionsStore.selectedFunction.name
           ? functionsStore.selectedFunction
           : groupedFunctions
