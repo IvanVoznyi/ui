@@ -113,7 +113,9 @@ const JobsPanel = ({
     })
   }
 
-  return functionsStore.loading ? (
+  return (groupedFunctions.metadata &&
+    functionsStore.selectedFunction.name === undefined) ||
+    functionsStore.loading ? (
     <Loader />
   ) : (
     <JobsPanelView
