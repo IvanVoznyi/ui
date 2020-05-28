@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -7,6 +7,9 @@ import JobsPanelView from './JobsPanelView'
 
 import jobsActions from '../../actions/jobs'
 import functionActions from '../../actions/functions'
+import { parseJobsDefaultParameters } from '../../utils/object'
+
+import _ from 'lodash'
 
 import './jobsPanel.scss'
 
@@ -50,7 +53,7 @@ const JobsPanel = ({
   const history = useHistory()
 
   useLayoutEffect(() => {
-    if (!functionsStore.selectedFunction.name) {
+    if (!groupedFunctions.name && !functionsStore.selectedFunction.name) {
       fetchFunctionTemplate(groupedFunctions.metadata.versions.latest)
     }
     return () =>
@@ -61,6 +64,66 @@ const JobsPanel = ({
     groupedFunctions,
     removeFunctionTemplate
   ])
+
+  const functionDefaultValues = useMemo(() => {
+    let functionDefaultData = {}
+    if (groupedFunctions.name || functionsStore.selectedFunction.name) {
+      functionDefaultData = _.chain(
+        groupedFunctions.functions || functionsStore.selectedFunction.functions
+      )
+        .map(func =>
+          _.map(func.spec.entry_points, entry_points => entry_points.parameters)
+        )
+        .flattenDeep()
+        .uniqBy('name')
+        .value()
+    }
+
+    if (Object.values(functionDefaultData).length > 0) {
+      let parameters = functionDefaultData
+        .filter(parameter => parameter.type !== 'DataItem')
+        .map(parameter => ({
+          doc: parameter.doc,
+          isValueEmpty: parameter.default ? false : true,
+          isDefault: true,
+          items: {
+            name: parameter.name ?? '',
+            type: parameter.type ?? '',
+            value: parameter.default ?? '',
+            simple: ''
+          }
+        }))
+
+      if (parameters.length > 0) {
+        parseJobsDefaultParameters(parameters, setNewJobParameters)
+      }
+
+      let dataInputs = functionDefaultData
+        .filter(dataInputs => dataInputs.type === 'DataItem')
+        .map(input => ({
+          doc: input.doc,
+          isValueEmpty: input.path ? false : true,
+          isDefault: true,
+          items: {
+            name: input.name,
+            path: input.path ?? ''
+          }
+        }))
+
+      if (dataInputs.length > 0) {
+        parseJobsDefaultParameters(dataInputs, setNewJobInputs)
+      }
+
+      return {
+        parameters,
+        dataInputs
+      }
+    }
+    return {
+      parameters: [],
+      dataInputs: []
+    }
+  }, [groupedFunctions, setNewJobInputs, setNewJobParameters, functionsStore])
 
   const handleRunJob = () => {
     let selectedFunction = groupedFunctions.functions.find(
@@ -121,6 +184,7 @@ const JobsPanel = ({
           ? functionsStore.selectedFunction
           : groupedFunctions
       }
+      functionDefaultValues={functionDefaultValues}
       handleRunJob={handleRunJob}
       jobsStore={jobsStore}
       limits={limits}

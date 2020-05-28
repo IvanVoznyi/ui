@@ -75,7 +75,7 @@ const JobsPanelTable = ({
 
   const handleSetSelectedVolume = selectedVolume => {
     const searchItem = volumes.find(
-      volume => volume.name === selectedVolume.name
+      volume => volume.name === selectedVolume.items.name
     )
 
     let newValue
@@ -121,63 +121,56 @@ const JobsPanelTable = ({
       {headers.length > 0 && (
         <div className="table__header table__row no-hover">
           {headers.map((header, index) => (
-            <div className="table__cell" key={index}>
+            <div
+              className={`table__cell table__cell-${header
+                .split(' ')
+                .join('')
+                .toLowerCase()}`}
+              key={index}
+            >
               {header}
             </div>
           ))}
+          <div className="table__cell actions_cell"></div>
         </div>
       )}
-      {Array.isArray(content)
-        ? content.map((contentItem, index) => {
-            if (editItem && contentItem.name === selectedItem.name) {
-              return section === 'parameters' ? (
-                <EditableParametersRow
-                  handleEdit={handleEdit}
-                  key={index}
-                  match={match}
-                  selectOption={selectOption}
-                  selectedParameter={selectedItem}
-                  setSelectedParameter={setSelectedParameter}
-                />
-              ) : (
-                <EditableVolumesRow
-                  handleEdit={handleEdit}
-                  key={index}
-                  selectedVolume={selectedItem}
-                  setSelectedVolume={setSelectedVolume}
-                />
-              )
-            } else {
-              return (
-                <JobsPanelTableRow
-                  actionsMenu={actionsMenu}
-                  item={contentItem}
-                  key={index}
-                  row={Object.values(contentItem)}
-                />
-              )
-            }
-          })
-        : Object.entries(content).map((row, index) => {
-            if (editItem && row[0] === selectedItem.name) {
-              return (
-                <EditableDataInputsRow
-                  handleEdit={handleEdit}
-                  key={index}
-                  selectedDataInput={selectedItem}
-                  setSelectedDataInput={setSelectedDataInput}
-                />
-              )
-            }
-            return (
-              <JobsPanelTableRow
-                actionsMenu={actionsMenu}
-                item={{ name: row[0], path: row[1] }}
-                key={index}
-                row={row}
-              />
-            )
-          })}
+      {content.map((contentItem, index) => {
+        if (editItem && contentItem.items.name === selectedItem.items.name) {
+          return section === 'parameters' ? (
+            <EditableParametersRow
+              handleEdit={handleEdit}
+              key={index}
+              match={match}
+              selectOption={selectOption}
+              selectedParameter={selectedItem}
+              setSelectedParameter={setSelectedParameter}
+            />
+          ) : section === 'data-inputs' ? (
+            <EditableDataInputsRow
+              handleEdit={handleEdit}
+              key={index}
+              selectedDataInput={selectedItem}
+              setSelectedDataInput={setSelectedDataInput}
+            />
+          ) : (
+            <EditableVolumesRow
+              handleEdit={handleEdit}
+              key={index}
+              selectedVolume={selectedItem}
+              setSelectedVolume={setSelectedVolume}
+            />
+          )
+        } else {
+          return (
+            <JobsPanelTableRow
+              actionsMenu={actionsMenu}
+              item={contentItem}
+              key={index}
+              row={contentItem.items}
+            />
+          )
+        }
+      })}
       {children}
     </div>
   )

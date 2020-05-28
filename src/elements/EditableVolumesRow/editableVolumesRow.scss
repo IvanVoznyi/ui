@@ -1,7 +1,6 @@
 .volumes {
   .edit-row {
     .input-wrapper {
-
       .input {
         padding-top: 20px;
 
@@ -13,6 +12,31 @@
           }
         }
       }
+    }
+
+    .resource-path {
+      max-width: 351px;
+      padding: 10px 20px 10px 0;
+    }
+
+    .volumes-access {
+      margin-right: 10px;
+      padding: 10px 0;
+
+      .input-wrapper {
+        .input {
+          padding: 20px 10px 10px 17px;
+
+          &__label {
+            left: 17px;
+          }
+        }
+      }
+    }
+
+    .volume-container,
+    .volume-path {
+      padding: 10px 20px 10px 0;
     }
   }
 }

@@ -15,22 +15,30 @@ const EditableVolumesRow = ({
   return (
     <>
       <div className="table__row edit-row">
-        <div className="table__cell">{selectedVolume.name}</div>
-        <div className="table__cell">
+        <div className="table__cell parameter-name">
+          {selectedVolume.items.name}
+        </div>
+        <div className="table__cell volume-path">
           <Input
             floatingLabel
             label="Path"
             onChange={path =>
-              setSelectedVolume({ ...selectedVolume, mountPath: path })
+              setSelectedVolume({
+                ...selectedVolume,
+                items: { ...selectedVolume.items, mountPath: path }
+              })
             }
             type="text"
-            value={selectedVolume.mountPath}
+            value={selectedVolume.items.mountPath}
           />
         </div>
+        <div className="actions_cell"></div>
       </div>
       <div className="table__row edit-row">
-        <div className="table__cell">{selectedVolume.type.value}</div>
-        <div className="table__cell">
+        <div className="table__cell parameter-name">
+          {selectedVolume.type.value}
+        </div>
+        <div className="table__cell volume-container">
           <Input
             floatingLabel
             label="Container"
@@ -44,7 +52,7 @@ const EditableVolumesRow = ({
             value={selectedVolume.type.name}
           />
         </div>
-        <div className="table__cell">
+        <div className="table__cell actions_cell">
           <button className="apply-edit-btn" onClick={handleEdit}>
             <Checkmark />
           </button>
@@ -52,7 +60,7 @@ const EditableVolumesRow = ({
       </div>
       {selectedVolume.type.value === 'V3IO' && (
         <div className="table__row edit-row">
-          <div className="table__cell">
+          <div className="table__cell volumes-access">
             <Input
               floatingLabel
               label="Access Key"
@@ -66,7 +74,7 @@ const EditableVolumesRow = ({
               value={selectedVolume.type.accessKey}
             />
           </div>
-          <div className="table__cell">
+          <div className="table__cell resource-path">
             <Input
               floatingLabel
               label="Resource Path"
@@ -80,6 +88,7 @@ const EditableVolumesRow = ({
               value={selectedVolume.type.subPath}
             />
           </div>
+          <div className="actions_cell"></div>
         </div>
       )}
     </>

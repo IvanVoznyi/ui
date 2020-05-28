@@ -39,20 +39,29 @@ const TableActionsMenu = ({ item, menu, time }) => {
           className="table-actions-container__body"
           onClick={() => setIsShowMenu(false)}
         >
-          {menu.map(menuItem => (
-            <div
-              className="table-actions-container__option"
-              onClick={() => {
-                menuItem.onClick(item)
-              }}
-              key={menuItem.label}
-            >
-              <span className="table-actions-container__icon">
-                {menuItem.icon}
-              </span>
-              {menuItem.label}
-            </div>
-          ))}
+          {menu.map(menuItem => {
+            if (
+              menuItem.label === 'Remove' &&
+              (!item.items.isValueEmpty || !item.items.path) &&
+              item.isDefault === true
+            ) {
+              return undefined
+            }
+            return (
+              <div
+                className="table-actions-container__option"
+                onClick={() => {
+                  menuItem.onClick(item)
+                }}
+                key={menuItem.label}
+              >
+                <span className="table-actions-container__icon">
+                  {menuItem.icon}
+                </span>
+                {menuItem.label}
+              </div>
+            )
+          })}
         </div>
       )}
     </div>

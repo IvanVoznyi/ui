@@ -15,29 +15,46 @@ const EditableParametersRow = ({
 }) => {
   return (
     <div className="table__row edit-row">
-      <div className="table__cell">{selectedParameter.name}</div>
-      <div className="table__cell">{selectedParameter.type}</div>
-      <div className="table__cell">
+      <div className="table__cell parameter-name">
+        {selectedParameter.items.name}
+      </div>
+      <div className="table__cell">{selectedParameter.items.type}</div>
+      <div className="table__cell table__cell_edit">
         <Input
-          onChange={value =>
-            setSelectedParameter({ ...selectedParameter, value: value })
-          }
+          onChange={value => {
+            setSelectedParameter({
+              ...selectedParameter,
+              items: {
+                ...selectedParameter.items,
+                value: value
+              }
+            })
+          }}
           type="text"
-          value={selectedParameter.value}
+          value={selectedParameter.items.value}
         />
       </div>
-      <div className="table__cell">
+      <div className="table__cell table__cell_edit">
         <Select
-          label={selectedParameter.simple}
+          label={selectedParameter.items.simple}
           match={match}
           onClick={simple =>
-            setSelectedParameter({ ...selectedParameter, simple: simple })
+            setSelectedParameter({
+              ...selectedParameter.items,
+              items: {
+                ...selectedParameter.items,
+                simple: simple
+              }
+            })
           }
           options={selectOption.parameterType}
         />
       </div>
-      <div className="table__cell">
-        <button className="apply-edit-btn" onClick={handleEdit}>
+      <div className="table__cell table__cell-edit">
+        <button
+          className="apply-edit-btn"
+          onClick={() => handleEdit(selectedParameter, false)}
+        >
           <Checkmark />
         </button>
       </div>

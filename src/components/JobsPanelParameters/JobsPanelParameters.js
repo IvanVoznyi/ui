@@ -6,11 +6,12 @@ import JobsPanelParametersView from './JobsPanelParametersView'
 import panelData from '../JobsPanel/panelData'
 
 const JobsPanelParameters = ({
+  functionDefaultValues,
   hyperparams,
   match,
   parameters,
-  setNewJobParameters,
-  setNewJobHyperParameters
+  setNewJobHyperParameters,
+  setNewJobParameters
 }) => {
   const [addNewParameter, setAddNewParameter] = useState(false)
   const [newParameter, setNewParameter] = useState({
@@ -21,7 +22,9 @@ const JobsPanelParameters = ({
   const [newParameterType, setNewParameterType] = useState(
     panelData.newParameterType[0].id
   )
-  const [parametersArray, setParametersArray] = useState([])
+  const [parametersArray, setParametersArray] = useState(
+    functionDefaultValues.parameters
+  )
   const [selectedParameter, setSelectedParameter] = useState({})
   const selectOptions = {
     parameterType: [
@@ -61,7 +64,15 @@ const JobsPanelParameters = ({
       return setAddNewParameter(false)
     }
 
+    let defaultParameters = parametersArray
+      .map(parameter => parameter.items)
+      .reduce((prev, curr) => {
+        let name = curr.name
+        return { ...prev, [name]: curr.value }
+      }, {})
+
     setNewJobParameters({
+      ...defaultParameters,
       ...parameters,
       [newParameter.name]: newParameter.value
     })
@@ -76,8 +87,11 @@ const JobsPanelParameters = ({
     setParametersArray([
       ...parametersArray,
       {
-        ...newParameter,
-        simple: newParameterType
+        items: {
+          ...newParameter,
+          simple: newParameterType
+        },
+        isDefault: false
       }
     ])
 
@@ -94,33 +108,37 @@ const JobsPanelParameters = ({
     const params = { ...parameters }
     const hyperParams = { ...hyperparams }
 
-    params[selectedParameter.name] = selectedParameter.value
+    params[selectedParameter.items.name] = selectedParameter.items.value
 
     if (selectedParameter.simple !== panelData.newParameterType[0].id) {
-      if (hyperParams[selectedParameter.name]) {
-        hyperParams[selectedParameter.name] = selectedParameter.value.split(',')
+      if (hyperParams[selectedParameter.items.name]) {
+        hyperParams[
+          selectedParameter.items.name
+        ] = selectedParameter.items.value.split(',')
         setNewJobHyperParameters({ ...hyperParams })
       } else {
         setNewJobHyperParameters({
           ...hyperparams,
-          [selectedParameter.name]: selectedParameter.value.split(',')
+          [selectedParameter.items.name]: selectedParameter.items.value.split(
+            ','
+          )
         })
       }
     }
 
     if (
-      selectedParameter.simple === panelData.newParameterType[0].id &&
-      hyperParams[selectedParameter.name]
+      selectedParameter.items.simple === panelData.newParameterType[0].id &&
+      hyperParams[selectedParameter.items.name]
     ) {
-      delete hyperParams[selectedParameter.name]
+      delete hyperParams[selectedParameter.items.name]
 
       setNewJobHyperParameters({ ...hyperParams })
     }
 
     const newParametersArray = parametersArray.map(param => {
-      if (param.name === selectedParameter.name) {
-        param.value = selectedParameter.value
-        param.simple = selectedParameter.simple
+      if (param.items.name === selectedParameter.items.name) {
+        param.items.value = selectedParameter.items.value
+        param.items.simple = selectedParameter.items.simple
       }
 
       return param
@@ -146,7 +164,9 @@ const JobsPanelParameters = ({
 
     setNewJobParameters({ ...newParameters })
     setParametersArray(
-      parametersArray.filter(parameter => parameter.name !== item.name)
+      parametersArray.filter(
+        parameter => parameter.items.name !== item.items.name
+      )
     )
   }
 
@@ -171,11 +191,12 @@ const JobsPanelParameters = ({
 }
 
 JobsPanelParameters.propTypes = {
+  functionDefaultValues: PropTypes.shape({}).isRequired,
   hyperparams: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
   parameters: PropTypes.shape({}).isRequired,
-  setNewJobParameters: PropTypes.func.isRequired,
-  setNewJobHyperParameters: PropTypes.func.isRequired
+  setNewJobHyperParameters: PropTypes.func.isRequired,
+  setNewJobParameters: PropTypes.func.isRequired
 }
 
 export default JobsPanelParameters
