@@ -21,7 +21,7 @@ const JobsPanelTableRow = ({ actionsMenu, item }) => {
               ((property === 'name' && has(item.data, 'value')) ||
                 property === 'type') &&
               item.isDefault
-                ? `table__cell-${property} table__cell_disable`
+                ? `table__cell-${property} table__cell_disabled`
                 : `table__cell-${property}`
             }`}
             key={property}

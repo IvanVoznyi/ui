@@ -9,7 +9,7 @@
     height: 55px;
     border-top: $tableBorder;
 
-    .actions_cell {
+    .offset {
       width: 44px;
       max-width: 44px;
     }
@@ -44,7 +44,7 @@
       padding: 0;
     }
 
-    &_disable {
+    &_disabled {
       color: $spunPearl;
     }
 

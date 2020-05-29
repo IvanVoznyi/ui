@@ -125,7 +125,7 @@ const JobsPanelTable = ({
               {header.label}
             </div>
           ))}
-          <div className="table__cell actions_cell" />
+          <div className="table__cell offset" />
         </div>
       )}
       {content.map((contentItem, index) => {
