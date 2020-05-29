@@ -65,7 +65,7 @@ const JobsPanelParameters = ({
       return setAddNewParameter(false)
     }
 
-    let defaultParameters = parseDefaultContent(parametersArray)
+    const defaultParameters = parseDefaultContent(parametersArray)
 
     setNewJobParameters({
       ...defaultParameters,

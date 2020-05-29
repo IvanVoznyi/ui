@@ -63,7 +63,7 @@ const JobsPanelDataInputsView = ({
           setSelectedDataInput={setSelectedDataInput}
         >
           {addNewInput ? (
-            <div className="table__row-addItem">
+            <div className="table__row-additem">
               <div className="input-row-wrapper">
                 <Input
                   onChange={name => setNewInput({ ...newInput, name: name })}
@@ -143,7 +143,7 @@ const JobsPanelDataInputsView = ({
                       })
                     }
                     options={selectOptions.volumeType}
-                    label={newVolume.type.length > 0 ? newVolume.type : 'Type'}
+                    label={newVolume.type.length ? newVolume.type : 'Type'}
                     match={match}
                   />
                   <Input
@@ -164,7 +164,7 @@ const JobsPanelDataInputsView = ({
                         setNewVolume({ ...newVolume, accessKey: accessKey })
                       }
                       label="Access Key"
-                      className="input-row__item volume-access-key"
+                      className="input-row__item"
                       floatingLabel
                       type="text"
                     />

@@ -15,8 +15,8 @@ const EditableVolumesRow = ({
   return (
     <>
       <div className="table__row edit-row">
-        <div className="table__cell table__cell-name">
-          {selectedVolume.data.name}
+        <div className="table__cell">
+          <div className="data-ellipsis">{selectedVolume.data.name}</div>
         </div>
         <div className="table__cell table__cell-input">
           <Input
@@ -35,9 +35,7 @@ const EditableVolumesRow = ({
         <div className="offset" />
       </div>
       <div className="table__row edit-row">
-        <div className="table__cell table__cell-name">
-          {selectedVolume.type.value}
-        </div>
+        <div className="table__cell">{selectedVolume.type.value}</div>
         <div className="table__cell table__cell-input">
           <Input
             floatingLabel

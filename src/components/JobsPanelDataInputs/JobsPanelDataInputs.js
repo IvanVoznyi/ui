@@ -104,8 +104,8 @@ const JobsPanelDataInputs = ({
     const currentInputs = { ...inputs }
     currentInputs[selectedDataInput.data.name] = selectedDataInput.data.path
 
-    let currentDataInput = [...defaultDataInputs]
-    let currentDataInputIndex = defaultDataInputs.findIndex(
+    const currentDataInput = [...defaultDataInputs]
+    const currentDataInputIndex = defaultDataInputs.findIndex(
       item => item.data.name === selectedDataInput.data.name
     )
 

@@ -17,13 +17,11 @@ const JobsPanelTableRow = ({ actionsMenu, item }) => {
       {map(item.data, (value, property) => {
         return (
           <div
-            className={`table__cell ${
-              ((property === 'name' && has(item.data, 'value')) ||
-                property === 'type') &&
-              item.isDefault
-                ? `table__cell-${property} table__cell_disabled`
-                : `table__cell-${property}`
-            }`}
+            className={`table__cell ${((property === 'name' &&
+              has(item.data, 'value')) ||
+              property === 'type') &&
+              item.isDefault &&
+              'table__cell_disabled'}`}
             key={property}
           >
             <Tooltip
@@ -33,7 +31,7 @@ const JobsPanelTableRow = ({ actionsMenu, item }) => {
                 <TextTooltipTemplate
                   text={
                     property === 'name'
-                      ? item.doc
+                      ? item.doc || value
                       : joinDataOfArrayOrObject(value, ', ')
                   }
                 />
@@ -51,8 +49,7 @@ const JobsPanelTableRow = ({ actionsMenu, item }) => {
             item={item}
             menu={actionsMenu}
             visible={
-              (!item.data.isValueEmpty || !item.data.path) &&
-              item.isDefault === true
+              (!item.data.isValueEmpty || !item.data.path) && item.isDefault
             }
           />
         )}

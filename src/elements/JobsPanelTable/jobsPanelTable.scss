@@ -12,14 +12,6 @@
       font-weight: bold;
       font-size: 14px;
       line-height: 24px;
-
-      .table__cell {
-        &-name,
-        &-inputName,
-        &-volumeName {
-          padding-left: 17px;
-        }
-      }
     }
 
     &__body {
@@ -31,8 +23,16 @@
       }
     }
 
-    &__row-addItem {
+    &__row-additem {
       display: flex;
+
+      .input-row-wrapper {
+        .input-wrapper {
+          &:first-child {
+            min-width: 181px;
+          }
+        }
+      }
     }
   }
 
@@ -77,16 +77,10 @@
       &::placeholder {
         font-style: italic;
       }
-
-      &.table__cell-name {
-        min-width: 181px;
-      }
     }
   }
 
   .edit-row {
-    position: relative;
-
     .input {
       width: 100%;
       margin: -1px;
@@ -120,7 +114,7 @@
 
         &:first-child {
           .input-wrapper {
-            min-width: 203px;
+            min-width: 204px;
             margin-right: 5px;
 
             .input {
@@ -142,16 +136,14 @@
         flex: 0.4;
 
         .select__header {
-          padding: 17px;
+          padding-left: 17px;
         }
       }
     }
 
     .table__cell {
       &:first-child {
-        flex: 0.38;
-        min-width: 209px;
-        padding-right: 0;
+        max-width: 209px;
       }
 
       &_edit {

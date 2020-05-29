@@ -12,8 +12,8 @@ const EditableDataInputsRow = ({
 }) => {
   return (
     <div className="table__row edit-row">
-      <div className="table__cell table__cell-name">
-        {selectedDataInput.data.name}
+      <div className="table__cell">
+        <div className="data-ellipsis">{selectedDataInput.data.name}</div>
       </div>
       <div className="table__cell table__cell_edit">
         <Input
