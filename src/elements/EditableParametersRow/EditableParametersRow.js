@@ -15,34 +15,34 @@ const EditableParametersRow = ({
 }) => {
   return (
     <div className="table__row edit-row">
-      <div className="table__cell parameter-name">
-        {selectedParameter.items.name}
+      <div className="table__cell table__cell-name">
+        {selectedParameter.data.name}
       </div>
-      <div className="table__cell">{selectedParameter.items.type}</div>
+      <div className="table__cell">{selectedParameter.data.type}</div>
       <div className="table__cell table__cell_edit">
         <Input
           onChange={value => {
             setSelectedParameter({
               ...selectedParameter,
-              items: {
-                ...selectedParameter.items,
+              data: {
+                ...selectedParameter.data,
                 value: value
               }
             })
           }}
           type="text"
-          value={selectedParameter.items.value}
+          value={selectedParameter.data.value}
         />
       </div>
       <div className="table__cell table__cell_edit">
         <Select
-          label={selectedParameter.items.simple}
+          label={selectedParameter.data.simple}
           match={match}
           onClick={simple =>
             setSelectedParameter({
-              ...selectedParameter.items,
-              items: {
-                ...selectedParameter.items,
+              ...selectedParameter.data,
+              data: {
+                ...selectedParameter.data,
                 simple: simple
               }
             })

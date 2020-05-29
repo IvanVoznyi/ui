@@ -75,7 +75,7 @@ const JobsPanelTable = ({
 
   const handleSetSelectedVolume = selectedVolume => {
     const searchItem = volumes.find(
-      volume => volume.name === selectedVolume.items.name
+      volume => volume.name === selectedVolume.data.name
     )
 
     let newValue
@@ -121,21 +121,15 @@ const JobsPanelTable = ({
       {headers.length > 0 && (
         <div className="table__header table__row no-hover">
           {headers.map((header, index) => (
-            <div
-              className={`table__cell table__cell-${header
-                .split(' ')
-                .join('')
-                .toLowerCase()}`}
-              key={index}
-            >
-              {header}
+            <div className="table__cell" key={index}>
+              {header.label}
             </div>
           ))}
           <div className="table__cell actions_cell"></div>
         </div>
       )}
       {content.map((contentItem, index) => {
-        if (editItem && contentItem.items.name === selectedItem.items.name) {
+        if (editItem && contentItem.data.name === selectedItem.data.name) {
           return section === 'parameters' ? (
             <EditableParametersRow
               handleEdit={handleEdit}
@@ -166,7 +160,6 @@ const JobsPanelTable = ({
               actionsMenu={actionsMenu}
               item={contentItem}
               key={index}
-              row={contentItem.items}
             />
           )
         }
@@ -193,7 +186,7 @@ JobsPanelTable.propTypes = {
     PropTypes.arrayOf(PropTypes.shape({})),
     PropTypes.shape({})
   ]).isRequired,
-  headers: PropTypes.arrayOf(PropTypes.string),
+  headers: PropTypes.arrayOf(PropTypes.shape({})),
   handleEditItems: PropTypes.func,
   handleEditParameter: PropTypes.func,
   match: PropTypes.shape({}).isRequired,

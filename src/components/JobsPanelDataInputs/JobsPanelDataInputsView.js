@@ -63,7 +63,7 @@ const JobsPanelDataInputsView = ({
           setSelectedDataInput={setSelectedDataInput}
         >
           {addNewInput ? (
-            <div className="table__row-create-data-input">
+            <div className="table__row-addItem">
               <div className="input-row-wrapper">
                 <Input
                   onChange={name => setNewInput({ ...newInput, name: name })}

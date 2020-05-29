@@ -1,12 +1,23 @@
 {
   "data-inputs": {
-    "table-headers": ["Input Name", "Path"]
+    "table-headers": [
+      { "label": "Input Name", "classes": "inputName" },
+      { "label": "Path", "classes": "path" }
+    ]
   },
   "volumes": {
-    "table-headers": ["Volume Name", "Path"]
+    "table-headers": [
+      { "label": "Volume Name", "classes": "volumeName" },
+      { "label": "Path", "classes": "path" }
+    ]
   },
   "parameters": {
-    "table-headers": ["Name", "Type", "Value/s", "Simple/Hyper"]
+    "table-headers": [
+      { "label": "Name", "classes": "name" },
+      { "label": "Type", "classes": "type" },
+      { "label": "Value/s", "classes": "value" },
+      { "label": "Simple/Hyper", "classes": "simple" }
+    ]
   },
   "newParameterType": [{ "label": "Simple", "id": "Simple" }]
 }

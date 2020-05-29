@@ -5,41 +5,41 @@ import Tooltip from '../../common/Tooltip/Tooltip'
 import TextTooltipTemplate from '../TooltipTemplate/TextTooltipTemplate'
 import TableActionsMenu from '../../common/TableActionsMenu/TableActionsMenu'
 
-import { has } from 'lodash'
+import { has, map } from 'lodash'
 
 import { joinDataOfArrayOrObject } from '../../utils'
 
 import './jobsPanelTableRow.scss'
 
-const JobsPanelTableRow = ({ actionsMenu, item, row }) => {
+const JobsPanelTableRow = ({ actionsMenu, item }) => {
   return (
     <div className="table__row">
-      {Object.keys(row).map((property, i) => {
+      {map(item.data, (value, property) => {
         return (
           <div
             className={`table__cell ${
-              ((property === 'name' && has(item.items, 'value')) ||
+              ((property === 'name' && has(item.data, 'value')) ||
                 property === 'type') &&
               item.isDefault
-                ? `parameter-${property} table__cell_disable`
-                : `parameter-${property}`
+                ? `table__cell-${property} table__cell_disable`
+                : `table__cell-${property}`
             }`}
-            key={i}
+            key={property}
           >
             <Tooltip
-              className="table__cell-value"
-              textShow={property === 'name' && item.doc ? true : false}
+              className="data-ellipsis"
+              textShow={property === 'name' && item.doc}
               template={
                 <TextTooltipTemplate
                   text={
                     property === 'name'
                       ? item.doc
-                      : joinDataOfArrayOrObject(row[property], ', ')
+                      : joinDataOfArrayOrObject(value, ', ')
                   }
                 />
               }
             >
-              {joinDataOfArrayOrObject(row[property], ', ')}
+              {joinDataOfArrayOrObject(value, ', ')}
             </Tooltip>
           </div>
         )
@@ -47,7 +47,14 @@ const JobsPanelTableRow = ({ actionsMenu, item, row }) => {
       <div className="table__cell actions_cell">
         {((!item.isValueEmpty && !item.isDefault) ||
           (item.isValueEmpty && item.isDefault)) && (
-          <TableActionsMenu menu={actionsMenu} item={item} />
+          <TableActionsMenu
+            item={item}
+            menu={actionsMenu}
+            visible={
+              (!item.data.isValueEmpty || !item.data.path) &&
+              item.isDefault === true
+            }
+          />
         )}
       </div>
     </div>
@@ -56,8 +63,7 @@ const JobsPanelTableRow = ({ actionsMenu, item, row }) => {
 
 JobsPanelTableRow.propTypes = {
   actionsMenu: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  item: PropTypes.shape({}).isRequired,
-  row: PropTypes.shape({}).isRequired
+  item: PropTypes.shape({}).isRequired
 }
 
 export default JobsPanelTableRow

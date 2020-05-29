@@ -15,8 +15,8 @@ const EditableVolumesRow = ({
   return (
     <>
       <div className="table__row edit-row">
-        <div className="table__cell parameter-name">
-          {selectedVolume.items.name}
+        <div className="table__cell table__cell-name">
+          {selectedVolume.data.name}
         </div>
         <div className="table__cell volume-path">
           <Input
@@ -25,17 +25,17 @@ const EditableVolumesRow = ({
             onChange={path =>
               setSelectedVolume({
                 ...selectedVolume,
-                items: { ...selectedVolume.items, mountPath: path }
+                data: { ...selectedVolume.data, mountPath: path }
               })
             }
             type="text"
-            value={selectedVolume.items.mountPath}
+            value={selectedVolume.data.mountPath}
           />
         </div>
         <div className="actions_cell"></div>
       </div>
       <div className="table__row edit-row">
-        <div className="table__cell parameter-name">
+        <div className="table__cell table__cell-name">
           {selectedVolume.type.value}
         </div>
         <div className="table__cell volume-container">

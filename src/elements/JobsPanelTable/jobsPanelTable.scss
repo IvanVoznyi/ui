@@ -15,8 +15,8 @@
 
       .table__cell {
         &-name,
-        &-inputname,
-        &-volumename {
+        &-inputName,
+        &-volumeName {
           padding-left: 17px;
         }
       }
@@ -30,15 +30,57 @@
         width: 100%;
       }
     }
+
+    &__row-addItem {
+      display: flex;
+    }
   }
 
-  .select {
-    width: 100%;
-    margin: -1px;
-    padding-left: 10px;
+  .input-row {
+    &-wrapper {
+      display: flex;
+      width: 100%;
+      border: $primaryBorder;
 
-    &__value {
-      min-width: unset;
+      .select {
+        flex: 1;
+        height: 54px;
+        margin: 1px 0;
+        padding: 0;
+        border: none;
+
+        &__label {
+          padding: 0;
+        }
+
+        &__header {
+          padding: 10px;
+        }
+
+        &.select-parameterSimple {
+          .select__header {
+            padding-left: 11px;
+          }
+        }
+      }
+
+      .input-wrapper {
+        &:first-child {
+          flex: 0.4;
+        }
+      }
+    }
+
+    &__item {
+      width: 100%;
+
+      &::placeholder {
+        font-style: italic;
+      }
+
+      &.table__cell-name {
+        min-width: 180px;
+      }
     }
   }
 
@@ -56,33 +98,21 @@
     .table__cell {
       &_edit {
         padding: 10px 20px 10px 0;
-      }
-    }
 
-    .select {
-      border-radius: 2px;
+        .select {
+          width: 100%;
+          margin: -1px;
+          padding-left: 10px;
+          border-radius: 2px;
 
-      &__label {
-        padding-left: 0;
-      }
-    }
-  }
+          &__value {
+            min-width: unset;
+          }
 
-  .input-row {
-    &-wrapper {
-      display: flex;
-      border: $primaryBorder;
-    }
-
-    &__item {
-      width: 100%;
-
-      &::placeholder {
-        font-style: italic;
-      }
-
-      &.parameter-name {
-        min-width: 180.5px;
+          &__label {
+            padding-left: 0;
+          }
+        }
       }
     }
   }
@@ -90,51 +120,20 @@
   &.data-inputs {
     &.volumes {
       .select {
+        flex: 0.4;
+      }
+    }
+
+    .table__cell {
+      &:first-child {
         flex: 0.38;
-        padding-left: 3px;
       }
-    }
-
-    .input-row-wrapper {
-      width: 100%;
-
-      .input-wrapper {
-        &:first-child {
-          max-width: 351px;
-        }
-      }
-    }
-
-    .table__row-create-data-input {
-      display: flex;
     }
   }
 
   &.parameters {
     .input-row-wrapper {
-      width: 100%;
-
-      .select {
-        flex: 1;
-
-        &__label {
-          padding: 0;
-        }
-
-        &__header {
-          padding: 10px;
-        }
-
-        &.parameter-simple {
-          .select__header {
-            padding-left: 11px;
-          }
-        }
-      }
-
       .parameters-type {
-        flex: 1;
-
         .select__label {
           text-transform: none;
         }

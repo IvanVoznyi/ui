@@ -46,14 +46,14 @@ const JobsPanelParametersView = ({
           setSelectedParameter={setSelectedParameter}
         >
           {addNewParameter ? (
-            <div className="table__row-create-parameter">
+            <div className="table__row-addItem">
               <div className="input-row-wrapper">
                 <Input
                   onChange={value =>
                     setNewParameter({ ...newParameter, name: value })
                   }
                   label="Name"
-                  className="input-row__item parameter-name"
+                  className="input-row__item table__cell-name"
                   floatingLabel
                   type="text"
                 />
@@ -83,7 +83,7 @@ const JobsPanelParametersView = ({
                 />
                 <Select
                   label={newParameterType}
-                  className="parameter-simple"
+                  className="select-parameterSimple"
                   match={match}
                   onClick={value =>
                     setNewParameterType(

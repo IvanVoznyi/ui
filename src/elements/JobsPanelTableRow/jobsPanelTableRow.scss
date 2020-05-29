@@ -57,14 +57,8 @@
       }
     }
 
-    &.parameter-name {
+    &:first-child {
       padding-left: 17px;
-    }
-
-    &-value {
-      overflow-x: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
   }
 }
