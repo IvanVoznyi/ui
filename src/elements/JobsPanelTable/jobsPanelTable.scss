@@ -79,7 +79,7 @@
       }
 
       &.table__cell-name {
-        min-width: 180px;
+        min-width: 181px;
       }
     }
   }
@@ -113,11 +113,6 @@
             padding-left: 0;
           }
         }
-      }
-
-      &:first-child {
-        min-width: 209px;
-        padding-right: 0;
       }
 
       &-input {
@@ -155,6 +150,12 @@
     .table__cell {
       &:first-child {
         flex: 0.38;
+        min-width: 209px;
+        padding-right: 0;
+      }
+
+      &_edit {
+        padding: 0;
       }
     }
   }
