@@ -114,6 +114,30 @@
           }
         }
       }
+
+      &:first-child {
+        min-width: 209px;
+        padding-right: 0;
+      }
+
+      &-input {
+        padding: 0;
+
+        &:first-child {
+          .input-wrapper {
+            min-width: 203px;
+            margin-right: 5px;
+
+            .input {
+              padding-left: 17px;
+
+              &__label {
+                padding-left: 5px;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -121,6 +145,10 @@
     &.volumes {
       .select {
         flex: 0.4;
+
+        .select__header {
+          padding: 17px;
+        }
       }
     }
 
@@ -142,12 +170,12 @@
       .parameter-value {
         padding: 18px 10px;
 
-        &.active-input {
-          padding: 27px 10px 9px;
-        }
-
         + .input__label {
           left: 10px;
+        }
+
+        &.active-input {
+          padding: 27px 10px 9px;
         }
       }
     }

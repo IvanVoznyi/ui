@@ -14,29 +14,21 @@
       }
     }
 
-    .resource-path {
-      padding: 10px 0 10px 5px;
-    }
+    // .volumes-access {
+    //   margin-right: 6px;
+    //   padding: 10px 0;
 
-    .volumes-access {
-      padding: 10px 0;
+    //   .input-wrapper {
+    //     min-width: 203px;
 
-      .input-wrapper {
-        min-width: 210px;
+    //     .input {
+    //       padding: 20px 10px 10px 17px;
 
-        .input {
-          padding: 20px 10px 10px 17px;
-
-          &__label {
-            left: 17px;
-          }
-        }
-      }
-    }
-
-    .volume-container,
-    .volume-path {
-      padding: 10px 0;
-    }
+    //       &__label {
+    //         left: 17px;
+    //       }
+    //     }
+    //   }
+    // }
   }
 }

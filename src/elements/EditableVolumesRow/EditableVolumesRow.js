@@ -18,7 +18,7 @@ const EditableVolumesRow = ({
         <div className="table__cell table__cell-name">
           {selectedVolume.data.name}
         </div>
-        <div className="table__cell volume-path">
+        <div className="table__cell table__cell-input">
           <Input
             floatingLabel
             label="Path"
@@ -32,13 +32,13 @@ const EditableVolumesRow = ({
             value={selectedVolume.data.mountPath}
           />
         </div>
-        <div className="actions_cell"></div>
+        <div className="actions_cell" />
       </div>
       <div className="table__row edit-row">
         <div className="table__cell table__cell-name">
           {selectedVolume.type.value}
         </div>
-        <div className="table__cell volume-container">
+        <div className="table__cell table__cell-input">
           <Input
             floatingLabel
             label="Container"
@@ -60,7 +60,7 @@ const EditableVolumesRow = ({
       </div>
       {selectedVolume.type.value === 'V3IO' && (
         <div className="table__row edit-row">
-          <div className="table__cell volumes-access">
+          <div className="table__cell table__cell-input">
             <Input
               floatingLabel
               label="Access Key"
@@ -74,7 +74,7 @@ const EditableVolumesRow = ({
               value={selectedVolume.type.accessKey}
             />
           </div>
-          <div className="table__cell resource-path">
+          <div className="table__cell table__cell-input">
             <Input
               floatingLabel
               label="Resource Path"
@@ -88,7 +88,7 @@ const EditableVolumesRow = ({
               value={selectedVolume.type.subPath}
             />
           </div>
-          <div className="actions_cell"></div>
+          <div className="actions_cell" />
         </div>
       )}
     </>
