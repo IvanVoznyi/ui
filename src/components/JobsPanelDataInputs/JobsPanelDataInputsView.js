@@ -63,7 +63,7 @@ const JobsPanelDataInputsView = ({
           setSelectedDataInput={setSelectedDataInput}
         >
           {addNewInput ? (
-            <div className="table__row-additem">
+            <div className="table__row-add-item">
               <div className="input-row-wrapper">
                 <Input
                   onChange={name => setNewInput({ ...newInput, name: name })}
@@ -75,7 +75,7 @@ const JobsPanelDataInputsView = ({
                 <Input
                   onChange={path => setNewInput({ ...newInput, path: path })}
                   label="Input path"
-                  className="input-row__item"
+                  className="input-row__item input-row__item_edit"
                   floatingLabel
                   type="text"
                 />
@@ -126,7 +126,7 @@ const JobsPanelDataInputsView = ({
                       setNewVolume({ ...newVolume, path: path })
                     }
                     label="Path"
-                    className="input-row__item"
+                    className="input-row__item input-row__item_edit"
                     floatingLabel
                     type="text"
                   />
@@ -151,7 +151,7 @@ const JobsPanelDataInputsView = ({
                       setNewVolume({ ...newVolume, typeName: typeName })
                     }
                     label={volumeTypeNameLabel}
-                    className="input-row__item"
+                    className="input-row__item input-row__item_edit"
                     disabled={newVolume.type.length === 0}
                     floatingLabel
                     type="text"
@@ -176,7 +176,7 @@ const JobsPanelDataInputsView = ({
                         })
                       }
                       label="Resource path"
-                      className="input-row__item"
+                      className="input-row__item input-row__item_edit"
                       floatingLabel
                       type="text"
                     />

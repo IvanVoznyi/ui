@@ -1,13 +1,10 @@
 import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
-import EditableDataInputsRow from '../EditableDataInputsRow/EditableDataInputsRow'
-import JobsPanelTableRow from '../JobsPanelTableRow/JobsPanelTableRow'
-import EditableParametersRow from '../EditableParametersRow/EditableParametersRow'
-import EditableVolumesRow from '../EditableVolumesRow/EditableVolumesRow'
-
 import { ReactComponent as Edit } from '../../images/edit.svg'
 import { ReactComponent as Delete } from '../../images/delete.svg'
+
+import JobsPanelTableView from './JobsPanelTableView'
 
 import './jobsPanelTable.scss'
 
@@ -139,57 +136,23 @@ const JobsPanelTable = ({
   )
 
   return (
-    <div
-      className={`job-panel__table ${addNewItem && 'no-border'} ${className}`}
-    >
-      {headers.length > 0 && (
-        <div className="table__header table__row no-hover">
-          {headers.map((header, index) => (
-            <div className="table__cell" key={index}>
-              {header.label}
-            </div>
-          ))}
-          <div className="table__cell offset" />
-        </div>
-      )}
-      {content.map((contentItem, index) => {
-        if (editItem && contentItem.data.name === selectedItem.data.name) {
-          return section === 'parameters' ? (
-            <EditableParametersRow
-              handleEdit={handleEdit}
-              key={index}
-              match={match}
-              selectOption={selectOption}
-              selectedParameter={selectedItem}
-              setSelectedParameter={setSelectedParameter}
-            />
-          ) : section === 'data-inputs' ? (
-            <EditableDataInputsRow
-              handleEdit={handleEdit}
-              key={index}
-              selectedDataInput={selectedItem}
-              setSelectedDataInput={setSelectedDataInput}
-            />
-          ) : (
-            <EditableVolumesRow
-              handleEdit={handleEdit}
-              key={index}
-              selectedVolume={selectedItem}
-              setSelectedVolume={setSelectedVolume}
-            />
-          )
-        } else {
-          return (
-            <JobsPanelTableRow
-              actionsMenu={generateActionsMenu(contentItem)}
-              item={contentItem}
-              key={index}
-            />
-          )
-        }
-      })}
-      {children}
-    </div>
+    <JobsPanelTableView
+      addNewItem={addNewItem}
+      children={children}
+      className={className}
+      content={content}
+      editItem={editItem}
+      generateActionsMenu={generateActionsMenu}
+      handleEdit={handleEdit}
+      headers={headers}
+      match={match}
+      section={section}
+      selectOption={selectOption}
+      selectedItem={selectedItem}
+      setSelectedDataInput={setSelectedDataInput}
+      setSelectedParameter={setSelectedParameter}
+      setSelectedVolume={setSelectedVolume}
+    />
   )
 }
 

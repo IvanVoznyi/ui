@@ -16,17 +16,16 @@ const JobsPanelTableRow = ({ actionsMenu, item }) => {
   return (
     <div className="table__row">
       {map(item.data, (value, property) => {
+        const tableCellClassName = classNames({
+          table__cell: true,
+          table__cell_disabled:
+            ((property === 'name' && has(item.data, 'value')) ||
+              property === 'type') &&
+            item.isDefault
+        })
+
         return (
-          <div
-            className={classNames({
-              table__cell: true,
-              table__cell_disabled:
-                ((property === 'name' && has(item.data, 'value')) ||
-                  property === 'type') &&
-                item.isDefault
-            })}
-            key={property}
-          >
+          <div className={tableCellClassName} key={property}>
             <Tooltip
               className="data-ellipsis"
               textShow={property === 'name' && item.doc}
@@ -46,7 +45,6 @@ const JobsPanelTableRow = ({ actionsMenu, item }) => {
         )
       })}
       <div className="table__cell table__cell-actions">
-        <div>{item.isValueEmpty && item.isDefault}</div>
         {((item.isValueEmpty && item.isDefault) ||
           (item.isValueEmpty && !item.isDefault)) && (
           <TableActionsMenu item={item} menu={actionsMenu} />

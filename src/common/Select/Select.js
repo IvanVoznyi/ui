@@ -50,7 +50,7 @@ const Select = ({
 
   return (
     <div
-      className={`select ${className} ${isOpen ? ' active' : ''}`}
+      className={`select ${className} ${isOpen ? 'active' : ''}`}
       onClick={() => toggleOpen(disabled)}
     >
       <div className="select__header">

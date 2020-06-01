@@ -32,7 +32,7 @@ const EditableVolumesRow = ({
             value={selectedVolume.data.mountPath}
           />
         </div>
-        <div className="offset" />
+        <div className="table__cell-actions" />
       </div>
       <div className="table__row edit-row">
         <div className="table__cell">{selectedVolume.type.value}</div>
@@ -86,7 +86,7 @@ const EditableVolumesRow = ({
               value={selectedVolume.type.subPath}
             />
           </div>
-          <div className="offset" />
+          <div className="table__cell-actions" />
         </div>
       )}
     </>

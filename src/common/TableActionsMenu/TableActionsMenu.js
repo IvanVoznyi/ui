@@ -40,22 +40,21 @@ const TableActionsMenu = ({ item, menu, time }) => {
           onClick={() => setIsShowMenu(false)}
         >
           {menu.map(menuItem => {
-            if (!menuItem.visible) {
-              return null
-            }
             return (
-              <div
-                className="table-actions-container__option"
-                onClick={() => {
-                  menuItem.onClick(item)
-                }}
-                key={menuItem.label}
-              >
-                <span className="table-actions-container__icon">
-                  {menuItem.icon}
-                </span>
-                {menuItem.label}
-              </div>
+              menuItem.visible && (
+                <div
+                  className="table-actions-container__option"
+                  onClick={() => {
+                    menuItem.onClick(item)
+                  }}
+                  key={menuItem.label}
+                >
+                  <span className="table-actions-container__icon">
+                    {menuItem.icon}
+                  </span>
+                  {menuItem.label}
+                </div>
+              )
             )
           })}
         </div>

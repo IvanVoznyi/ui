@@ -19,7 +19,7 @@ const EditableParametersRow = ({
         <div className="data-ellipsis">{selectedParameter.data.name}</div>
       </div>
       <div className="table__cell">{selectedParameter.data.type}</div>
-      <div className="table__cell table__cell_edit">
+      <div className="table__cell">
         <Input
           onChange={value => {
             setSelectedParameter({
@@ -34,7 +34,7 @@ const EditableParametersRow = ({
           value={selectedParameter.data.value}
         />
       </div>
-      <div className="table__cell table__cell_edit">
+      <div className="table__cell">
         <Select
           label={selectedParameter.data.simple}
           match={match}

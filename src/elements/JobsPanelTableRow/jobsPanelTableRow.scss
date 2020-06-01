@@ -9,8 +9,7 @@
     height: 55px;
     border-top: $tableBorder;
 
-    .table__cell-actions,
-    .offset {
+    .table__cell-actions {
       width: 44px;
       max-width: 44px;
     }
@@ -21,10 +20,6 @@
       .table__cell-actions {
         .table-actions-container {
           display: block;
-
-          &__body {
-            right: 22px;
-          }
         }
       }
     }
@@ -38,6 +33,7 @@
     display: flex;
     flex: 1;
     align-items: center;
+    min-width: 5px;
     padding: 10px;
     color: $primary;
 

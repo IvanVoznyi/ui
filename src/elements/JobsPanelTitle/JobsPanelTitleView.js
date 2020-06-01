@@ -22,15 +22,15 @@ const JobsPanelTitleView = ({
   setOpenScheduleJob,
   versionOptions
 }) => {
+  const jobPanelClassName = classNames({
+    'job-panel__title-wrapper': 'true',
+    'job-panel__title-wrapper_edit': isEdit,
+    'job-panel__title-wrapper_hover': !openScheduleJob && !isEdit
+  })
+
   return (
     <div className="job-panel__title">
-      <div
-        className={classNames({
-          'job-panel__title-wrapper': 'true',
-          'job-panel__title-wrapper_edit': isEdit,
-          'job-panel__title-wrapper_hover': !openScheduleJob && !isEdit
-        })}
-      >
+      <div className={jobPanelClassName}>
         {openScheduleJob && (
           <div className="job-schedule-container">
             <BackArrow onClick={() => setOpenScheduleJob(false)} />

@@ -149,8 +149,6 @@ input {
 }
 
 .data-ellipsis {
-  min-width: 100%;
-  max-width: 5px;
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
