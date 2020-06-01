@@ -6,6 +6,7 @@ import TextTooltipTemplate from '../TooltipTemplate/TextTooltipTemplate'
 import TableActionsMenu from '../../common/TableActionsMenu/TableActionsMenu'
 
 import { has, map } from 'lodash'
+import classNames from 'classnames'
 
 import { joinDataOfArrayOrObject } from '../../utils'
 
@@ -17,11 +18,13 @@ const JobsPanelTableRow = ({ actionsMenu, item }) => {
       {map(item.data, (value, property) => {
         return (
           <div
-            className={`table__cell ${((property === 'name' &&
-              has(item.data, 'value')) ||
-              property === 'type') &&
-              item.isDefault &&
-              'table__cell_disabled'}`}
+            className={classNames({
+              table__cell: true,
+              table__cell_disabled:
+                ((property === 'name' && has(item.data, 'value')) ||
+                  property === 'type') &&
+                item.isDefault
+            })}
             key={property}
           >
             <Tooltip
