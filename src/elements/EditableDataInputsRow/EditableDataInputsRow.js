@@ -27,7 +27,7 @@ const EditableDataInputsRow = ({
           value={selectedDataInput.data.path}
         />
       </div>
-      <div className="table__cell actions_cell">
+      <div className="table__cell table__cell-actions">
         <button
           className="apply-edit-btn"
           onClick={() => handleEdit(selectedDataInput.data, true)}

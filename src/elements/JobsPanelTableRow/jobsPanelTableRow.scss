@@ -9,7 +9,7 @@
     height: 55px;
     border-top: $tableBorder;
 
-    .actions_cell,
+    .table__cell-actions,
     .offset {
       width: 44px;
       max-width: 44px;
@@ -18,7 +18,7 @@
     &:hover {
       background-color: $alabaster;
 
-      .actions_cell {
+      .table__cell-actions {
         .table-actions-container {
           display: block;
 

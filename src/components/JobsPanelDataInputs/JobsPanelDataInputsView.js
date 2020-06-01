@@ -133,7 +133,7 @@ const JobsPanelDataInputsView = ({
                 </div>
                 <div
                   className={`input-row-wrapper ${newVolume.type === 'V3IO' &&
-                    ' no-border'}`}
+                    'no-border'}`}
                 >
                   <Select
                     onClick={type =>

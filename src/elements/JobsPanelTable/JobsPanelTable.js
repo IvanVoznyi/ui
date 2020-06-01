@@ -30,25 +30,31 @@ const JobsPanelTable = ({
 }) => {
   const [editItem, setEditItem] = useState(false)
 
-  const actionsMenu = [
-    {
-      label: 'Edit',
-      icon: <Edit />,
-      onClick: param => handleEdit(param)
-    },
-    {
-      label: 'Remove',
-      icon: <Delete />,
-      onClick: item => {
-        handleDelete(item)
-      }
-    }
-  ]
-
   const selectOption = {
     parameterType: [
       { label: 'Simple', id: 'Simple' },
       { label: 'Hyper', id: 'Hyper' }
+    ]
+  }
+
+  const generateActionsMenu = item => {
+    const isVisible =
+      (!item.data.isValueEmpty || !item.data.path) && item.isDefault
+    return [
+      {
+        label: 'Edit',
+        icon: <Edit />,
+        visible: isVisible,
+        onClick: param => handleEdit(param)
+      },
+      {
+        label: 'Remove',
+        icon: <Delete />,
+        visible: isVisible,
+        onClick: item => {
+          handleDelete(item)
+        }
+      }
     ]
   }
 
@@ -157,7 +163,7 @@ const JobsPanelTable = ({
         } else {
           return (
             <JobsPanelTableRow
-              actionsMenu={actionsMenu}
+              actionsMenu={generateActionsMenu(contentItem)}
               item={contentItem}
               key={index}
             />

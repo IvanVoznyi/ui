@@ -45,16 +45,10 @@ const JobsPanelTableRow = ({ actionsMenu, item }) => {
           </div>
         )
       })}
-      <div className="table__cell actions_cell">
+      <div className="table__cell table__cell-actions">
         {((!item.isValueEmpty && !item.isDefault) ||
           (item.isValueEmpty && item.isDefault)) && (
-          <TableActionsMenu
-            item={item}
-            menu={actionsMenu}
-            visible={
-              (!item.data.isValueEmpty || !item.data.path) && item.isDefault
-            }
-          />
+          <TableActionsMenu item={item} menu={actionsMenu} />
         )}
       </div>
     </div>

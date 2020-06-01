@@ -5,7 +5,7 @@ import { ReactComponent as ActionMenu } from '../../images/elipsis.svg'
 
 import './tableActionsMenu.scss'
 
-const TableActionsMenu = ({ item, menu, time, visible }) => {
+const TableActionsMenu = ({ item, menu, time }) => {
   const [isShowMenu, setIsShowMenu] = useState(false)
   let idTimeout = null
 
@@ -40,7 +40,7 @@ const TableActionsMenu = ({ item, menu, time, visible }) => {
           onClick={() => setIsShowMenu(false)}
         >
           {menu.map(menuItem => {
-            if (menuItem.label === 'Remove' && visible) {
+            if (menuItem.label === 'Remove' && menuItem.visible) {
               return undefined
             }
             return (
@@ -66,15 +66,13 @@ const TableActionsMenu = ({ item, menu, time, visible }) => {
 
 TableActionsMenu.defaultProps = {
   item: {},
-  time: 100,
-  visible: false
+  time: 100
 }
 
 TableActionsMenu.propTypes = {
   item: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string]),
   menu: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  time: PropTypes.number,
-  visible: PropTypes.bool
+  time: PropTypes.number
 }
 
 export default TableActionsMenu

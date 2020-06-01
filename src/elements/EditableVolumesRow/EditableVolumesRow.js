@@ -50,7 +50,7 @@ const EditableVolumesRow = ({
             value={selectedVolume.type.name}
           />
         </div>
-        <div className="table__cell actions_cell">
+        <div className="table__cell table__cell-actions">
           <button className="apply-edit-btn" onClick={handleEdit}>
             <Checkmark />
           </button>
