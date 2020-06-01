@@ -40,8 +40,8 @@ const TableActionsMenu = ({ item, menu, time }) => {
           onClick={() => setIsShowMenu(false)}
         >
           {menu.map(menuItem => {
-            if (menuItem.label === 'Remove' && menuItem.visible) {
-              return undefined
+            if (!menuItem.visible) {
+              return null
             }
             return (
               <div

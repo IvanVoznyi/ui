@@ -89,7 +89,11 @@ const JobsPanelDataInputs = ({
     newItem[newInput.name] = newInput.path
 
     setDefaultDataInputs(prev =>
-      prev.concat({ data: { name: newInput.name, path: newInput.path } })
+      prev.concat({
+        data: { name: newInput.name, path: newInput.path },
+        isValueEmpty: true,
+        isDefault: false
+      })
     )
 
     setAddNewInput(false)
@@ -126,7 +130,9 @@ const JobsPanelDataInputs = ({
     const newItem = createVolumeOfNewJob(newVolume)
 
     const newVolumeMounts = {
-      data: { name: newVolume.name, mountPath: newVolume.path }
+      data: { name: newVolume.name, mountPath: newVolume.path },
+      isValueEmpty: true,
+      isDefault: false
     }
 
     setNewJobVolumes([...volumes, newItem])

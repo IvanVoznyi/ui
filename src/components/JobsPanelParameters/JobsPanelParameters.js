@@ -87,6 +87,7 @@ const JobsPanelParameters = ({
           ...newParameter,
           simple: newParameterType
         },
+        isValueEmpty: true,
         isDefault: false
       }
     ])

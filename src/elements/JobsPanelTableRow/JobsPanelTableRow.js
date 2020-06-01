@@ -46,8 +46,9 @@ const JobsPanelTableRow = ({ actionsMenu, item }) => {
         )
       })}
       <div className="table__cell table__cell-actions">
-        {((!item.isValueEmpty && !item.isDefault) ||
-          (item.isValueEmpty && item.isDefault)) && (
+        <div>{item.isValueEmpty && item.isDefault}</div>
+        {((item.isValueEmpty && item.isDefault) ||
+          (item.isValueEmpty && !item.isDefault)) && (
           <TableActionsMenu item={item} menu={actionsMenu} />
         )}
       </div>

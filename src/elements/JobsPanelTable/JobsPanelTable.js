@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 import EditableDataInputsRow from '../EditableDataInputsRow/EditableDataInputsRow'
@@ -37,88 +37,106 @@ const JobsPanelTable = ({
     ]
   }
 
-  const generateActionsMenu = item => {
-    const isVisible =
-      (!item.data.isValueEmpty || !item.data.path) && item.isDefault
-    return [
-      {
-        label: 'Edit',
-        icon: <Edit />,
-        visible: isVisible,
-        onClick: param => handleEdit(param)
-      },
-      {
-        label: 'Remove',
-        icon: <Delete />,
-        visible: isVisible,
-        onClick: item => {
-          handleDelete(item)
+  const handleSetSelectedVolume = useCallback(
+    selectedVolume => {
+      const searchItem = volumes.find(
+        volume => volume.name === selectedVolume.data.name
+      )
+
+      let newValue
+
+      if (searchItem.configMap) {
+        newValue = {
+          value: 'Config Map',
+          name: searchItem.configMap.name
+        }
+      } else if (searchItem.persistentVolumeClaim) {
+        newValue = {
+          value: 'PVC',
+          name: searchItem.persistentVolumeClaim.claimName
+        }
+      } else if (searchItem.secret) {
+        newValue = {
+          value: 'Secret',
+          name: searchItem.secret.secretName
+        }
+      } else {
+        newValue = {
+          value: 'V3IO',
+          name: searchItem.flexVolume.options.container,
+          accessKey: searchItem.flexVolume.options.accessKey,
+          subPath: searchItem.flexVolume.options.subPath
         }
       }
+
+      setSelectedVolume({
+        ...selectedVolume,
+        type: newValue
+      })
+    },
+    [setSelectedVolume, volumes]
+  )
+
+  const handleEdit = useCallback(
+    (item, isInput) => {
+      if (editItem) {
+        setEditItem(false)
+        section === 'parameters'
+          ? handleEditParameter()
+          : handleEditItems(isInput)
+      } else {
+        switch (section) {
+          case 'parameters':
+            setSelectedParameter(item)
+            break
+          case 'data-inputs':
+            setSelectedDataInput(item)
+            break
+          default:
+            handleSetSelectedVolume(item)
+        }
+        setEditItem(true)
+      }
+    },
+    [
+      editItem,
+      handleEditItems,
+      handleEditParameter,
+      handleSetSelectedVolume,
+      section,
+      setSelectedDataInput,
+      setSelectedParameter
     ]
-  }
+  )
 
-  const handleEdit = (item, isInput) => {
-    if (editItem) {
-      setEditItem(false)
-      section === 'parameters'
-        ? handleEditParameter()
-        : handleEditItems(isInput)
-    } else {
-      switch (section) {
-        case 'parameters':
-          setSelectedParameter(item)
-          break
-        case 'data-inputs':
-          setSelectedDataInput(item)
-          break
-        default:
-          handleSetSelectedVolume(item)
-      }
-      setEditItem(true)
-    }
-  }
+  const handleDelete = useCallback(
+    item => {
+      handleDeleteItems(section === 'data-inputs', item)
+    },
+    [handleDeleteItems, section]
+  )
 
-  const handleSetSelectedVolume = selectedVolume => {
-    const searchItem = volumes.find(
-      volume => volume.name === selectedVolume.data.name
-    )
-
-    let newValue
-
-    if (searchItem.configMap) {
-      newValue = {
-        value: 'Config Map',
-        name: searchItem.configMap.name
-      }
-    } else if (searchItem.persistentVolumeClaim) {
-      newValue = {
-        value: 'PVC',
-        name: searchItem.persistentVolumeClaim.claimName
-      }
-    } else if (searchItem.secret) {
-      newValue = {
-        value: 'Secret',
-        name: searchItem.secret.secretName
-      }
-    } else {
-      newValue = {
-        value: 'V3IO',
-        name: searchItem.flexVolume.options.container,
-        accessKey: searchItem.flexVolume.options.accessKey,
-        subPath: searchItem.flexVolume.options.subPath
-      }
-    }
-
-    setSelectedVolume({
-      ...selectedVolume,
-      type: newValue
-    })
-  }
-
-  const handleDelete = item => {
-    handleDeleteItems(section === 'data-inputs', item)
-  }
+  const generateActionsMenu = useCallback(
+    item => {
+      return [
+        {
+          label: 'Edit',
+          icon: <Edit />,
+          visible: item.isValueEmpty,
+          onClick: param => handleEdit(param)
+        },
+        {
+          label: 'Remove',
+          icon: <Delete />,
+          visible: item.isValueEmpty && !item.isDefault,
+          onClick: item => {
+            handleDelete(item)
+          }
+        }
+      ]
+    },
+    [handleEdit, handleDelete]
+  )
 
   return (
     <div
