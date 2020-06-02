@@ -45,8 +45,9 @@
       color: $spunPearl;
     }
 
-    &-edit {
+    &.cell-btn-wrapper {
       flex: 0.1;
+      min-width: 45px;
       margin: 0;
 
       button {
