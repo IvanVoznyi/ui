@@ -4,7 +4,6 @@
     { "label": "Iter", "id": "iter" },
     { "label": "Kind", "id": "kind" },
     { "label": "Size", "id": "size" },
-    { "label": "Path", "id": "path" },
     { "label": "Tree", "id": "tree" },
     { "label": "Updated", "id": "updated" },
     { "label": "Labels", "id": "labels" },
@@ -18,10 +17,6 @@
     {
       "header": "Name",
       "class": "artifacts_medium"
-    },
-    {
-      "header": "Path",
-      "class": "artifacts_big"
     },
     {
       "header": "Type",
