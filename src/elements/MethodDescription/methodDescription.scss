@@ -11,7 +11,6 @@
       overflow: hidden;
       white-space: nowrap;
       text-align: justify;
-      text-overflow: ellipsis;
 
       &.extended-description {
         overflow: visible;
@@ -19,7 +18,13 @@
       }
     }
 
-    .cursor-pointer {
+    .description__toggle-btn {
+      height: 17px;
+      margin-left: 5px;
+      color: $riverBed;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background: $iron;
       cursor: pointer;
     }
   }
