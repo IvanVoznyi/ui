@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { find } from 'lodash'
+import classnames from 'classnames'
 
 import JobsPanelSection from '../../elements/JobsPanelSection/JobsPanelSection'
 import JobsPanelTable from '../../elements/JobsPanelTable/JobsPanelTable'
@@ -9,6 +10,7 @@ import Tooltip from '../../common/Tooltip/Tooltip'
 import TextTooltipTemplate from '../../elements/TooltipTemplate/TextTooltipTemplate'
 import JobsPanelTableAddItemRow from '../../elements/JobsPanelTableAddItemRow/JobsPanelTableAddItemRow'
 import Select from '../../common/Select/Select'
+import Tip from '../../common/Tip/Tip'
 
 import { ReactComponent as Plus } from '../../images/plus.svg'
 
@@ -20,6 +22,7 @@ const JobsPanelParametersView = ({
   handleAddNewItem,
   handleDeleteParameter,
   handleEditParameter,
+  isHyperTypeExist,
   match,
   parameters,
   parametersDispatch,
@@ -122,7 +125,57 @@ const JobsPanelParametersView = ({
             />
           )}
         </JobsPanelTable>
-        <button className="btn-load">Load file</button>
+        <div className="hyper-parameters-container">
+          <div className="hyper-parameters-header">
+            <span className="hyper-parameters-header__text">
+              Hyper Parameters
+            </span>{' '}
+            <Tip text="Hyper Parameters" />
+          </div>
+          <div className="hyper-parameters-fields">
+            <div
+              className={classnames(
+                'hyper-parameters-fields__url',
+                isHyperTypeExist && 'disabled'
+              )}
+            >
+              <Input
+                label="Type URL"
+                className="default-input"
+                type="text"
+                floatingLabel
+                onChange={value => {
+                  parametersDispatch({
+                    type: parametersActions.SET_URL,
+                    payload: value
+                  })
+                }}
+              />
+            </div>
+            <div
+              className={classnames(
+                'hyper-parameters-fields__hyper',
+                !isHyperTypeExist && !parametersState.url && 'disabled'
+              )}
+            >
+              <Select
+                selectedId={parametersState.hyper}
+                options={selectOptions.hyperStrategyType}
+                label="Tuning Strategy:"
+                match={match}
+                onClick={value => {
+                  parametersDispatch({
+                    type: parametersActions.SET_HYPER,
+                    payload: find(selectOptions.hyperStrategyType, [
+                      'id',
+                      value
+                    ]).id
+                  })
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </JobsPanelSection>
     </div>
   )
@@ -132,6 +185,7 @@ JobsPanelParametersView.propTypes = {
   handleAddNewItem: PropTypes.func.isRequired,
   handleDeleteParameter: PropTypes.func.isRequired,
   handleEditParameter: PropTypes.func.isRequired,
+  isHyperTypeExist: PropTypes.bool.isRequired,
   match: PropTypes.shape({}).isRequired,
   parameters: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   parametersDispatch: PropTypes.func.isRequired,

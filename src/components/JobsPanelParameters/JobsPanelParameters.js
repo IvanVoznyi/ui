@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import JobsPanelParametersView from './JobsPanelParametersView'
@@ -25,6 +25,12 @@ const JobsPanelParameters = ({
     jobsPanelParametersReducer,
     initialState
   )
+
+  const isHyperTypeExist = useMemo(() => {
+    return panelState.tableData.parameters.some(
+      parameter => parameter.data.parameterType.toLowerCase() === 'hyper'
+    )
+  }, [panelState.tableData.parameters])
 
   const handleAddNewParameter = () => {
     if (
@@ -197,10 +203,11 @@ const JobsPanelParameters = ({
       handleAddNewItem={handleAddNewParameter}
       handleDeleteParameter={handleDeleteParameter}
       handleEditParameter={handleEditParameter}
+      isHyperTypeExist={isHyperTypeExist}
       match={match}
+      parameters={panelState.tableData.parameters}
       parametersDispatch={parametersDispatch}
       parametersState={parametersState}
-      parameters={panelState.tableData.parameters}
     />
   )
 }
