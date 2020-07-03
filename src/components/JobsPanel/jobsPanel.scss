@@ -142,82 +142,78 @@
       }
     }
 
-    .hyper-parameters {
+    .parameters-additional-settings {
+      display: flex;
+      flex-direction: row;
+
       &-container {
         display: flex;
         flex: 1;
         flex-direction: column;
+      }
 
-        .hyper-parameters {
-          &-header {
-            display: flex;
-            margin-bottom: 18px;
+      &__header {
+        display: flex;
+        margin-bottom: 18px;
 
-            &__text {
-              margin-right: 10px;
-              color: $topaz;
-              font-weight: bold;
-            }
+        &-text {
+          margin-right: 10px;
+          color: $topaz;
+          font-weight: bold;
+        }
+      }
+
+      &__url-type {
+        align-items: flex-end;
+
+        @include tableDisplay(2);
+      }
+
+      &__tuning-strategy {
+        flex-direction: column;
+
+        &__label {
+          margin-bottom: 5px;
+          color: $primary;
+        }
+
+        .select {
+          height: 56px;
+        }
+
+        @include tableDisplay(1);
+      }
+
+      .disabled {
+        position: relative;
+
+        .hyper-container__label,
+        .select__label,
+        .select__value,
+        .input__label {
+          color: $spunPearl;
+          user-select: none;
+        }
+
+        .default-input,
+        .select {
+          color: $spunPearl;
+          border: $disabledBorder;
+          user-select: none;
+        }
+
+        svg {
+          path {
+            fill: $spunPearl;
           }
+        }
 
-          &-fields {
-            display: flex;
-            flex-direction: row;
-
-            &__url {
-              align-items: flex-end;
-
-              @include tableDisplay(2);
-            }
-
-            &__hyper {
-              flex-direction: column;
-
-              &__label {
-                margin-bottom: 5px;
-                color: $primary;
-              }
-
-              .select {
-                height: 56px;
-              }
-
-              @include tableDisplay(1);
-            }
-
-            .disabled {
-              position: relative;
-
-              .hyper-container__label,
-              .select__label,
-              .select__value,
-              .input__label {
-                color: $spunPearl;
-                user-select: none;
-              }
-
-              .default-input,
-              .select {
-                color: $spunPearl;
-                border: $disableBorder;
-                user-select: none;
-              }
-
-              svg {
-                path {
-                  fill: $spunPearl;
-                }
-              }
-
-              &::before {
-                position: absolute;
-                z-index: 6;
-                width: 100%;
-                height: 100%;
-                content: '';
-              }
-            }
-          }
+        &::before {
+          position: absolute;
+          z-index: 6;
+          width: 100%;
+          height: 100%;
+          content: '';
         }
       }
     }

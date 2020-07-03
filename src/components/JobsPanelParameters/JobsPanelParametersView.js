@@ -28,6 +28,14 @@ const JobsPanelParametersView = ({
   parametersDispatch,
   parametersState
 }) => {
+  const urlTypeClassName = classnames(
+    'parameters-additional-settings__url-type',
+    isHyperTypeExist && 'disabled'
+  )
+  const tuningStrategyClassName = classnames(
+    'parameters-additional-settings__tuning-strategy',
+    !isHyperTypeExist && !parametersState.url && 'disabled'
+  )
   return (
     <div className="job-panel__item">
       <JobsPanelSection title="Parameters">
@@ -125,20 +133,15 @@ const JobsPanelParametersView = ({
             />
           )}
         </JobsPanelTable>
-        <div className="hyper-parameters-container">
-          <div className="hyper-parameters-header">
-            <span className="hyper-parameters-header__text">
+        <div className="parameters-additional-settings-container">
+          <div className="parameters-additional-settings__header">
+            <span className="parameters-additional-settings__header-text">
               Hyper Parameters
-            </span>{' '}
+            </span>
             <Tip text="Hyper Parameters" />
           </div>
-          <div className="hyper-parameters-fields">
-            <div
-              className={classnames(
-                'hyper-parameters-fields__url',
-                isHyperTypeExist && 'disabled'
-              )}
-            >
+          <div className="parameters-additional-settings">
+            <div className={urlTypeClassName}>
               <Input
                 label="Type URL"
                 className="default-input"
@@ -146,18 +149,13 @@ const JobsPanelParametersView = ({
                 floatingLabel
                 onChange={value => {
                   parametersDispatch({
-                    type: parametersActions.SET_URL,
+                    type: parametersActions.SET_URL_TYPE,
                     payload: value
                   })
                 }}
               />
             </div>
-            <div
-              className={classnames(
-                'hyper-parameters-fields__hyper',
-                !isHyperTypeExist && !parametersState.url && 'disabled'
-              )}
-            >
+            <div className={tuningStrategyClassName}>
               <Select
                 selectedId={parametersState.hyper}
                 options={selectOptions.hyperStrategyType}
@@ -165,7 +163,7 @@ const JobsPanelParametersView = ({
                 match={match}
                 onClick={value => {
                   parametersDispatch({
-                    type: parametersActions.SET_HYPER,
+                    type: parametersActions.SET_TUNING_STRATEGY,
                     payload: find(selectOptions.hyperStrategyType, [
                       'id',
                       value
