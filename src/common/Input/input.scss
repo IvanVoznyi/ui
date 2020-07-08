@@ -25,6 +25,11 @@
     transform: translate(0, -50%);
   }
 
+  &-default {
+    border: $primaryBorder;
+    border-radius: 2px;
+  }
+
   &__warning {
     position: absolute;
     top: 35%;
