@@ -267,4 +267,16 @@ Content.propTypes = {
   yamlContent: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 
-export default Content
+export default React.memo(Content, (prev, next) => {
+  return (
+    JSON.stringify(prev.content) === JSON.stringify(next.content) &&
+    JSON.stringify(prev.match) === JSON.stringify(next.match) &&
+    JSON.stringify(prev.pageData) === JSON.stringify(next.pageData) &&
+    JSON.stringify(prev.selectedItem) === JSON.stringify(next.selectedItem) &&
+    JSON.stringify(prev.yamlContent) === JSON.stringify(next.yamlContent) &&
+    prev.groupFilter === next.groupFilter &&
+    prev.loading === next.loading &&
+    prev.showUntagged === next.showUntagged &&
+    prev.stateFilter === next.stateFilter
+  )
+})

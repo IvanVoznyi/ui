@@ -5,7 +5,7 @@ import { ReactComponent as Close } from '../../images/close.svg'
 
 import './popUpDialog.scss'
 
-const PopUpDialog = ({ headerText, children, closePopUp }) => {
+const PopUpDialog = ({ children, closePopUp, headerText }) => {
   return (
     <div className="pop-up-dialog__overlay">
       <div className="pop-up-dialog">

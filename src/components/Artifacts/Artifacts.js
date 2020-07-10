@@ -13,9 +13,9 @@ import ErrorMessage from '../../common/ErrorMessage/ErrorMessage'
 import artifactApi from '../../api/artifacts-api'
 import artifactsAction from '../../actions/artifacts'
 import artifactsData from './artifactsData'
+import { generateArtifactPreviewData } from '../../utils/generateArtifactPreviewData'
 
 import './artifacts.scss'
-import { generateArtifactPreviewData } from '../../utils/generateArtifactPreviewData'
 
 const Artifacts = ({
   artifactsStore,
@@ -204,7 +204,10 @@ const Artifacts = ({
       tree: uid,
       target_path: registerArtifactData.target_path.value,
       description: registerArtifactData.description,
-      kind: registerArtifactData.kind,
+      kind:
+        registerArtifactData.kind === 'general'
+          ? ''
+          : registerArtifactData.kind,
       project: match.params.projectName,
       producer: {
         kind: 'api',

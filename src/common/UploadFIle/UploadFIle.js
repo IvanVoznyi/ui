@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
+import formatSize from 'pretty-bytes'
+
+import Tooltip from '../Tooltip/Tooltip'
+import TextTooltipTemplate from '../../elements/TooltipTemplate/TextTooltipTemplate'
 
 import { ReactComponent as DropFileIcon } from '../../images/drop-file.svg'
 import { ReactComponent as Warning } from '../../images/warning.svg'
 
-import classnames from 'classnames'
-import formatSize from 'pretty-bytes'
-
 import './uploadFile.scss'
-import Tooltip from '../Tooltip/Tooltip'
-import TextTooltipTemplate from '../../elements/TooltipTemplate/TextTooltipTemplate'
 
 const UploadFile = ({ file, changeFile, required, requiredText }) => {
   const [isDragFile, setIsDragFile] = useState(false)
 
   const upLoadFileClassName = classnames(
     'uploadfile-container',
-    isDragFile && 'onFocus',
+    isDragFile && 'on-focus',
     file && 'selected-file',
     required && 'uploadfile_required'
   )

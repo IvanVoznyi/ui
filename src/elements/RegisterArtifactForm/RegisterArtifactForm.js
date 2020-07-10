@@ -39,7 +39,6 @@ const RegisterArtifactForm = ({ match, registerArtifactData, onChange }) => {
   return (
     <div className="artifact-register-form">
       <Input
-        className="input-default"
         floatingLabel
         label="Key"
         onChange={value =>
@@ -54,7 +53,6 @@ const RegisterArtifactForm = ({ match, registerArtifactData, onChange }) => {
         value={key.value}
       />
       <Input
-        className="input-default"
         floatingLabel
         label="Target Path"
         onChange={value =>
@@ -69,7 +67,6 @@ const RegisterArtifactForm = ({ match, registerArtifactData, onChange }) => {
         value={target_path.value}
       />
       <Input
-        className="input-default"
         floatingLabel
         label="Description"
         onChange={value =>
@@ -83,7 +80,7 @@ const RegisterArtifactForm = ({ match, registerArtifactData, onChange }) => {
         match={match}
         onClick={value => onChange(prevData => ({ ...prevData, kind: value }))}
         options={KindOptions}
-        selectedId={kind === 'general' ? '' : kind}
+        selectedId={kind}
       />
     </div>
   )
