@@ -36,11 +36,9 @@
     }
   }
 
-  &__buttons {
-    &-container {
-      display: flex;
-      justify-content: flex-end;
-    }
+  &__buttons-container {
+    display: flex;
+    justify-content: flex-end;
   }
 
   .btn_success {

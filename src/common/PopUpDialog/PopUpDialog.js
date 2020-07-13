@@ -22,8 +22,9 @@ const PopUpDialog = ({ children, closePopUp, headerText }) => {
 }
 
 PopUpDialog.propTypes = {
-  headerText: PropTypes.string,
-  closePopUp: PropTypes.func.isRequired
+  children: PropTypes.element.isRequired,
+  closePopUp: PropTypes.func.isRequired,
+  headerText: PropTypes.string
 }
 
 export default PopUpDialog

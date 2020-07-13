@@ -169,6 +169,24 @@ const Artifacts = ({
     selectedArtifact.item
   ])
 
+  const resetRegisterArtifactForm = useCallback(() => {
+    setRegisterArtifactData({
+      description: '',
+      kind: 'general',
+      key: {
+        value: '',
+        required: false
+      },
+      target_path: {
+        value: '',
+        required: false
+      },
+      error: {
+        message: ''
+      }
+    })
+  }, [])
+
   const registerArtifact = useCallback(() => {
     if (
       !registerArtifactData.key.value ||
@@ -239,6 +257,7 @@ const Artifacts = ({
       .registerArtifact(match.params.projectName, data)
       .then(() => {
         setIsPopupDialogOpen(false)
+        resetRegisterArtifactForm()
         fetchData({ tag: 'latest', project: match.params.projectName })
       })
       .catch(err => {
@@ -250,7 +269,12 @@ const Artifacts = ({
           }
         }))
       })
-  }, [match.params.projectName, registerArtifactData, fetchData])
+  }, [
+    fetchData,
+    match.params.projectName,
+    registerArtifactData,
+    resetRegisterArtifactForm
+  ])
 
   const handleCancel = () => {
     setSelectedArtifact({})
@@ -262,22 +286,8 @@ const Artifacts = ({
 
   const closePopupDialog = useCallback(() => {
     setIsPopupDialogOpen(false)
-    setRegisterArtifactData({
-      description: '',
-      kind: 'general',
-      key: {
-        value: '',
-        required: false
-      },
-      target_path: {
-        value: '',
-        required: false
-      },
-      error: {
-        message: ''
-      }
-    })
-  }, [])
+    resetRegisterArtifactForm()
+  }, [resetRegisterArtifactForm])
 
   const closeErrorMessage = useCallback(() => {
     setRegisterArtifactData(prevData => ({

@@ -43,9 +43,9 @@ const UploadFile = ({ file, changeFile, required, requiredText }) => {
 
   const handleDrop = event => {
     if (!file) {
+      const file = event.dataTransfer.files[0]
       event.preventDefault()
       setIsDragFile(false)
-      const file = event.dataTransfer.files[0]
       changeFile(file)
     }
   }

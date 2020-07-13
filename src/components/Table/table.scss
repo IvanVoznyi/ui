@@ -53,7 +53,6 @@
 
       &_small {
         max-width: 150px;
-        min-height: 61px;
 
         @include tableColumnFlex(0.5, 80px);
 
@@ -63,8 +62,6 @@
       }
 
       &_big {
-        min-height: 61px;
-
         @include tableColumnFlex(1, 80px);
       }
 
