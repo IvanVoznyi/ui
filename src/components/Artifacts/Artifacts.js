@@ -1,17 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 
 import Content from '../../layout/Content/Content'
 import Loader from '../../common/Loader/Loader'
 import parseTargetPath from '../../utils/parseTargetPath'
+import RegisterArtifactForm from '../../elements/RegisterArtifactForm/RegisterArtifactForm'
+import PopUpDialog from '../../common/PopUpDialog/PopUpDialog'
+import ErrorMessage from '../../common/ErrorMessage/ErrorMessage'
 
 import artifactApi from '../../api/artifacts-api'
 import artifactsAction from '../../actions/artifacts'
 import artifactsData from './artifactsData'
+import { generateArtifactPreviewData } from '../../utils/generateArtifactPreviewData'
 
 import './artifacts.scss'
-import { generateArtifactPreviewData } from '../../utils/generateArtifactPreviewData'
 
 const Artifacts = ({
   artifactsStore,
@@ -22,6 +26,23 @@ const Artifacts = ({
 }) => {
   const [artifacts, _setArtifacts] = useState([])
   const [selectedArtifact, setSelectedArtifact] = useState({})
+  const [isPopupDialogOpen, setIsPopupDialogOpen] = useState(false)
+  const [registerArtifactData, setRegisterArtifactData] = useState({
+    description: '',
+    kind: 'general',
+    key: {
+      value: '',
+      required: false
+    },
+    target_path: {
+      value: '',
+      required: false
+    },
+    error: {
+      message: ''
+    }
+  })
+
   const [pageData, setPageData] = useState({
     detailsMenu: artifactsData.detailsMenu,
     filters: artifactsData.filters,
@@ -148,9 +169,125 @@ const Artifacts = ({
     selectedArtifact.item
   ])
 
+  const registerArtifact = useCallback(() => {
+    if (
+      !registerArtifactData.key.value ||
+      !registerArtifactData.target_path.value
+    ) {
+      setRegisterArtifactData(prevData => ({
+        ...prevData,
+        key: {
+          ...prevData.key,
+          required: !registerArtifactData.key.value
+        },
+        target_path: {
+          ...prevData.target_path,
+          required: !registerArtifactData.target_path.value
+        }
+      }))
+      return
+    }
+
+    if (registerArtifactData.error.message) {
+      setRegisterArtifactData(prevData => ({
+        ...prevData,
+        error: { ...prevData.error, message: '' }
+      }))
+    }
+
+    const uid = uuidv4()
+
+    const data = {
+      uid: uid,
+      key: registerArtifactData.key.value,
+      db_key: registerArtifactData.key.value,
+      tree: uid,
+      target_path: registerArtifactData.target_path.value,
+      description: registerArtifactData.description,
+      kind:
+        registerArtifactData.kind === 'general'
+          ? ''
+          : registerArtifactData.kind,
+      project: match.params.projectName,
+      producer: {
+        kind: 'api',
+        uri: window.location.host
+      }
+    }
+
+    if (registerArtifactData.kind === 'model') {
+      const {
+        target_path,
+        model_file
+      } = registerArtifactData.target_path.value.split('/').reduce(
+        (prev, curr, index, arr) => {
+          if (arr.length - 1 === index) {
+            prev.model_file = curr
+          } else {
+            prev.target_path += `${curr}/`
+          }
+          return prev
+        },
+        { model_file: '', target_path: '' }
+      )
+
+      data.target_path = target_path
+      data.model_file = model_file
+    }
+
+    artifactApi
+      .registerArtifact(match.params.projectName, data)
+      .then(() => {
+        setIsPopupDialogOpen(false)
+        fetchData({ tag: 'latest', project: match.params.projectName })
+      })
+      .catch(err => {
+        setRegisterArtifactData(prevData => ({
+          ...prevData,
+          error: {
+            ...prevData.error,
+            message: err.message
+          }
+        }))
+      })
+  }, [match.params.projectName, registerArtifactData, fetchData])
+
   const handleCancel = () => {
     setSelectedArtifact({})
   }
+
+  const openPopupDialog = () => {
+    setIsPopupDialogOpen(true)
+  }
+
+  const closePopupDialog = useCallback(() => {
+    setIsPopupDialogOpen(false)
+    setRegisterArtifactData({
+      description: '',
+      kind: 'general',
+      key: {
+        value: '',
+        required: false
+      },
+      target_path: {
+        value: '',
+        required: false
+      },
+      error: {
+        message: ''
+      }
+    })
+  }, [])
+
+  const closeErrorMessage = useCallback(() => {
+    setRegisterArtifactData(prevData => ({
+      ...prevData,
+      error: {
+        ...prevData.error,
+        message: ''
+      }
+    }))
+  }, [])
 
   return (
     <>
@@ -163,9 +300,42 @@ const Artifacts = ({
         match={match}
         pageData={pageData}
         refresh={fetchData}
+        openPopupDialog={openPopupDialog}
         selectedItem={selectedArtifact.item}
         yamlContent={artifactsStore.artifacts}
       />
+      {isPopupDialogOpen && (
+        <PopUpDialog
+          headerText="Register artifact"
+          closePopUp={closePopupDialog}
+        >
+          <RegisterArtifactForm
+            match={match}
+            registerArtifactData={registerArtifactData}
+            onChange={setRegisterArtifactData}
+          />
+          <div className="pop-up-dialog__buttons-container">
+            {registerArtifactData.error.message && (
+              <ErrorMessage
+                closeError={closeErrorMessage}
+                message={registerArtifactData.error.message}
+              />
+            )}
+            <button
+              className="btn_default pop-up-dialog__btn_cancel"
+              onClick={closePopupDialog}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn_primary btn_success"
+              onClick={registerArtifact}
+            >
+              Register
+            </button>
+          </div>
+        </PopUpDialog>
+      )}
     </>
   )
 }

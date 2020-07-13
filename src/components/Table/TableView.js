@@ -55,7 +55,8 @@ const TableView = ({
           ))}
         </div>
         <div className="table-body">
-          {(groupFilter === 'none' &&
+          {pageData.page === ARTIFACTS_PAGE ||
+          (groupFilter === 'none' &&
             isEmpty(groupedByName) &&
             isEmpty(groupedByWorkflow)) ||
           (groupFilter === 'none' && isEmpty(groupLatestItem)) ? (

@@ -29,9 +29,7 @@ const artifactsAction = {
             return prev
           }, {})
         )
-
         dispatch(artifactsAction.fetchArtifactsSuccess(artifacts))
-
         return artifacts
       })
       .catch(err => dispatch(artifactsAction.fetchArtifactsFailure(err)))
