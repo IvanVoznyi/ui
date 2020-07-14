@@ -6,7 +6,7 @@ import Select from '../../common/Select/Select'
 
 import './registerArtifactForm.scss'
 
-const RegisterArtifactForm = ({ match, registerArtifactData, onChange }) => {
+const RegisterArtifactForm = ({ match, onChange, registerArtifactData }) => {
   const { description, key, kind, target_path } = registerArtifactData
 
   const KindOptions = [

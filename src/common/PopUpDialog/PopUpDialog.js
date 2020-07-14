@@ -22,7 +22,7 @@ const PopUpDialog = ({ children, closePopUp, headerText }) => {
 }
 
 PopUpDialog.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.array.isRequired,
   closePopUp: PropTypes.func.isRequired,
   headerText: PropTypes.string
 }

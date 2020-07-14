@@ -95,7 +95,7 @@ const Projects = ({
               value={projectStore.newProject.description}
             />
           </div>
-          <div className="pop-up-dialog__buttons-container">
+          <div className="pop-up-dialog__footer-container">
             {projectStore.error && (
               <ErrorMessage
                 closeError={() => {
