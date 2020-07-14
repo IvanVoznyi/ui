@@ -9,7 +9,7 @@ import './registerArtifactForm.scss'
 const RegisterArtifactForm = ({ match, onChange, registerArtifactData }) => {
   const { description, key, kind, target_path } = registerArtifactData
 
-  const KindOptions = [
+  const kindOptions = [
     {
       label: 'General',
       id: 'general'
@@ -48,7 +48,7 @@ const RegisterArtifactForm = ({ match, onChange, registerArtifactData }) => {
           }))
         }
         required={key.required}
-        requiredText="This fields is required"
+        requiredText="This field is required"
         type="text"
         value={key.value}
       />
@@ -62,7 +62,7 @@ const RegisterArtifactForm = ({ match, onChange, registerArtifactData }) => {
           }))
         }
         required={target_path.required}
-        requiredText="This fields is required"
+        requiredText="This field is required"
         type="text"
         value={target_path.value}
       />
@@ -70,17 +70,28 @@ const RegisterArtifactForm = ({ match, onChange, registerArtifactData }) => {
         floatingLabel
         label="Description"
         onChange={value =>
-          onChange(prevData => ({ ...prevData, description: value }))
+          onChange(prevData => ({
+            ...prevData,
+            description: { ...prevData, value }
+          }))
         }
         type="text"
-        value={description}
+        value={description.value}
       />
       <Select
         label="Kind"
         match={match}
-        onClick={value => onChange(prevData => ({ ...prevData, kind: value }))}
-        options={KindOptions}
-        selectedId={kind}
+        onClick={value =>
+          onChange(prevData => ({
+            ...prevData,
+            kind: {
+              ...prevData,
+              value
+            }
+          }))
+        }
+        options={kindOptions}
+        selectedId={kind.value}
       />
     </div>
   )

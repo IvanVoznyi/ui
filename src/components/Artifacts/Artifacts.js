@@ -155,10 +155,6 @@ const Artifacts = ({
     setSelectedArtifact({})
   }
 
-  const openPopupDialog = () => {
-    setIsPopupDialogOpen(true)
-  }
-
   return (
     <>
       {artifactsStore.loading && <Loader />}
@@ -170,7 +166,7 @@ const Artifacts = ({
         match={match}
         pageData={pageData}
         refresh={fetchData}
-        openPopupDialog={openPopupDialog}
+        openPopupDialog={() => setIsPopupDialogOpen(true)}
         selectedItem={selectedArtifact.item}
         yamlContent={artifactsStore.artifacts}
       />

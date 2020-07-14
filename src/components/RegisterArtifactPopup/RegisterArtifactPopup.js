@@ -10,8 +10,11 @@ import artifactApi from '../../api/artifacts-api'
 
 const RegisterArtifactPopup = ({ match, refresh, setIsPopupDialogOpen }) => {
   const [registerArtifactData, setRegisterArtifactData] = useState({
-    description: '',
-    kind: 'general',
+    description: {
+      value: '',
+      required: false
+    },
+    kind: { value: 'general', required: false },
     key: {
       value: '',
       required: false
@@ -27,8 +30,11 @@ const RegisterArtifactPopup = ({ match, refresh, setIsPopupDialogOpen }) => {
 
   const resetRegisterArtifactForm = useCallback(() => {
     setRegisterArtifactData({
-      description: '',
-      kind: 'general',
+      description: {
+        value: '',
+        required: false
+      },
+      kind: { value: 'general', required: false },
       key: {
         value: '',
         required: false
@@ -48,7 +54,7 @@ const RegisterArtifactPopup = ({ match, refresh, setIsPopupDialogOpen }) => {
       !registerArtifactData.key.value ||
       !registerArtifactData.target_path.value
     ) {
-      setRegisterArtifactData(prevData => ({
+      return setRegisterArtifactData(prevData => ({
         ...prevData,
         key: {
           ...prevData.key,
@@ -59,7 +65,6 @@ const RegisterArtifactPopup = ({ match, refresh, setIsPopupDialogOpen }) => {
           required: !registerArtifactData.target_path.value
         }
       }))
-      return
     }
 
     if (registerArtifactData.error.message) {
@@ -70,18 +75,17 @@ const RegisterArtifactPopup = ({ match, refresh, setIsPopupDialogOpen }) => {
     }
 
     const uid = uuidv4()
-
     const data = {
       uid: uid,
       key: registerArtifactData.key.value,
       db_key: registerArtifactData.key.value,
       tree: uid,
       target_path: registerArtifactData.target_path.value,
-      description: registerArtifactData.description,
+      description: registerArtifactData.description.value,
       kind:
-        registerArtifactData.kind === 'general'
+        registerArtifactData.kind.value === 'general'
           ? ''
-          : registerArtifactData.kind,
+          : registerArtifactData.kind.value,
       project: match.params.projectName,
       producer: {
         kind: 'api',

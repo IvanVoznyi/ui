@@ -73,7 +73,7 @@ ArtifactInfoSources.defaultProps = {
 
 ArtifactInfoSources.propTypes = {
   header: PropTypes.string.isRequired,
-  sources: PropTypes.shape({}).isRequired
+  sources: PropTypes.shape({})
 }
 
 export default ArtifactInfoSources

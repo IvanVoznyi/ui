@@ -29,6 +29,7 @@ const artifactsAction = {
             return prev
           }, {})
         )
+
         dispatch(artifactsAction.fetchArtifactsSuccess(artifacts))
         return artifacts
       })
