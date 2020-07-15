@@ -8,6 +8,8 @@ import { v4 as uuidv4 } from 'uuid'
 
 import artifactApi from '../../api/artifacts-api'
 
+import './registerArtifactPopup.scss'
+
 const RegisterArtifactPopup = ({ match, refresh, setIsPopupDialogOpen }) => {
   const [registerArtifactData, setRegisterArtifactData] = useState({
     description: {

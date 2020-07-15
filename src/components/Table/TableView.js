@@ -55,10 +55,8 @@ const TableView = ({
           ))}
         </div>
         <div className="table-body">
-          {pageData.page === ARTIFACTS_PAGE ||
-          (groupFilter === 'none' &&
-            isEmpty(groupedByName) &&
-            isEmpty(groupedByWorkflow)) ||
+          {!groupFilter ||
+          (isEmpty(groupedByName) && isEmpty(groupedByWorkflow)) ||
           (groupFilter === 'none' && isEmpty(groupLatestItem)) ? (
             tableContent.map((rowItem, i) => {
               switch (pageData.page) {
