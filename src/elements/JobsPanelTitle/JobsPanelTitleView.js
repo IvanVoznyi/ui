@@ -12,6 +12,7 @@ import { ReactComponent as Close } from '../../images/close.svg'
 import { ReactComponent as Edit } from '../../images/edit.svg'
 
 import { panelActions } from '../../components/JobsPanel/panelReducer'
+import JobsPanelLabels from '../../components/JobPanelLabels/JobPanelLabels'
 
 const JobsPanelTitleView = ({
   closePanel,
@@ -81,18 +82,13 @@ const JobsPanelTitleView = ({
                   !editTitle ? 'job-panel__title-input-wrapper' : ''
                 }
               />
-              <Input
-                className="job-panel__title-labels"
-                label="Labels: "
-                onChange={name =>
-                  panelDispatch({
-                    type: panelActions.SET_CURRENT_FUNCTION_INFO_LABELS,
-                    payload: name.split(',')
-                  })
-                }
-                type="text"
-                value={currentFunctionInfo.labels.join(',')}
-              />
+              {editTitle && (
+                <JobsPanelLabels
+                  labels={currentFunctionInfo.labels}
+                  panelDispatch={panelDispatch}
+                  editTitle={editTitle}
+                />
+              )}
             </>
           )}
         </Accordion>
