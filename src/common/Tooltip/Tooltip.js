@@ -10,8 +10,8 @@ const Tooltip = ({ children, template, className, textShow = false }) => {
   const [style, setStyle] = useState({})
   const tooltipClassNames = classnames('data-ellipsis', className)
   const duration = 200
-  const parentRef = useRef()
-  const tooltipRef = useRef()
+  const parentRef = useRef(null)
+  const tooltipRef = useRef(null)
   const offset = 10
 
   const defaultStyle = {

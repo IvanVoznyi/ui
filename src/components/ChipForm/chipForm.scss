@@ -10,14 +10,15 @@
     border-radius: 15px;
 
     &_edited {
+      padding-right: 15px;
       border: $labelEditBorder;
     }
 
-    .input {
+    input {
       display: flex;
-      width: 50px;
       margin: 0 5px;
       padding: 0;
+      background-color: transparent;
       border: none;
 
       &.job-labels__item_edited {
@@ -28,6 +29,18 @@
 
       &::placeholder {
         color: $primary;
+      }
+    }
+
+    .input {
+      &-label {
+        &-key {
+          min-width: 25px;
+        }
+
+        &-value {
+          min-width: 40px;
+        }
       }
     }
   }

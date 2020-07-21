@@ -12,7 +12,8 @@ import { ReactComponent as Close } from '../../images/close.svg'
 import { ReactComponent as Edit } from '../../images/edit.svg'
 
 import { panelActions } from '../../components/JobsPanel/panelReducer'
-import JobsPanelLabels from '../../components/JobPanelLabels/JobPanelLabels'
+// import JobsPanelLabels from '../../components/JobPanelLabels/JobPanelLabels'
+import ChipCell from '../../common/ChipCell/ChipCell'
 
 const JobsPanelTitleView = ({
   closePanel,
@@ -27,7 +28,13 @@ const JobsPanelTitleView = ({
   panelDispatch,
   setEditTitle,
   setOpenScheduleJob,
-  versionOptions
+  versionOptions,
+  editConfig,
+  setEditConfig,
+  addLabel,
+  editLabel,
+  handleIsEdit,
+  handleRemovelabel
 }) => {
   const funcTitleClassNames = classnames(
     'job-panel__title-input',
@@ -83,11 +90,17 @@ const JobsPanelTitleView = ({
                 }
               />
               {editTitle && (
-                <JobsPanelLabels
-                  labels={currentFunctionInfo.labels}
-                  panelDispatch={panelDispatch}
-                  editTitle={editTitle}
-                />
+                <div className="job-labels-container">
+                  <div className="job-labels__text">Labels</div>
+                  <div className="job-labels-wrapper">
+                    <ChipCell
+                      className="job-labels__item"
+                      dispatch={panelDispatch}
+                      elements={currentFunctionInfo.labels}
+                      isEditMode={true}
+                    />
+                  </div>
+                </div>
               )}
             </>
           )}

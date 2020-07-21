@@ -13,15 +13,12 @@ const Input = ({
   className,
   disabled,
   floatingLabel,
-  focused,
   iconClass,
   infoLabel,
   inputIcon,
   label,
   maxLength,
-  onBlur,
   onChange,
-  onFocus,
   onKeyDown,
   placeholder,
   required,
@@ -47,12 +44,6 @@ const Input = ({
     }
   }, [input])
 
-  useEffect(() => {
-    if (focused) {
-      input.current.focus()
-    }
-  }, [focused, input])
-
   const handleClick = () => {
     if (input.current.value.length > 0) {
       setInputIsFocused(true)
@@ -70,8 +61,6 @@ const Input = ({
         disabled={disabled}
         maxLength={maxLength}
         onChange={handleClick}
-        onFocus={onFocus}
-        onBlur={onBlur}
         onKeyDown={onKeyDown}
         placeholder={placeholder}
         ref={input}
@@ -111,15 +100,12 @@ const Input = ({
 Input.defaultProps = {
   disabled: false,
   floatingLabel: false,
-  focused: false,
   iconClass: null,
   infoLabel: false,
   inputIcon: null,
   label: null,
   maxLength: null,
-  onBlur: null,
   onChange: null,
-  onFocus: null,
   onKeyDown: null,
   placeholder: '',
   required: false,
@@ -132,15 +118,12 @@ Input.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   floatingLabel: PropTypes.bool,
-  focused: PropTypes.bool,
   iconClass: PropTypes.string,
   infoLabel: PropTypes.bool,
   inputIcon: PropTypes.element,
   label: PropTypes.string,
   maxLength: PropTypes.number,
-  onBlur: PropTypes.func,
   onChange: PropTypes.func,
-  onFocus: PropTypes.func,
   onKeyDown: PropTypes.func,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
