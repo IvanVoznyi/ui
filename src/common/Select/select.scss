@@ -102,6 +102,11 @@
       }
     }
 
+    &__icon {
+      display: flex;
+      margin-right: 10px;
+    }
+
     &:hover {
       background-color: $alabaster;
       cursor: pointer;

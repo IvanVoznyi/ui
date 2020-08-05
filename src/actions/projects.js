@@ -13,9 +13,26 @@ import {
 } from '../constants'
 
 const projectsAction = {
+  createNewProject: postData => dispatch => {
+    dispatch(projectsAction.createProjectBegin())
+    return projectsApi
+      .createProject(postData)
+      .then(result => {
+        dispatch(projectsAction.createProjectSuccess())
+        return result
+      })
+      .catch(error => {
+        dispatch(projectsAction.createProjectFailure(error.message))
+      })
+  },
+  createProjectBegin: () => ({ type: CREATE_PROJECT_BEGIN }),
+  createProjectFailure: error => ({
+    type: CREATE_PROJECT_FAILURE,
+    payload: error
+  }),
+  createProjectSuccess: () => ({ type: CREATE_PROJECT_SUCCESS }),
   fetchProjects: () => dispatch => {
     dispatch(projectsAction.fetchProjectsBegin())
-
     return projectsApi
       .getProjects()
       .then(response => {
@@ -25,55 +42,22 @@ const projectsAction = {
         dispatch(projectsAction.fetchProjectsFailure(err))
       })
   },
-  fetchProjectsBegin: () => ({
-    type: FETCH_PROJECTS_BEGIN
+  fetchProjectsBegin: () => ({ type: FETCH_PROJECTS_BEGIN }),
+  fetchProjectsFailure: error => ({
+    type: FETCH_PROJECTS_FAILURE,
+    payload: error
   }),
   fetchProjectsSuccess: artifactsList => ({
     type: FETCH_PROJECTS_SUCCESS,
     payload: artifactsList
   }),
-  fetchProjectsFailure: error => ({
-    type: FETCH_PROJECTS_FAILURE,
-    payload: error
-  }),
-  createNewProject: postData => dispatch => {
-    dispatch(projectsAction.createProjectBegin())
-
-    return projectsApi
-      .createProject(postData)
-      .then(result => {
-        dispatch(projectsAction.createProjectSuccess())
-
-        return result
-      })
-      .catch(error => {
-        dispatch(projectsAction.createProjectFailure(error.message))
-      })
-  },
-  createProjectBegin: () => ({
-    type: CREATE_PROJECT_BEGIN
-  }),
-  createProjectSuccess: () => ({
-    type: CREATE_PROJECT_SUCCESS
-  }),
-  createProjectFailure: error => ({
-    type: CREATE_PROJECT_FAILURE,
-    payload: error
-  }),
-  removeNewProject: () => ({
-    type: REMOVE_NEW_PROJECT
-  }),
-  setNewProjectName: name => ({
-    type: SET_NEW_PROJECT_NAME,
-    payload: name
-  }),
+  removeNewProject: () => ({ type: REMOVE_NEW_PROJECT }),
+  removeProjectError: () => ({ type: REMOVE_PROJECT_ERROR }),
   setNewProjectDescription: description => ({
     type: SET_NEW_PROJECT_DESCRIPTION,
     payload: description
   }),
-  removeProjectError: () => ({
-    type: REMOVE_PROJECT_ERROR
-  })
+  setNewProjectName: name => ({ type: SET_NEW_PROJECT_NAME, payload: name })
 }
 
 export default projectsAction

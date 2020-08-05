@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom'
 const ProjectCard = ({ project }) => {
   return (
     <div className="project_card">
-      <div className="project_card_header">{project.name}</div>
+      <div className="project_card_header">
+        <Link to={`/projects/${project.name}`}>{project.name}</Link>
+      </div>
       {project?.description && (
         <div className="project_card_description">{project.description}</div>
       )}

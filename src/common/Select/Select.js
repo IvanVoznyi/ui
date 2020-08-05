@@ -10,17 +10,19 @@ import './select.scss'
 
 const Select = ({
   className,
-  disabledOptions,
   disabled,
+  disabledOptions,
   floatingLabel,
   label,
+  match,
+  menu,
   onClick,
   options,
   selectType,
   selectedId
 }) => {
   const [isOpen, setOpen] = useState(false)
-  const selectedOption = options.find(option => option.id === selectedId)
+  const caretClassName = classNames(!menu && 'select__caret')
   const selectClassName = classNames('select', className, isOpen && 'active')
   const selectLabelClassName = classNames(
     'select__label',
@@ -30,6 +32,7 @@ const Select = ({
     'select__value',
     selectedId && floatingLabel && 'select__value_floating'
   )
+  const selectedOption = options.find(option => option.id === selectedId)
 
   useEffect(() => {
     window.addEventListener('scroll', handlerScroll)
@@ -57,13 +60,15 @@ const Select = ({
     <div className={selectClassName} onClick={() => toggleOpen(disabled)}>
       <div className="select__header">
         {label && <div className={selectLabelClassName}>{label}</div>}
-        <div className={selectValueClassName}>
-          {selectedId && selectedOption?.label}
-          {selectedOption?.subLabel && (
-            <span className="sub-label">{selectedOption.subLabel}</span>
-          )}
-        </div>
-        <Caret className="select__caret" />
+        {!menu && (
+          <div className={selectValueClassName}>
+            {selectedId && selectedOption?.label}
+            {selectedOption?.subLabel && (
+              <span className="sub-label">{selectedOption.subLabel}</span>
+            )}
+          </div>
+        )}
+        <Caret className={caretClassName} />
       </div>
       {isOpen && (
         <>

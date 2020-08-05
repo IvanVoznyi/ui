@@ -33,6 +33,11 @@ const App = () => {
               render={routeProps => <Projects {...routeProps} />}
             />
             <Route
+              path="/projects/:projectName"
+              exact
+              render={routeProps => <Projects {...routeProps} />}
+            />
+            <Route
               path="/projects/:projectName/jobs/:jobTab/:jobId/:tab"
               exact
               render={routeProps => <Jobs {...routeProps} />}

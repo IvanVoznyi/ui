@@ -17,6 +17,7 @@ import ErrorMessage from '../../common/ErrorMessage/ErrorMessage'
 import pageData from './projectsData'
 
 import './projects.scss'
+import ProjectOverView from '../ProjectOverView/ProjectOverView'
 
 const Projects = ({
   createNewProject,
@@ -36,8 +37,10 @@ const Projects = ({
   )
 
   useEffect(() => {
-    fetchProjects()
-  }, [fetchProjects])
+    if (!match.params.projectName) {
+      fetchProjects()
+    }
+  }, [fetchProjects, match.params.projectName])
 
   const handleCreateProject = () => {
     if (projectStore.newProject.name.length === 0) {
@@ -123,23 +126,32 @@ const Projects = ({
       )}
       <div className="projects__header">
         <Breadcrumbs match={match} />
-        <PageActionsMenu
-          match={match}
-          onClick={() => setCreateProject(true)}
-          page={pageData.page}
-        />
-      </div>
-      <div className="projects__wrapper">
-        {projectStore.projects.length !== 0 || !projectStore.error ? (
-          projectStore.projects.map(project => {
-            return (
-              <ProjectCard key={project.id || project.name} project={project} />
-            )
-          })
-        ) : projectStore.loading ? null : (
-          <NoData />
+        {!match.params.projectName && (
+          <PageActionsMenu
+            match={match}
+            onClick={() => setCreateProject(true)}
+            page={pageData.page}
+          />
         )}
       </div>
+      {!match.params.projectName ? (
+        <div className="projects__wrapper">
+          {projectStore.projects.length !== 0 || !projectStore.error ? (
+            projectStore.projects.map(project => {
+              return (
+                <ProjectCard
+                  key={project.id || project.name}
+                  project={project}
+                />
+              )
+            })
+          ) : projectStore.loading ? null : (
+            <NoData />
+          )}
+        </div>
+      ) : (
+        <ProjectOverView match={match} />
+      )}
     </div>
   )
 }

@@ -1,0 +1,183 @@
+@import '../../scss/colors.scss';
+@import '../../scss/borders.scss';
+@import '../../scss/shadows.scss';
+
+.project-container {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  padding: 45px;
+  background: $wildSandSecond;
+
+  &__left-panel {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-right: 64px;
+
+    &-project {
+      &__name {
+        display: flex;
+        flex: 2;
+        color: rgba($mulledWine, 0.88);
+        font-weight: 300;
+        font-size: 36px;
+        line-height: 42px;
+      }
+
+      &-wrapper {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+    }
+
+    &__description {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+    }
+
+    &-status {
+      margin-bottom: 13px;
+
+      &__label {
+        margin-right: 15px;
+        color: $primary;
+        font-size: 14px;
+        line-height: 16px;
+      }
+
+      &__icon {
+        margin-right: 10px;
+      }
+    }
+
+    &-owner {
+      color: $primary;
+
+      &__label {
+        margin-right: 15px;
+      }
+    }
+
+    &-links {
+      display: flex;
+      flex-direction: column;
+
+      &__label {
+        margin-bottom: 16px;
+        color: $primary;
+      }
+
+      &__link {
+        margin-bottom: 15px;
+        color: $cornflowerBlue;
+      }
+    }
+
+    &__divider {
+      margin: 17px 0;
+      border-top: $tableBorder;
+    }
+  }
+
+  &__main-panel {
+    display: flex;
+    flex: 4;
+    flex-direction: column;
+
+    &__tool-bar {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+
+      &__menu {
+        width: 155px;
+
+        .select {
+          &__header {
+            justify-content: center;
+            cursor: pointer;
+          }
+
+          &__label {
+            padding-left: 0;
+          }
+        }
+
+        &.launch-menu {
+          background-color: $white;
+
+          .select {
+            &__label {
+              color: $primary;
+            }
+          }
+        }
+
+        &.create-new-menu {
+          background-color: $purple;
+          border: none;
+
+          .select {
+            &__label {
+              color: $white;
+            }
+          }
+
+          svg {
+            path {
+              fill: $white;
+            }
+          }
+        }
+      }
+    }
+
+    &__jobs {
+      margin-right: 22px;
+    }
+
+    &__jobs,
+    &__functions {
+      position: relative;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      min-height: 491px;
+      background-color: rgba($white, 0.84);
+      border-radius: 4px;
+
+      &-title {
+        margin-bottom: 16px;
+        color: $primary;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 23px;
+      }
+
+      &__link-all {
+        margin: 15px 20px 25px auto;
+        color: $cornflowerBlue;
+      }
+    }
+
+    &__wrapper {
+      z-index: 1;
+      padding: 20px;
+      background-color: $white;
+      box-shadow: $projectStatisticsShadow;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      background-color: $white;
+    }
+
+    &__statistics-section {
+      display: flex;
+    }
+  }
+}

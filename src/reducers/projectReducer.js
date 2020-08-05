@@ -5,9 +5,9 @@ import {
   FETCH_PROJECTS_FAILURE,
   FETCH_PROJECTS_SUCCESS,
   REMOVE_NEW_PROJECT,
+  REMOVE_PROJECT_ERROR,
   SET_NEW_PROJECT_DESCRIPTION,
-  SET_NEW_PROJECT_NAME,
-  REMOVE_PROJECT_ERROR
+  SET_NEW_PROJECT_NAME
 } from '../constants'
 
 const initialState = {
@@ -22,16 +22,22 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case CREATE_PROJECT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: payload
+      }
+    case CREATE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null
+      }
     case FETCH_PROJECTS_BEGIN:
       return {
         ...state,
         loading: true
-      }
-    case FETCH_PROJECTS_SUCCESS:
-      return {
-        ...state,
-        projects: payload,
-        loading: false
       }
     case FETCH_PROJECTS_FAILURE:
       return {
@@ -39,6 +45,12 @@ export default (state = initialState, { type, payload }) => {
         projects: [],
         loading: false,
         error: payload
+      }
+    case FETCH_PROJECTS_SUCCESS:
+      return {
+        ...state,
+        projects: payload,
+        loading: false
       }
     case REMOVE_NEW_PROJECT:
       return {
@@ -48,13 +60,10 @@ export default (state = initialState, { type, payload }) => {
           description: ''
         }
       }
-    case SET_NEW_PROJECT_NAME:
+    case REMOVE_PROJECT_ERROR:
       return {
         ...state,
-        newProject: {
-          ...state.newProject,
-          name: payload
-        }
+        error: null
       }
     case SET_NEW_PROJECT_DESCRIPTION:
       return {
@@ -64,22 +73,13 @@ export default (state = initialState, { type, payload }) => {
           description: payload
         }
       }
-    case CREATE_PROJECT_SUCCESS:
+    case SET_NEW_PROJECT_NAME:
       return {
         ...state,
-        loading: false,
-        error: null
-      }
-    case CREATE_PROJECT_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: payload
-      }
-    case REMOVE_PROJECT_ERROR:
-      return {
-        ...state,
-        error: null
+        newProject: {
+          ...state.newProject,
+          name: payload
+        }
       }
     default:
       return state
