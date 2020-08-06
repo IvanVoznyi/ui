@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import Loader from '../../common/Loader/Loader'
-import ProjectOverViewTable from '../ProjectOverViewTable/ProjectOverViewTable'
-
-import projectsApi from '../../api/projects-api'
+import ProjectTable from '../ProjectTable/ProjectTable'
+import _ from 'lodash'
 
 import measureTime from '../../utils/measureTime'
 import { formatDatetime } from '../../utils/datetime'
-import ProjectOverViewStatistics from '../ProjectOverViewStatistics/ProjectOverViewStatistics'
+import ProjectStatistics from '../ProjectStatistics/ProjectStatistics'
+import NoData from '../../common/NoData/NoData'
 
-const JobsAndWorkflows = ({ match }) => {
-  const [jobs, setJobs] = useState({
-    data: null,
-    error: null
-  })
-
+const JobsAndWorkflows = ({ fetchProjectJobs, jobs, match }) => {
   const jobsStatistics = React.useMemo(() => {
     if (!jobs.data) return
 
@@ -99,23 +95,12 @@ const JobsAndWorkflows = ({ match }) => {
   }, [jobs, match.params.projectName])
 
   useEffect(() => {
-    let { request, cancelRequest } = projectsApi.getJobsAndWorkflows(
-      match.params.projectName
-    )
-
-    request
-      .then(({ data }) => {
-        setJobs({ data: data.runs })
-      })
-      .catch(error => {
-        if (!error.message) return //axios sends error when canceling request
-        setJobs({ error: error.response.data })
-      })
+    let cancelRequest = fetchProjectJobs(match.params.projectName)
 
     return () => {
       cancelRequest()
     }
-  }, [match.params.projectName])
+  }, [match.params.projectName, fetchProjectJobs])
 
   return (
     <div className="project-container__main-panel__jobs">
@@ -123,27 +108,35 @@ const JobsAndWorkflows = ({ match }) => {
         <div className="project-container__main-panel__jobs-title">
           Jobs and Workflows
         </div>
-        {jobs.data && (
+        {!_.isEmpty(jobs.data) && (
           <div className="project-container__main-panel__statistics">
-            <ProjectOverViewStatistics statistics={jobsStatistics} />
+            <ProjectStatistics statistics={jobsStatistics} />
           </div>
         )}
       </div>
-      {!jobs.data && !jobs.error ? (
+      {jobs.loading ? (
         <Loader />
       ) : jobs.error ? (
         <div className="error_container">
-          <h1>Sorry, something went wrong</h1>
+          <h1>{jobs.error}</h1>
         </div>
+      ) : _.isEmpty(jobs.data) ? (
+        <NoData />
       ) : (
-        <ProjectOverViewTable
+        <ProjectTable
           match={match}
           table={jobsTable}
-          linktoAllItem={`projects/${match.params.projectName}/jobs/monitor`}
+          linkAllItem={`projects/${match.params.projectName}/jobs/monitor`}
         />
       )}
     </div>
   )
 }
 
-export default React.memo(JobsAndWorkflows)
+JobsAndWorkflows.propTypes = {
+  fetchProjectJobs: PropTypes.func.isRequired,
+  jobs: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired
+}
+
+export default JobsAndWorkflows

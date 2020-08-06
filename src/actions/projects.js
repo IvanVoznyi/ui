@@ -1,15 +1,25 @@
 import projectsApi from '../api/projects-api'
 import {
+  CREATE_PROJECT_BEGIN,
+  CREATE_PROJECT_FAILURE,
+  CREATE_PROJECT_SUCCESS,
+  FETCH_PROJECT,
   FETCH_PROJECTS_BEGIN,
   FETCH_PROJECTS_FAILURE,
   FETCH_PROJECTS_SUCCESS,
-  CREATE_PROJECT_BEGIN,
-  CREATE_PROJECT_SUCCESS,
-  CREATE_PROJECT_FAILURE,
+  FETCH_PROJECT_FUNCTIONS,
+  FETCH_PROJECT_JOBS,
+  PROJECT_ERROR,
+  PROJECT_FUNCTIONS_ERROR,
+  PROJECT_FUNCTIONS_LOADING,
+  PROJECT_JOBS_ERROR,
+  PROJECT_JOBS_LOADING,
+  PROJECT_LOADING,
   REMOVE_NEW_PROJECT,
-  SET_NEW_PROJECT_NAME,
+  REMOVE_PROJECT,
+  REMOVE_PROJECT_ERROR,
   SET_NEW_PROJECT_DESCRIPTION,
-  REMOVE_PROJECT_ERROR
+  SET_NEW_PROJECT_NAME
 } from '../constants'
 
 const projectsAction = {
@@ -31,9 +41,72 @@ const projectsAction = {
     payload: error
   }),
   createProjectSuccess: () => ({ type: CREATE_PROJECT_SUCCESS }),
+  fetchProject: project => dispatch => {
+    dispatch({ type: PROJECT_LOADING })
+
+    let { request, cancelRequest } = projectsApi.getProject(project)
+
+    request
+      .then(({ data }) => {
+        dispatch({
+          type: FETCH_PROJECT,
+          payload: data.project
+        })
+      })
+      .catch(error => {
+        if (!error.message) return //axios sends error when canceling request
+        dispatch({
+          type: PROJECT_ERROR,
+          payload: error.message
+        })
+      })
+
+    return cancelRequest
+  },
+  fetchProjectJobs: project => dispatch => {
+    dispatch({ type: PROJECT_JOBS_LOADING })
+    let { request, cancelRequest } = projectsApi.getJobsAndWorkflows(project)
+    request
+      .then(({ data }) => {
+        dispatch({
+          type: FETCH_PROJECT_JOBS,
+          payload: data.runs
+        })
+      })
+      .catch(error => {
+        if (!error.message) return //axios sends error when canceling request
+        dispatch({
+          type: PROJECT_JOBS_ERROR,
+          payload: error.message
+        })
+      })
+
+    return cancelRequest
+  },
+  fetchProjectFunctions: project => dispatch => {
+    dispatch({ type: PROJECT_FUNCTIONS_LOADING })
+
+    let { request, cancelRequest } = projectsApi.getProjectFunctions(project)
+
+    request
+      .then(({ data }) => {
+        dispatch({
+          type: FETCH_PROJECT_FUNCTIONS,
+          payload: data.funcs
+        })
+      })
+      .catch(error => {
+        if (!error.message) return //axios sends error when canceling request
+        dispatch({
+          type: PROJECT_FUNCTIONS_ERROR,
+          payload: error.message
+        })
+      })
+    return cancelRequest
+  },
   fetchProjects: () => dispatch => {
     dispatch(projectsAction.fetchProjectsBegin())
-    return projectsApi
+    projectsApi
       .getProjects()
       .then(response => {
         dispatch(projectsAction.fetchProjectsSuccess(response.data.projects))
@@ -52,6 +125,7 @@ const projectsAction = {
     payload: artifactsList
   }),
   removeNewProject: () => ({ type: REMOVE_NEW_PROJECT }),
+  removeProject: () => ({ type: REMOVE_PROJECT }),
   removeProjectError: () => ({ type: REMOVE_PROJECT_ERROR }),
   setNewProjectDescription: description => ({
     type: SET_NEW_PROJECT_DESCRIPTION,

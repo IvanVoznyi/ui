@@ -18,7 +18,9 @@ const request = url => {
 export default {
   getProjects: () => mainHttpClient.get('/projects?full=yes'),
   createProject: postData => mainHttpClient.post('/project', postData),
-  getProjectOverView: project => request(`/project/${project}`),
+  getProject: project => request(`/project/${project}`),
+  editProject: (project, data) =>
+    mainHttpClient.post(`/project/${project}`, data),
   getJobsAndWorkflows: project => request(`/runs?project=${project}`),
   getProjectFunctions: project => request(`/funcs?project=${project}`)
 }

@@ -15,13 +15,6 @@ const SelectOption = ({ disabled, item, onClick, selectType, selectedId }) => {
         </CheckBox>
       </div>
     )
-  } else if (selectType === 'icon') {
-    return (
-      <div className="select__item" onClick={() => onClick(item.id)}>
-        <span className="select__item__icon">{item.icon}</span>
-        <span className="select__item__label">{item.label}</span>
-      </div>
-    )
   }
 
   const selectClassName = classnames('select__item', disabled && 'disabled')
@@ -31,6 +24,7 @@ const SelectOption = ({ disabled, item, onClick, selectType, selectedId }) => {
       className={selectClassName}
       onClick={() => !disabled && onClick(item.id)}
     >
+      {item.icon && <span className="select__item__icon">{item.icon}</span>}
       {item.label}
       {item.subLabel && (
         <Tooltip

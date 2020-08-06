@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import './projectOverViewStatistics.scss'
+import './projectStatistics.scss'
 
-const ProjectOverViewStatistics = ({ statistics }) => {
+const ProjectStatistics = ({ statistics }) => {
   return Object.keys(statistics).map((key, index) => {
     return (
       <div
@@ -25,4 +25,4 @@ const ProjectOverViewStatistics = ({ statistics }) => {
   })
 }
 
-export default ProjectOverViewStatistics
+export default ProjectStatistics

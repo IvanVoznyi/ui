@@ -13,9 +13,9 @@ const Select = ({
   disabled,
   disabledOptions,
   floatingLabel,
+  isButtonMenu,
   label,
   match,
-  menu,
   onClick,
   options,
   selectType,
@@ -60,7 +60,7 @@ const Select = ({
     <div className={selectClassName} onClick={() => toggleOpen(disabled)}>
       <div className="select__header">
         {label && <div className={selectLabelClassName}>{label}</div>}
-        {!menu && (
+        {!isButtonMenu && (
           <div className={selectValueClassName}>
             {selectedId && selectedOption?.label}
             {selectedOption?.subLabel && (
@@ -68,7 +68,7 @@ const Select = ({
             )}
           </div>
         )}
-        <Caret className={caretClassName} />
+        <Caret className="select__caret" />
       </div>
       {isOpen && (
         <>
@@ -96,18 +96,20 @@ const Select = ({
 Select.defaultProps = {
   className: '',
   disabled: false,
+  disabledOptions: [],
+  isButtonMenu: false,
   label: '',
   onClick: null,
   selectType: '',
-  selectedId: '',
-  disabledOptions: []
+  selectedId: ''
 }
 
 Select.propTypes = {
   className: PropTypes.string,
-  disabledOptions: PropTypes.array,
   disabled: PropTypes.bool,
+  disabledOptions: PropTypes.array,
   floatingLabel: PropTypes.bool,
+  isButtonMenu: PropTypes.bool,
   label: PropTypes.string,
   onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   options: PropTypes.array.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import classnames from 'classnames'
 
@@ -6,9 +7,9 @@ import TableTypeCell from '../../elements/TableTypeCell/TableTypeCell'
 import Tooltip from '../../common/Tooltip/Tooltip'
 import TextTooltipTemplate from '../../elements/TooltipTemplate/TextTooltipTemplate'
 
-import './projectOverViewTable.scss'
+import './projectTable.scss'
 
-const ProjectOverViewTable = ({ table, linktoAllItem }) => {
+const ProjectTable = ({ table, linkAllItem }) => {
   return (
     <>
       <div className="project-container__main-panel__table">
@@ -83,7 +84,7 @@ const ProjectOverViewTable = ({ table, linktoAllItem }) => {
       </div>
       <Link
         className="project-container__main-panel__jobs__link-all"
-        to={linktoAllItem}
+        to={linkAllItem}
       >
         See all
       </Link>
@@ -91,4 +92,9 @@ const ProjectOverViewTable = ({ table, linktoAllItem }) => {
   )
 }
 
-export default ProjectOverViewTable
+ProjectTable.propTypes = {
+  table: PropTypes.shape({}).isRequired,
+  linkAllItem: PropTypes.string.isRequired
+}
+
+export default ProjectTable

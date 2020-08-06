@@ -17,7 +17,6 @@ import ErrorMessage from '../../common/ErrorMessage/ErrorMessage'
 import pageData from './projectsData'
 
 import './projects.scss'
-import ProjectOverView from '../ProjectOverView/ProjectOverView'
 
 const Projects = ({
   createNewProject,
@@ -134,24 +133,17 @@ const Projects = ({
           />
         )}
       </div>
-      {!match.params.projectName ? (
-        <div className="projects__wrapper">
-          {projectStore.projects.length !== 0 || !projectStore.error ? (
-            projectStore.projects.map(project => {
-              return (
-                <ProjectCard
-                  key={project.id || project.name}
-                  project={project}
-                />
-              )
-            })
-          ) : projectStore.loading ? null : (
-            <NoData />
-          )}
-        </div>
-      ) : (
-        <ProjectOverView match={match} />
-      )}
+      <div className="projects__wrapper">
+        {projectStore.projects.length !== 0 || !projectStore.error ? (
+          projectStore.projects.map(project => {
+            return (
+              <ProjectCard key={project.id || project.name} project={project} />
+            )
+          })
+        ) : projectStore.loading ? null : (
+          <NoData />
+        )}
+      </div>
     </div>
   )
 }

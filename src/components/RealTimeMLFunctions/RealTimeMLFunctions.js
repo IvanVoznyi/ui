@@ -1,17 +1,13 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
+import PropTypes from 'prop-types'
+import _ from 'lodash'
 
-import ProjectOverViewTable from '../ProjectOverViewTable/ProjectOverViewTable'
-import ProjectOverViewStatistics from '../ProjectOverViewStatistics/ProjectOverViewStatistics'
+import ProjectTable from '../ProjectTable/ProjectTable'
+import ProjectStatistics from '../ProjectStatistics/ProjectStatistics'
 import Loader from '../../common/Loader/Loader'
+import NoData from '../../common/NoData/NoData'
 
-import projectsApi from '../../api/projects-api'
-
-const RealTimeMLFunction = ({ match }) => {
-  const [functions, setFunction] = useState({
-    data: null,
-    error: null
-  })
-
+const RealTimeMLFunction = ({ fetchProjectFunctions, functions, match }) => {
   const functionsStatistics = useMemo(() => {
     if (!functions.data) return
     const totalFunction = functions.data.length
@@ -64,22 +60,12 @@ const RealTimeMLFunction = ({ match }) => {
   }, [functions, match.params.projectName])
 
   useEffect(() => {
-    let { request, cancelRequest } = projectsApi.getProjectFunctions(
-      match.params.projectName
-    )
+    let cancelRequest = fetchProjectFunctions(match.params.projectName)
 
-    request
-      .then(({ data }) => {
-        setFunction({ data: data.funcs })
-      })
-      .catch(error => {
-        if (!error.message) return //axios sends error when canceling request
-        setFunction({ error: error.response.data })
-      })
     return () => {
       cancelRequest()
     }
-  }, [match.params.projectName])
+  }, [match.params.projectName, fetchProjectFunctions])
 
   return (
     <div className="project-container__main-panel__functions">
@@ -87,27 +73,35 @@ const RealTimeMLFunction = ({ match }) => {
         <div className="project-container__main-panel__functions-title">
           Real-Time and ML functions
         </div>
-        {functions.data && (
+        {!_.isEmpty(functions.data) && (
           <div className="project-container__main-panel__statistics">
-            <ProjectOverViewStatistics statistics={functionsStatistics} />
+            <ProjectStatistics statistics={functionsStatistics} />
           </div>
         )}
       </div>
-      {!functions.data && !functions.error ? (
+      {functions.loading ? (
         <Loader />
       ) : functions.error ? (
         <div className="error_container">
-          <h1>Sorry, something went wrong</h1>
+          <h1>{functions.error}</h1>
         </div>
+      ) : _.isEmpty(functions.data) ? (
+        <NoData />
       ) : (
-        <ProjectOverViewTable
+        <ProjectTable
           match={match}
           table={functionsTable}
-          linktoAllItem={`projects/${match.params.projectName}/functions`}
+          linkAllItem={`projects/${match.params.projectName}/functions`}
         />
       )}
     </div>
   )
+}
+
+RealTimeMLFunction.propTypes = {
+  fetchProjectFunctions: PropTypes.func.isRequired,
+  functions: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired
 }
 
 export default RealTimeMLFunction
