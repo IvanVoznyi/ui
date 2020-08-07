@@ -44,9 +44,8 @@ const projectsAction = {
   fetchProject: project => dispatch => {
     dispatch({ type: PROJECT_LOADING })
 
-    let { request, cancelRequest } = projectsApi.getProject(project)
-
-    request
+    projectsApi
+      .getProject(project)
       .then(({ data }) => {
         dispatch({
           type: FETCH_PROJECT,
@@ -60,13 +59,11 @@ const projectsAction = {
           payload: error.message
         })
       })
-
-    return cancelRequest
   },
   fetchProjectJobs: project => dispatch => {
     dispatch({ type: PROJECT_JOBS_LOADING })
-    let { request, cancelRequest } = projectsApi.getJobsAndWorkflows(project)
-    request
+    projectsApi
+      .getJobsAndWorkflows(project)
       .then(({ data }) => {
         dispatch({
           type: FETCH_PROJECT_JOBS,
@@ -80,15 +77,12 @@ const projectsAction = {
           payload: error.message
         })
       })
-
-    return cancelRequest
   },
   fetchProjectFunctions: project => dispatch => {
     dispatch({ type: PROJECT_FUNCTIONS_LOADING })
 
-    let { request, cancelRequest } = projectsApi.getProjectFunctions(project)
-
-    request
+    projectsApi
+      .getProjectFunctions(project)
       .then(({ data }) => {
         dispatch({
           type: FETCH_PROJECT_FUNCTIONS,
@@ -102,7 +96,6 @@ const projectsAction = {
           payload: error.message
         })
       })
-    return cancelRequest
   },
   fetchProjects: () => dispatch => {
     dispatch(projectsAction.fetchProjectsBegin())

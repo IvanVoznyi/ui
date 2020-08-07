@@ -109,10 +109,8 @@ const Project = ({
   )
 
   useEffect(() => {
-    const handleCancelRequest = fetchProject(match.params.projectName)
-
+    fetchProject(match.params.projectName)
     return () => {
-      handleCancelRequest()
       removeProject()
     }
   }, [fetchProject, match.params.projectName, removeProject])

@@ -95,11 +95,7 @@ const JobsAndWorkflows = ({ fetchProjectJobs, jobs, match }) => {
   }, [jobs, match.params.projectName])
 
   useEffect(() => {
-    let cancelRequest = fetchProjectJobs(match.params.projectName)
-
-    return () => {
-      cancelRequest()
-    }
+    fetchProjectJobs(match.params.projectName)
   }, [match.params.projectName, fetchProjectJobs])
 
   return (

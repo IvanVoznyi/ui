@@ -60,11 +60,7 @@ const RealTimeMLFunction = ({ fetchProjectFunctions, functions, match }) => {
   }, [functions, match.params.projectName])
 
   useEffect(() => {
-    let cancelRequest = fetchProjectFunctions(match.params.projectName)
-
-    return () => {
-      cancelRequest()
-    }
+    fetchProjectFunctions(match.params.projectName)
   }, [match.params.projectName, fetchProjectFunctions])
 
   return (

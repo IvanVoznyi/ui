@@ -12,7 +12,6 @@
   &-container {
     display: flex;
     flex: 1;
-    height: 100%;
     padding: 45px;
     background: $wildSandSecond;
 
@@ -115,6 +114,7 @@
         display: flex;
         flex: 1;
         justify-content: space-between;
+        min-height: 204px;
 
         &__menu {
           width: 155px;
