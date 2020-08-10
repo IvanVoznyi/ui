@@ -101,7 +101,7 @@ const JobsAndWorkflows = ({ fetchProjectJobs, jobs, match }) => {
   return (
     <div className="project-container__main-panel__jobs">
       <div className="project-container__main-panel__wrapper">
-        <div className="project-container__main-panel__jobs-title">
+        <div className="project-container__main-panel__jobs-title data-ellipsis">
           Jobs and Workflows
         </div>
         {!_.isEmpty(jobs.data) && (

@@ -66,7 +66,7 @@ const RealTimeMLFunction = ({ fetchProjectFunctions, functions, match }) => {
   return (
     <div className="project-container__main-panel__functions">
       <div className="project-container__main-panel__wrapper">
-        <div className="project-container__main-panel__functions-title">
+        <div className="project-container__main-panel__functions-title data-ellipsis">
           Real-Time and ML functions
         </div>
         {!_.isEmpty(functions.data) && (

@@ -16,7 +16,7 @@ const ProjectStatistics = ({ statistics }) => {
           >
             {statistics[key].value}
           </div>
-          <div className="project-container__main-panel__statistics-item__label">
+          <div className="project-container__main-panel__statistics-item__label data-ellipsis">
             {statistics[key].label}
           </div>
         </Link>

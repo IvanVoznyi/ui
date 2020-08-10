@@ -112,9 +112,8 @@
 
       &__tool-bar {
         display: flex;
-        flex: 1;
         justify-content: space-between;
-        min-height: 204px;
+        margin-bottom: 15px;
 
         &__menu {
           width: 155px;
@@ -169,6 +168,8 @@
         border-radius: 4px;
 
         &-title {
+          min-width: 100%;
+          max-width: 100px;
           margin-bottom: 16px;
           color: $primary;
           font-weight: 500;

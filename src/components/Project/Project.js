@@ -97,7 +97,8 @@ const Project = ({
     }
     closeEditMode()
     projectApi.editProject(match.params.projectName, data)
-  }, [project, closeEditMode, match, newProjectData])
+    history.push(`/projects/${data.name}`)
+  }, [closeEditMode, history, match, newProjectData, project])
 
   const handleDocumentClick = useCallback(
     event => {
