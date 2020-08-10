@@ -13,7 +13,7 @@ const Select = ({
   disabled,
   disabledOptions,
   floatingLabel,
-  isButtonMenu,
+  hideLabel,
   label,
   match,
   onClick,
@@ -22,7 +22,6 @@ const Select = ({
   selectedId
 }) => {
   const [isOpen, setOpen] = useState(false)
-  const caretClassName = classNames(!menu && 'select__caret')
   const selectClassName = classNames('select', className, isOpen && 'active')
   const selectLabelClassName = classNames(
     'select__label',
@@ -60,7 +59,7 @@ const Select = ({
     <div className={selectClassName} onClick={() => toggleOpen(disabled)}>
       <div className="select__header">
         {label && <div className={selectLabelClassName}>{label}</div>}
-        {!isButtonMenu && (
+        {!hideLabel && (
           <div className={selectValueClassName}>
             {selectedId && selectedOption?.label}
             {selectedOption?.subLabel && (
@@ -97,7 +96,7 @@ Select.defaultProps = {
   className: '',
   disabled: false,
   disabledOptions: [],
-  isButtonMenu: false,
+  hideLabel: false,
   label: '',
   onClick: null,
   selectType: '',
@@ -109,7 +108,7 @@ Select.propTypes = {
   disabled: PropTypes.bool,
   disabledOptions: PropTypes.array,
   floatingLabel: PropTypes.bool,
-  isButtonMenu: PropTypes.bool,
+  hideLabel: PropTypes.bool,
   label: PropTypes.string,
   onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   options: PropTypes.array.isRequired,

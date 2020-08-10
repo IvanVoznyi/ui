@@ -1,23 +1,22 @@
 import {
   CREATE_PROJECT_FAILURE,
   CREATE_PROJECT_SUCCESS,
+  FETCH_PROJECT_SUCCESS,
   FETCH_PROJECTS_BEGIN,
   FETCH_PROJECTS_FAILURE,
   FETCH_PROJECTS_SUCCESS,
+  FETCH_PROJECT_BEGIN,
+  FETCH_PROJECT_FUNCTIONS_SUCCESS,
+  FETCH_PROJECT_JOBS_SUCCESS,
+  FETCH_PROJECT_FAILURE,
+  FETCH_PROJECT_FUNCTIONS_FAILURE,
+  FETCH_PROJECT_FUNCTIONS_BEGIN,
+  FETCH_PROJECT_JOBS_FAILURE,
+  FETCH_PROJECT_JOBS_BEGIN,
   REMOVE_NEW_PROJECT,
-  REMOVE_PROJECT_ERROR,
+  REMOVE_PROJECT_DATA,
   SET_NEW_PROJECT_DESCRIPTION,
-  SET_NEW_PROJECT_NAME,
-  FETCH_PROJECT,
-  REMOVE_PROJECT,
-  FETCH_PROJECT_JOBS,
-  PROJECT_JOBS_LOADING,
-  PROJECT_JOBS_ERROR,
-  PROJECT_LOADING,
-  PROJECT_ERROR,
-  PROJECT_FUNCTIONS_LOADING,
-  FETCH_PROJECT_FUNCTIONS,
-  PROJECT_FUNCTIONS_ERROR
+  SET_NEW_PROJECT_NAME
 } from '../constants'
 
 const initialState = {
@@ -47,7 +46,7 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case PROJECT_LOADING:
+    case FETCH_PROJECT_BEGIN:
       return {
         ...state,
         project: {
@@ -55,7 +54,7 @@ export default (state = initialState, { type, payload }) => {
           loading: true
         }
       }
-    case PROJECT_ERROR:
+    case FETCH_PROJECT_FAILURE:
       return {
         ...state,
         project: {
@@ -64,7 +63,7 @@ export default (state = initialState, { type, payload }) => {
           error: payload
         }
       }
-    case PROJECT_JOBS_LOADING:
+    case FETCH_PROJECT_JOBS_BEGIN:
       return {
         ...state,
         project: {
@@ -75,7 +74,7 @@ export default (state = initialState, { type, payload }) => {
           }
         }
       }
-    case PROJECT_FUNCTIONS_LOADING:
+    case FETCH_PROJECT_FUNCTIONS_BEGIN:
       return {
         ...state,
         project: {
@@ -86,7 +85,7 @@ export default (state = initialState, { type, payload }) => {
           }
         }
       }
-    case PROJECT_JOBS_ERROR:
+    case FETCH_PROJECT_JOBS_FAILURE:
       return {
         ...state,
         project: {
@@ -98,7 +97,7 @@ export default (state = initialState, { type, payload }) => {
           }
         }
       }
-    case PROJECT_FUNCTIONS_ERROR:
+    case FETCH_PROJECT_FUNCTIONS_FAILURE:
       return {
         ...state,
         project: {
@@ -121,7 +120,7 @@ export default (state = initialState, { type, payload }) => {
         loading: false,
         error: null
       }
-    case FETCH_PROJECT:
+    case FETCH_PROJECT_SUCCESS:
       return {
         ...state,
         project: {
@@ -130,7 +129,7 @@ export default (state = initialState, { type, payload }) => {
           loading: false
         }
       }
-    case FETCH_PROJECT_JOBS:
+    case FETCH_PROJECT_JOBS_SUCCESS:
       return {
         ...state,
         project: {
@@ -142,7 +141,7 @@ export default (state = initialState, { type, payload }) => {
           }
         }
       }
-    case FETCH_PROJECT_FUNCTIONS:
+    case FETCH_PROJECT_FUNCTIONS_SUCCESS:
       return {
         ...state,
         project: {
@@ -172,7 +171,7 @@ export default (state = initialState, { type, payload }) => {
         projects: payload,
         loading: false
       }
-    case REMOVE_PROJECT:
+    case REMOVE_PROJECT_DATA:
       return {
         ...state,
         project: {
@@ -198,11 +197,6 @@ export default (state = initialState, { type, payload }) => {
           name: '',
           description: ''
         }
-      }
-    case REMOVE_PROJECT_ERROR:
-      return {
-        ...state,
-        error: null
       }
     case SET_NEW_PROJECT_DESCRIPTION:
       return {

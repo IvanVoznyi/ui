@@ -3,14 +3,18 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 
 import ProjectTable from '../ProjectTable/ProjectTable'
-import ProjectStatistics from '../ProjectStatistics/ProjectStatistics'
+import ProjectStatistics from '../../elements/ProjectStatistics/ProjectStatistics'
 import Loader from '../../common/Loader/Loader'
 import NoData from '../../common/NoData/NoData'
 
-const RealTimeMLFunction = ({ fetchProjectFunctions, functions, match }) => {
-  const functionsStatistics = useMemo(() => {
-    if (!functions.data) return
-    const totalFunction = functions.data.length
+const ProjectFunctions = ({ fetchProjectFunctions, functionsStore, match }) => {
+  useEffect(() => {
+    fetchProjectFunctions(match.params.projectName)
+  }, [match.params.projectName, fetchProjectFunctions])
+
+  const functions = useMemo(() => {
+    if (!functionsStore.data) return
+    const totalFunction = functionsStore.data.length
 
     return {
       ml: {
@@ -20,10 +24,10 @@ const RealTimeMLFunction = ({ fetchProjectFunctions, functions, match }) => {
         link: `/projects/${match.params.projectName}/functions`
       }
     }
-  }, [functions, match.params.projectName])
+  }, [functionsStore, match.params.projectName])
 
   const functionsTable = useMemo(() => {
-    if (!functions.data) return
+    if (!functionsStore.data) return
 
     const functionsTableHeader = [
       {
@@ -34,7 +38,7 @@ const RealTimeMLFunction = ({ fetchProjectFunctions, functions, match }) => {
       { value: 'Status', className: 'table-cell_small' }
     ]
 
-    const functionsTableBody = functions.data.slice(0, 5).map(func => {
+    const functionsTableBody = functionsStore.data.slice(0, 5).map(func => {
       return {
         name: {
           value: func.metadata.name,
@@ -44,7 +48,7 @@ const RealTimeMLFunction = ({ fetchProjectFunctions, functions, match }) => {
         type: {
           value: func.metadata.kind ?? '',
           class:
-            'project-container__main-panel__table-body__row-value table-cell_small'
+            'project__content__main-panel__table-body__row-value table-cell_small'
         },
         status: {
           value: func?.status?.state ?? '',
@@ -57,47 +61,43 @@ const RealTimeMLFunction = ({ fetchProjectFunctions, functions, match }) => {
       header: functionsTableHeader,
       body: functionsTableBody
     }
-  }, [functions, match.params.projectName])
-
-  useEffect(() => {
-    fetchProjectFunctions(match.params.projectName)
-  }, [match.params.projectName, fetchProjectFunctions])
+  }, [functionsStore, match.params.projectName])
 
   return (
-    <div className="project-container__main-panel__functions">
-      <div className="project-container__main-panel__wrapper">
-        <div className="project-container__main-panel__functions-title data-ellipsis">
+    <div className="project__main-info__functions">
+      <div className="project__main-info__wrapper">
+        <div className="project__main-info__functions-title data-ellipsis">
           Real-Time and ML functions
         </div>
-        {!_.isEmpty(functions.data) && (
-          <div className="project-container__main-panel__statistics">
-            <ProjectStatistics statistics={functionsStatistics} />
+        {!_.isEmpty(functionsStore.data) && (
+          <div className="project__main-info__statistics">
+            <ProjectStatistics statistics={functions} />
           </div>
         )}
       </div>
-      {functions.loading ? (
+      {functionsStore.loading ? (
         <Loader />
-      ) : functions.error ? (
+      ) : functionsStore.error ? (
         <div className="error_container">
-          <h1>{functions.error}</h1>
+          <h1>{functionsStore.error}</h1>
         </div>
-      ) : _.isEmpty(functions.data) ? (
+      ) : _.isEmpty(functionsStore.data) ? (
         <NoData />
       ) : (
         <ProjectTable
           match={match}
           table={functionsTable}
-          linkAllItem={`/projects/${match.params.projectName}/functions`}
+          seeAllLink={`/projects/${match.params.projectName}/functions`}
         />
       )}
     </div>
   )
 }
 
-RealTimeMLFunction.propTypes = {
+ProjectFunctions.propTypes = {
   fetchProjectFunctions: PropTypes.func.isRequired,
-  functions: PropTypes.shape({}).isRequired,
+  functionsStore: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired
 }
 
-export default React.memo(RealTimeMLFunction)
+export default React.memo(ProjectFunctions)

@@ -3,21 +3,20 @@ import {
   CREATE_PROJECT_BEGIN,
   CREATE_PROJECT_FAILURE,
   CREATE_PROJECT_SUCCESS,
-  FETCH_PROJECT,
   FETCH_PROJECTS_BEGIN,
   FETCH_PROJECTS_FAILURE,
   FETCH_PROJECTS_SUCCESS,
-  FETCH_PROJECT_FUNCTIONS,
-  FETCH_PROJECT_JOBS,
-  PROJECT_ERROR,
-  PROJECT_FUNCTIONS_ERROR,
-  PROJECT_FUNCTIONS_LOADING,
-  PROJECT_JOBS_ERROR,
-  PROJECT_JOBS_LOADING,
-  PROJECT_LOADING,
+  FETCH_PROJECT_BEGIN,
+  FETCH_PROJECT_FAILURE,
+  FETCH_PROJECT_FUNCTIONS_BEGIN,
+  FETCH_PROJECT_FUNCTIONS_FAILURE,
+  FETCH_PROJECT_FUNCTIONS_SUCCESS,
+  FETCH_PROJECT_JOBS_BEGIN,
+  FETCH_PROJECT_JOBS_FAILURE,
+  FETCH_PROJECT_JOBS_SUCCESS,
+  FETCH_PROJECT_SUCCESS,
   REMOVE_NEW_PROJECT,
-  REMOVE_PROJECT,
-  REMOVE_PROJECT_ERROR,
+  REMOVE_PROJECT_DATA,
   SET_NEW_PROJECT_DESCRIPTION,
   SET_NEW_PROJECT_NAME
 } from '../constants'
@@ -42,59 +41,39 @@ const projectsAction = {
   }),
   createProjectSuccess: () => ({ type: CREATE_PROJECT_SUCCESS }),
   fetchProject: project => dispatch => {
-    dispatch({ type: PROJECT_LOADING })
+    dispatch(projectsAction.fetchProjectBegin())
 
     projectsApi
       .getProject(project)
       .then(({ data }) => {
-        dispatch({
-          type: FETCH_PROJECT,
-          payload: data.project
-        })
+        dispatch(projectsAction.fetchProjectSuccess(data.project))
       })
       .catch(error => {
-        if (!error.message) return //axios sends error when canceling request
-        dispatch({
-          type: PROJECT_ERROR,
-          payload: error.message
-        })
+        dispatch(projectsAction.fetchProjectFailure(error.message))
       })
   },
   fetchProjectJobs: project => dispatch => {
-    dispatch({ type: PROJECT_JOBS_LOADING })
+    dispatch(projectsAction.fetchProjectJobsBegin())
+
     projectsApi
       .getJobsAndWorkflows(project)
       .then(({ data }) => {
-        dispatch({
-          type: FETCH_PROJECT_JOBS,
-          payload: data.runs
-        })
+        dispatch(projectsAction.fetchProjectJobsSuccess(data.runs))
       })
       .catch(error => {
-        if (!error.message) return //axios sends error when canceling request
-        dispatch({
-          type: PROJECT_JOBS_ERROR,
-          payload: error.message
-        })
+        dispatch(projectsAction.fetchProjectJobsFailure(error.message))
       })
   },
   fetchProjectFunctions: project => dispatch => {
-    dispatch({ type: PROJECT_FUNCTIONS_LOADING })
+    dispatch(projectsAction.fetchProjectFunctionsBegin())
 
     projectsApi
       .getProjectFunctions(project)
       .then(({ data }) => {
-        dispatch({
-          type: FETCH_PROJECT_FUNCTIONS,
-          payload: data.funcs
-        })
+        dispatch(projectsAction.fetchProjectFunctionsSuccess(data.funcs))
       })
       .catch(error => {
-        if (!error.message) return //axios sends error when canceling request
-        dispatch({
-          type: PROJECT_FUNCTIONS_ERROR,
-          payload: error.message
-        })
+        dispatch(projectsAction.fetchProjectFunctionsFailure(error.message))
       })
   },
   fetchProjects: () => dispatch => {
@@ -109,17 +88,43 @@ const projectsAction = {
       })
   },
   fetchProjectsBegin: () => ({ type: FETCH_PROJECTS_BEGIN }),
+  fetchProjectBegin: () => ({ type: FETCH_PROJECT_BEGIN }),
+  fetchProjectJobsBegin: () => ({ type: FETCH_PROJECT_JOBS_BEGIN }),
+  fetchProjectFunctionsBegin: () => ({ type: FETCH_PROJECT_FUNCTIONS_BEGIN }),
   fetchProjectsFailure: error => ({
     type: FETCH_PROJECTS_FAILURE,
     payload: error
   }),
-  fetchProjectsSuccess: artifactsList => ({
+  fetchProjectFailure: error => ({
+    type: FETCH_PROJECT_FAILURE,
+    payload: error
+  }),
+  fetchProjectJobsFailure: error => ({
+    type: FETCH_PROJECT_JOBS_FAILURE,
+    payload: error
+  }),
+  fetchProjectFunctionsFailure: error => ({
+    type: FETCH_PROJECT_FUNCTIONS_FAILURE,
+    payload: error
+  }),
+  fetchProjectsSuccess: projectsList => ({
     type: FETCH_PROJECTS_SUCCESS,
-    payload: artifactsList
+    payload: projectsList
+  }),
+  fetchProjectSuccess: project => ({
+    type: FETCH_PROJECT_SUCCESS,
+    payload: project
+  }),
+  fetchProjectJobsSuccess: jobs => ({
+    type: FETCH_PROJECT_JOBS_SUCCESS,
+    payload: jobs
+  }),
+  fetchProjectFunctionsSuccess: functions => ({
+    type: FETCH_PROJECT_FUNCTIONS_SUCCESS,
+    payload: functions
   }),
   removeNewProject: () => ({ type: REMOVE_NEW_PROJECT }),
-  removeProject: () => ({ type: REMOVE_PROJECT }),
-  removeProjectError: () => ({ type: REMOVE_PROJECT_ERROR }),
+  removeProjectData: () => ({ type: REMOVE_PROJECT_DATA }),
   setNewProjectDescription: description => ({
     type: SET_NEW_PROJECT_DESCRIPTION,
     payload: description

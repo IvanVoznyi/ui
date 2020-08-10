@@ -153,7 +153,7 @@ const ChipForm = ({
     [refInputKey, refInputValue, setEditConfig]
   )
 
-  const handleOnChange = useCallback(
+  const handleOnChangeProject = useCallback(
     event => {
       event.preventDefault()
 
@@ -203,7 +203,7 @@ const ChipForm = ({
         className={labelKeyClassName}
         name="key"
         style={{ width: chip.keyFieldWidth }}
-        onChange={handleOnChange}
+        onChange={handleOnChangeProject}
         onFocus={handleOnFocus}
         placeholder="key"
         ref={refInputKey}
@@ -215,7 +215,7 @@ const ChipForm = ({
         autoComplete="off"
         className={labelValueClassName}
         name="value"
-        onChange={handleOnChange}
+        onChange={handleOnChangeProject}
         onFocus={handleOnFocus}
         placeholder="value"
         ref={refInputValue}

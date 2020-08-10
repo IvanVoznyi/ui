@@ -22,7 +22,13 @@ const SelectOption = ({ disabled, item, onClick, selectType, selectedId }) => {
   return (
     <div
       className={selectClassName}
-      onClick={() => !disabled && onClick(item.id)}
+      onClick={() => {
+        if (item.handler) {
+          item.handler()
+        } else {
+          !disabled && onClick(item.id)
+        }
+      }}
     >
       {item.icon && <span className="select__item__icon">{item.icon}</span>}
       {item.label}

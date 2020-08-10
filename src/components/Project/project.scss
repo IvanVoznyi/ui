@@ -3,206 +3,211 @@
 @import '../../scss/shadows.scss';
 
 .project {
-  &-header {
+  &__header {
     padding: 27px 24px;
     background-color: $white;
     box-shadow: $headerShadow;
   }
 
-  &-container {
+  &__content {
     display: flex;
     flex: 1;
     padding: 45px;
     background: $wildSandSecond;
+  }
 
-    &__left-panel {
+  &__main-info {
+    display: flex;
+    flex: 4;
+    flex-direction: column;
+
+    &__tool-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+
+      &__menu {
+        width: 155px;
+
+        .select {
+          &__header {
+            cursor: pointer;
+          }
+        }
+
+        &.launch-menu {
+          background-color: $white;
+
+          .select {
+            &__label {
+              color: $primary;
+            }
+          }
+        }
+
+        &.create-new-menu {
+          background-color: $purple;
+          border: none;
+
+          .select {
+            &__label {
+              color: $white;
+            }
+          }
+
+          svg {
+            path {
+              fill: $white;
+            }
+          }
+        }
+      }
+    }
+
+    &__jobs {
+      margin-right: 22px;
+    }
+
+    &__jobs,
+    &__functions {
+      position: relative;
       display: flex;
       flex: 1;
       flex-direction: column;
-      padding-right: 64px;
+      min-height: 491px;
+      background-color: rgba($white, 0.84);
+      border-radius: 4px;
 
-      &-project {
-        &__name {
-          display: flex;
-          flex: 2;
-          color: rgba($mulledWine, 0.88);
+      &-title {
+        min-width: 100%;
+        max-width: 100px;
+        margin-bottom: 16px;
+        color: $primary;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 23px;
+      }
+
+      &__link-all {
+        margin: 15px 20px 25px auto;
+        color: $cornflowerBlue;
+      }
+    }
+
+    &__wrapper {
+      z-index: 1;
+      padding: 20px;
+      background-color: $white;
+      box-shadow: $projectStatisticsShadow;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      background-color: $white;
+    }
+
+    &__statistics-section {
+      display: flex;
+    }
+  }
+
+  &__general-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-right: 64px;
+
+    &-project {
+      &__name {
+        display: flex;
+        flex: 2;
+        color: rgba($mulledWine, 0.88);
+        font-weight: 300;
+        font-size: 36px;
+        line-height: 42px;
+        cursor: pointer;
+
+        .input {
+          width: 100%;
           font-weight: 300;
           font-size: 36px;
-          line-height: 42px;
-          cursor: pointer;
-
-          .input {
-            width: 100%;
-            font-weight: 300;
-            font-size: 36px;
-          }
-        }
-
-        &__description {
-          color: rgba($mulledWine, 0.88);
-          font-weight: 500;
-          font-size: 14px;
-          line-height: 16px;
-          cursor: pointer;
-
-          .input {
-            width: 100%;
-          }
-        }
-
-        &__settings {
-          margin-left: 10px;
-        }
-
-        &-wrapper {
-          display: flex;
-          align-items: center;
-          margin-bottom: 16px;
         }
       }
 
-      &-status {
-        margin-bottom: 13px;
-        color: $primary;
+      &__description {
+        color: rgba($mulledWine, 0.88);
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        cursor: pointer;
 
-        &__label {
-          margin-right: 15px;
-          font-size: 14px;
-          line-height: 16px;
-        }
-
-        &__icon {
-          margin-right: 10px;
-        }
-
-        &__name {
-          text-transform: capitalize;
+        .input {
+          width: 100%;
         }
       }
 
-      &-owner {
-        color: $primary;
-
-        &__label {
-          margin-right: 15px;
-        }
+      &__settings {
+        margin-left: 10px;
       }
 
-      &-links {
+      &-wrapper {
         display: flex;
-        flex-direction: column;
-
-        &__label {
-          margin-bottom: 16px;
-          color: $primary;
-        }
-
-        &__link {
-          margin-bottom: 15px;
-          color: $cornflowerBlue;
-        }
-      }
-
-      &__divider {
-        margin: 17px 0;
-        border-top: $tableBorder;
+        align-items: center;
+        margin-bottom: 16px;
       }
     }
 
-    &__main-panel {
+    &-status {
+      margin-bottom: 13px;
+      color: $primary;
+
+      &__label {
+        margin-right: 15px;
+        font-size: 14px;
+        line-height: 16px;
+      }
+
+      &__icon {
+        margin-right: 10px;
+      }
+
+      &__name {
+        text-transform: capitalize;
+      }
+    }
+
+    &-owner {
+      color: $primary;
+
+      &__label {
+        margin-right: 15px;
+      }
+    }
+
+    &-links {
       display: flex;
-      flex: 4;
       flex-direction: column;
 
-      &__tool-bar {
-        display: flex;
-        justify-content: space-between;
+      &__label {
+        margin-bottom: 16px;
+        color: $primary;
+      }
+
+      &__link {
         margin-bottom: 15px;
-
-        &__menu {
-          width: 155px;
-
-          .select {
-            &__header {
-              cursor: pointer;
-            }
-          }
-
-          &.launch-menu {
-            background-color: $white;
-
-            .select {
-              &__label {
-                color: $primary;
-              }
-            }
-          }
-
-          &.create-new-menu {
-            background-color: $purple;
-            border: none;
-
-            .select {
-              &__label {
-                color: $white;
-              }
-            }
-
-            svg {
-              path {
-                fill: $white;
-              }
-            }
-          }
-        }
-      }
-
-      &__jobs {
-        margin-right: 22px;
-      }
-
-      &__jobs,
-      &__functions {
-        position: relative;
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        min-height: 491px;
-        background-color: rgba($white, 0.84);
-        border-radius: 4px;
-
-        &-title {
-          min-width: 100%;
-          max-width: 100px;
-          margin-bottom: 16px;
-          color: $primary;
-          font-weight: 500;
-          font-size: 20px;
-          line-height: 23px;
-        }
-
-        &__link-all {
-          margin: 15px 20px 25px auto;
-          color: $cornflowerBlue;
-        }
-      }
-
-      &__wrapper {
-        z-index: 1;
-        padding: 20px;
-        background-color: $white;
-        box-shadow: $projectStatisticsShadow;
-      }
-
-      .wrapper {
-        position: relative;
-        z-index: 1;
-        background-color: $white;
-      }
-
-      &__statistics-section {
-        display: flex;
+        color: $cornflowerBlue;
       }
     }
+
+    &__divider {
+      margin: 17px 0;
+      border-top: $tableBorder;
+    }
+  }
+
+  &__error-container {
+    margin: auto;
+    color: $primary;
   }
 }

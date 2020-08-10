@@ -36,9 +36,7 @@ const Projects = ({
   )
 
   useEffect(() => {
-    if (!match.params.projectName) {
-      fetchProjects()
-    }
+    fetchProjects()
   }, [fetchProjects, match.params.projectName])
 
   const handleCreateProject = () => {
@@ -125,13 +123,11 @@ const Projects = ({
       )}
       <div className="projects__header">
         <Breadcrumbs match={match} />
-        {!match.params.projectName && (
-          <PageActionsMenu
-            match={match}
-            onClick={() => setCreateProject(true)}
-            page={pageData.page}
-          />
-        )}
+        <PageActionsMenu
+          match={match}
+          onClick={() => setCreateProject(true)}
+          page={pageData.page}
+        />
       </div>
       <div className="projects__wrapper">
         {projectStore.projects.length !== 0 || !projectStore.error ? (

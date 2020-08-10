@@ -24,6 +24,7 @@ const Input = ({
   placeholder,
   required,
   requiredText,
+  focused,
   tip,
   type,
   value,
@@ -39,12 +40,15 @@ const Input = ({
   )
 
   const wrapperClassNames = classnames(wrapperClassName, 'input-wrapper')
-
   useEffect(() => {
     if (input.current.value.length > 0) {
       setInputIsFocused(true)
     }
-  }, [input])
+
+    if (focused) {
+      input.current.focus()
+    }
+  }, [input, focused])
 
   const handleClick = () => {
     if (input.current.value.length > 0) {
@@ -103,6 +107,7 @@ const Input = ({
 Input.defaultProps = {
   disabled: false,
   floatingLabel: false,
+  focused: false,
   iconClass: null,
   infoLabel: false,
   inputIcon: null,
@@ -122,6 +127,7 @@ Input.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   floatingLabel: PropTypes.bool,
+  focused: PropTypes.bool,
   iconClass: PropTypes.string,
   infoLabel: PropTypes.bool,
   inputIcon: PropTypes.element,
