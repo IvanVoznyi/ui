@@ -54,7 +54,7 @@ const JobsAndWorkflows = ({ fetchProjectJobs, jobs, match }) => {
       return {
         name: {
           value: job.metadata.name,
-          link: `/projects/${match.params.projectName}/jobs/${job.metadata.uid}/info`,
+          link: `/projects/${match.params.projectName}/jobs/monitor/${job.metadata.uid}/info`,
           className: 'table-cell_big'
         },
         type: {
@@ -122,7 +122,7 @@ const JobsAndWorkflows = ({ fetchProjectJobs, jobs, match }) => {
         <ProjectTable
           match={match}
           table={jobsTable}
-          linkAllItem={`projects/${match.params.projectName}/jobs/monitor`}
+          linkAllItem={`/projects/${match.params.projectName}/jobs/monitor`}
         />
       )}
     </div>
@@ -135,4 +135,4 @@ JobsAndWorkflows.propTypes = {
   match: PropTypes.shape({}).isRequired
 }
 
-export default JobsAndWorkflows
+export default React.memo(JobsAndWorkflows)

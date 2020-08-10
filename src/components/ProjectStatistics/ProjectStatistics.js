@@ -25,4 +25,4 @@ const ProjectStatistics = ({ statistics }) => {
   })
 }
 
-export default ProjectStatistics
+export default React.memo(ProjectStatistics)

@@ -255,7 +255,9 @@ const Project = ({
                   Status:
                 </span>
                 <i className={statusClassName}></i>
-                <span>{project.data.state}</span>
+                <span className="project-container__left-panel-status__name">
+                  {project.data.state}
+                </span>
               </div>
             )}
             <div className="project-container__left-panel-owner">

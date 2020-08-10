@@ -63,16 +63,20 @@
 
       &-status {
         margin-bottom: 13px;
+        color: $primary;
 
         &__label {
           margin-right: 15px;
-          color: $primary;
           font-size: 14px;
           line-height: 16px;
         }
 
         &__icon {
           margin-right: 10px;
+        }
+
+        &__name {
+          text-transform: capitalize;
         }
       }
 

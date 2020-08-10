@@ -97,4 +97,4 @@ ProjectTable.propTypes = {
   linkAllItem: PropTypes.string.isRequired
 }
 
-export default ProjectTable
+export default React.memo(ProjectTable)

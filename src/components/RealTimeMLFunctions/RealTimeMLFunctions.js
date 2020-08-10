@@ -87,7 +87,7 @@ const RealTimeMLFunction = ({ fetchProjectFunctions, functions, match }) => {
         <ProjectTable
           match={match}
           table={functionsTable}
-          linkAllItem={`projects/${match.params.projectName}/functions`}
+          linkAllItem={`/projects/${match.params.projectName}/functions`}
         />
       )}
     </div>
@@ -100,4 +100,4 @@ RealTimeMLFunction.propTypes = {
   match: PropTypes.shape({}).isRequired
 }
 
-export default RealTimeMLFunction
+export default React.memo(RealTimeMLFunction)
