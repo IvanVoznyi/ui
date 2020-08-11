@@ -88,7 +88,7 @@ const Project = ({
     }
 
     closeEditMode()
-    projectsApi.editProject(match.params.projectName, data)
+    projectsApi.updateProject(match.params.projectName, data)
     history.push(`/projects/${data.name}`)
   }, [closeEditMode, editProject, history, match, projectStore.project])
 

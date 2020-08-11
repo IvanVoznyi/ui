@@ -8,6 +8,7 @@ import ProjectStatistics from '../../elements/ProjectStatistics/ProjectStatistic
 import NoData from '../../common/NoData/NoData'
 
 import { getJobsStatistics, getJobsTableData } from './projectJobs.utils'
+import { Link } from 'react-router-dom'
 
 const ProjectJobs = ({ match, jobs, fetchProjectJobs }) => {
   useEffect(() => {
@@ -24,13 +25,13 @@ const ProjectJobs = ({ match, jobs, fetchProjectJobs }) => {
   }, [jobs, match])
 
   return (
-    <div className="project__main-info__jobs">
-      <div className="project__main-info__wrapper">
-        <div className="project__main-info__jobs-title data-ellipsis">
+    <div className="project-data-card">
+      <div className="project-data-card__header">
+        <div className="project-data-card__header__title data-ellipsis">
           Jobs and Workflows
         </div>
         {!isEmpty(jobs.data) && (
-          <div className="project__main-info__statistics">
+          <div className="project-data-card__statistics">
             <ProjectStatistics statistics={jobsData.statistics} />
           </div>
         )}
@@ -44,11 +45,15 @@ const ProjectJobs = ({ match, jobs, fetchProjectJobs }) => {
       ) : isEmpty(jobs.data) ? (
         <NoData />
       ) : (
-        <ProjectTable
-          match={match}
-          table={jobsData.table}
-          seeAllLink={`/projects/${match.params.projectName}/jobs/monitor`}
-        />
+        <>
+          <ProjectTable match={match} table={jobsData.table} />
+          <Link
+            className="project-data-card__link-all"
+            to={`/projects/${match.params.projectName}/jobs/monitor`}
+          >
+            See all
+          </Link>
+        </>
       )}
     </div>
   )

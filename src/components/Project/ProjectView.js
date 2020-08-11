@@ -1,18 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 
 import Breadcrumbs from '../../common/Breadcrumbs/Breadcrumbs'
-import ProjectJobs from '../ProjectJobs/ProjectJobs'
+import Input from '../../common/Input/Input'
 import Loader from '../../common/Loader/Loader'
 import NoData from '../../common/NoData/NoData'
-import RealTimeMLFunctions from '../ProjectFunctions/ProjectFunctions'
+import ProjectFunctions from '../ProjectFunctions/ProjectFunctions'
+import ProjectJobs from '../ProjectJobs/ProjectJobs'
 import RegisterArtifactPopup from '../RegisterArtifactPopup/RegisterArtifactPopup'
 import Select from '../../common/Select/Select'
 
 import { ReactComponent as Settings } from '../../images/settings.svg'
-import Input from '../../common/Input/Input'
 
 const ProjectView = ({
   createNewOptions,
@@ -47,16 +47,15 @@ const ProjectView = ({
         <NoData />
       ) : (
         <div className="project__content">
-          <div className="project__general-info">
-            <div className="project__general-info-project">
-              <div className="project__general-info-project-wrapper">
+          <div className="general-info">
+            <div className="general-info__main-data">
+              <div className="general-info__main-data-wrapper">
                 <div
-                  className="project__general-info-project__name"
+                  className="general-info__name"
                   onClick={() => handleEditProject('name')}
                 >
                   {editProject.name.isEdit ? (
                     <Input
-                      className="input"
                       name="name"
                       onChange={handleOnChangeProject}
                       onKeyDown={handleOnKeyDown}
@@ -70,15 +69,14 @@ const ProjectView = ({
                     editProject.name.value ?? projectStore.project.data.name
                   )}
                 </div>
-                <Settings className="project__general-info-project__settings" />
+                <Settings className="general-info__settings" />
               </div>
               <div
-                className="project__general-info-project__description"
+                className="general-info__description"
                 onClick={() => handleEditProject('description')}
               >
                 {editProject.description.isEdit ? (
                   <Input
-                    className="input"
                     name="description"
                     onChange={handleOnChangeProject}
                     onKeyDown={handleOnKeyDown}
@@ -95,32 +93,28 @@ const ProjectView = ({
                 )}
               </div>
             </div>
-            <div className="project__general-info__divider"></div>
+            <div className="general-info__divider"></div>
             {projectStore.project.data.state && (
-              <div className="project__general-info-status">
-                <span className="project__general-info-status__label">
-                  Status:
-                </span>
+              <div className="general-info__status">
+                <span className="general-info__status-label">Status:</span>
                 <i className={statusClassName}></i>
-                <span className="project__general-info-status__name">
+                <span className="general-info__status-name">
                   {projectStore.project.data.state}
                 </span>
               </div>
             )}
-            <div className="project__general-info-owner">
-              <span className="project__general-info-owner__label">Owner:</span>
+            <div className="general-info__owner">
+              <span className="general-info__owner-label">Owner:</span>
               <span>{projectStore.project.data.owner}</span>
             </div>
-            <div className="project__general-info__divider"></div>
-            <div className="project__general-info-links">
-              <div className="project__general-info-links__label">
-                Quick Links
-              </div>
+            <div className="general-info__divider"></div>
+            <div className="general-info__links">
+              <div className="general-info__links-label">Quick Links</div>
               {links.map(({ label, link }) => {
                 return (
                   <Link
                     key={label}
-                    className="project__general-info-links__link"
+                    className="general-info__links-link"
                     to={link}
                   >
                     {label}
@@ -129,10 +123,10 @@ const ProjectView = ({
               })}
             </div>
           </div>
-          <div className="project__main-info">
-            <div className="project__main-info__tool-bar">
+          <div className="main-info">
+            <div className="main-info__toolbar">
               <Select
-                className="project__main-info__tool-bar__menu launch-menu"
+                className="main-info__toolbar__menu launch-menu"
                 hideLabel
                 label="Launch IDE"
                 match={match}
@@ -140,20 +134,20 @@ const ProjectView = ({
                 options={launchIDEOptions}
               />
               <Select
-                className="project__main-info__tool-bar__menu create-new-menu"
+                className="main-info__toolbar__menu create-new-menu"
                 hideLabel
                 label="Create new"
                 match={match}
                 options={createNewOptions}
               />
             </div>
-            <div className="project__main-info__statistics-section">
+            <div className="main-info__statistics-section">
               <ProjectJobs
                 fetchProjectJobs={fetchProjectJobs}
                 jobs={projectStore.project.jobs}
                 match={match}
               />
-              <RealTimeMLFunctions
+              <ProjectFunctions
                 fetchProjectFunctions={fetchProjectFunctions}
                 functionsStore={projectStore.project.functions}
                 match={match}

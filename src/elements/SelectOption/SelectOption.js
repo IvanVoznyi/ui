@@ -30,7 +30,7 @@ const SelectOption = ({ disabled, item, onClick, selectType, selectedId }) => {
         }
       }}
     >
-      {item.icon && <span className="select__item__icon">{item.icon}</span>}
+      {item.icon && <span className="select__icon">{item.icon}</span>}
       {item.label}
       {item.subLabel && (
         <Tooltip

@@ -24,10 +24,12 @@ import {
 const projectsAction = {
   createNewProject: postData => dispatch => {
     dispatch(projectsAction.createProjectBegin())
+
     return projectsApi
       .createProject(postData)
       .then(result => {
         dispatch(projectsAction.createProjectSuccess())
+
         return result
       })
       .catch(error => {

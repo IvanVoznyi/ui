@@ -9,15 +9,15 @@ import TextTooltipTemplate from '../../elements/TooltipTemplate/TextTooltipTempl
 
 import './projectTable.scss'
 
-const ProjectTable = ({ seeAllLink, table }) => {
+const ProjectTable = ({ table }) => {
   return (
     <>
-      <div className="project__main-info__table">
-        <div className="project__main-info__table-header">
+      <div className="project-data-card__table">
+        <div className="project-data-card__table-header">
           {table.header.map(header => (
             <div
               key={header.value}
-              className={`project__main-info__table-header__item ${header.className}`}
+              className={`project-data-card__table-header__item ${header.className}`}
             >
               <Tooltip template={<TextTooltipTemplate text={header.value} />}>
                 {header.value}
@@ -25,13 +25,13 @@ const ProjectTable = ({ seeAllLink, table }) => {
             </div>
           ))}
         </div>
-        <div className="project__main-info__table-body">
+        <div className="project-data-card__table-body">
           {table.body.map((body, index) => {
             return (
-              <div key={index} className="project__main-info__table-body__row">
+              <div key={index} className="project-data-card__table-body__row">
                 {Object.keys(body).map((key, index) => {
                   const tableValueClassName = classnames(
-                    'project__main-info__table-body__row-value',
+                    'project-data-card__table-body__row-value',
                     body[key].className,
                     key === 'status' && `status_${body[key].value} capitalize`
                   )
@@ -48,7 +48,7 @@ const ProjectTable = ({ seeAllLink, table }) => {
                     >
                       {key === 'name' ? (
                         <Link
-                          className="project__main-info__table-body__row-value__link"
+                          className="project-data-card__table-body__row-value__link"
                           to={body[key].link}
                         >
                           <Tooltip
@@ -76,16 +76,12 @@ const ProjectTable = ({ seeAllLink, table }) => {
           })}
         </div>
       </div>
-      <Link className="project__main-info__jobs__link-all" to={seeAllLink}>
-        See all
-      </Link>
     </>
   )
 }
 
 ProjectTable.propTypes = {
-  table: PropTypes.shape({}).isRequired,
-  seeAllLink: PropTypes.string.isRequired
+  table: PropTypes.shape({}).isRequired
 }
 
 export default React.memo(ProjectTable)

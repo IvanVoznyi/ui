@@ -1,25 +1,26 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import './projectStatistics.scss'
 import Tooltip from '../../common/Tooltip/Tooltip'
 import TextTooltipTemplate from '../TooltipTemplate/TextTooltipTemplate'
+
+import './projectStatistics.scss'
 
 const ProjectStatistics = ({ statistics }) => {
   return Object.keys(statistics).map((key, index) => {
     return (
-      <div key={key + index} className="project__main-info__statistics-item">
+      <div key={key + index} className="project-data-card__statistics-item">
         <Link
-          className="project__main-info__statistics-item__link"
+          className="project-data-card__statistics-link"
           to={statistics[key].link}
         >
           <div
-            className={`project__main-info__statistics-item__value statistics_${statistics[key].className}`}
+            className={`project-data-card__statistics-value statistics_${statistics[key].className}`}
           >
             {statistics[key].value}
           </div>
-          <div className="project__main-info__statistics-item__label">
+          <div className="project-data-card__statistics-label">
             <Tooltip
               template={<TextTooltipTemplate text={statistics[key].label} />}
             >

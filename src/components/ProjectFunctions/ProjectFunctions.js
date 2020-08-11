@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
+import { isEmpty } from 'lodash'
 
 import ProjectTable from '../ProjectTable/ProjectTable'
 import ProjectStatistics from '../../elements/ProjectStatistics/ProjectStatistics'
 import Loader from '../../common/Loader/Loader'
 import NoData from '../../common/NoData/NoData'
+import { Link } from 'react-router-dom'
 
 const ProjectFunctions = ({ fetchProjectFunctions, functionsStore, match }) => {
   useEffect(() => {
@@ -64,13 +65,13 @@ const ProjectFunctions = ({ fetchProjectFunctions, functionsStore, match }) => {
   }, [functionsStore, match.params.projectName])
 
   return (
-    <div className="project__main-info__functions">
-      <div className="project__main-info__wrapper">
-        <div className="project__main-info__functions-title data-ellipsis">
+    <div className="project-data-card">
+      <div className="project-data-card__header">
+        <div className="project-data-card__header__title data-ellipsis">
           Real-Time and ML functions
         </div>
-        {!_.isEmpty(functionsStore.data) && (
-          <div className="project__main-info__statistics">
+        {!isEmpty(functionsStore.data) && (
+          <div className="project-data-card__statistics">
             <ProjectStatistics statistics={functions} />
           </div>
         )}
@@ -81,14 +82,18 @@ const ProjectFunctions = ({ fetchProjectFunctions, functionsStore, match }) => {
         <div className="error_container">
           <h1>{functionsStore.error}</h1>
         </div>
-      ) : _.isEmpty(functionsStore.data) ? (
+      ) : isEmpty(functionsStore.data) ? (
         <NoData />
       ) : (
-        <ProjectTable
-          match={match}
-          table={functionsTable}
-          seeAllLink={`/projects/${match.params.projectName}/functions`}
-        />
+        <>
+          <ProjectTable match={match} table={functionsTable} />
+          <Link
+            className="project-data-card__link-all"
+            to={`/projects/${match.params.projectName}/functions`}
+          >
+            See all
+          </Link>
+        </>
       )}
     </div>
   )

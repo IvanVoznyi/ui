@@ -14,111 +14,20 @@
     flex: 1;
     padding: 45px;
     background: $wildSandSecond;
-  }
 
-  &__main-info {
-    display: flex;
-    flex: 4;
-    flex-direction: column;
-
-    &__tool-bar {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-
-      &__menu {
-        width: 155px;
-
-        .select {
-          &__header {
-            cursor: pointer;
-          }
-        }
-
-        &.launch-menu {
-          background-color: $white;
-
-          .select {
-            &__label {
-              color: $primary;
-            }
-          }
-        }
-
-        &.create-new-menu {
-          background-color: $purple;
-          border: none;
-
-          .select {
-            &__label {
-              color: $white;
-            }
-          }
-
-          svg {
-            path {
-              fill: $white;
-            }
-          }
-        }
-      }
-    }
-
-    &__jobs {
-      margin-right: 22px;
-    }
-
-    &__jobs,
-    &__functions {
-      position: relative;
+    .general-info {
       display: flex;
       flex: 1;
       flex-direction: column;
-      min-height: 491px;
-      background-color: rgba($white, 0.84);
-      border-radius: 4px;
+      padding-right: 64px;
 
-      &-title {
-        min-width: 100%;
-        max-width: 100px;
-        margin-bottom: 16px;
-        color: $primary;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 23px;
+      &__main-data {
+        &-wrapper {
+          display: flex;
+          align-items: center;
+        }
       }
 
-      &__link-all {
-        margin: 15px 20px 25px auto;
-        color: $cornflowerBlue;
-      }
-    }
-
-    &__wrapper {
-      z-index: 1;
-      padding: 20px;
-      background-color: $white;
-      box-shadow: $projectStatisticsShadow;
-    }
-
-    .wrapper {
-      position: relative;
-      z-index: 1;
-      background-color: $white;
-    }
-
-    &__statistics-section {
-      display: flex;
-    }
-  }
-
-  &__general-info {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    padding-right: 64px;
-
-    &-project {
       &__name {
         display: flex;
         flex: 2;
@@ -135,7 +44,12 @@
         }
       }
 
+      &__settings {
+        margin-left: 10px;
+      }
+
       &__description {
+        margin-top: 16px;
         color: rgba($mulledWine, 0.88);
         font-weight: 500;
         font-size: 14px;
@@ -147,62 +61,147 @@
         }
       }
 
-      &__settings {
-        margin-left: 10px;
+      &__status {
+        margin-bottom: 13px;
+        color: $primary;
+
+        &-label {
+          margin-right: 15px;
+          font-size: 14px;
+          line-height: 16px;
+        }
+
+        &__icon {
+          margin-right: 10px;
+        }
+
+        &-name {
+          text-transform: capitalize;
+        }
       }
 
-      &-wrapper {
+      &__owner {
+        color: $primary;
+
+        &-label {
+          margin-right: 15px;
+        }
+      }
+
+      &__links {
         display: flex;
-        align-items: center;
-        margin-bottom: 16px;
+        flex-direction: column;
+
+        &-label {
+          margin-bottom: 16px;
+          color: $primary;
+        }
+
+        &-link {
+          margin-bottom: 15px;
+          color: $cornflowerBlue;
+        }
+      }
+
+      &__divider {
+        margin: 17px 0;
+        border-top: $tableBorder;
       }
     }
 
-    &-status {
-      margin-bottom: 13px;
-      color: $primary;
-
-      &__label {
-        margin-right: 15px;
-        font-size: 14px;
-        line-height: 16px;
-      }
-
-      &__icon {
-        margin-right: 10px;
-      }
-
-      &__name {
-        text-transform: capitalize;
-      }
-    }
-
-    &-owner {
-      color: $primary;
-
-      &__label {
-        margin-right: 15px;
-      }
-    }
-
-    &-links {
+    .main-info {
       display: flex;
+      flex: 4;
       flex-direction: column;
 
-      &__label {
-        margin-bottom: 16px;
-        color: $primary;
-      }
-
-      &__link {
+      &__toolbar {
+        display: flex;
+        justify-content: space-between;
         margin-bottom: 15px;
-        color: $cornflowerBlue;
-      }
-    }
 
-    &__divider {
-      margin: 17px 0;
-      border-top: $tableBorder;
+        &__menu {
+          width: 155px;
+
+          .select {
+            &__header {
+              cursor: pointer;
+            }
+          }
+
+          &.launch-menu {
+            background-color: $white;
+
+            .select {
+              &__label {
+                color: $primary;
+              }
+            }
+          }
+
+          &.create-new-menu {
+            background-color: $purple;
+            border: none;
+
+            .select {
+              &__label {
+                color: $white;
+              }
+            }
+
+            svg {
+              path {
+                fill: $white;
+              }
+            }
+          }
+        }
+      }
+
+      .project-data-card {
+        position: relative;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        min-height: 491px;
+        background-color: rgba($white, 0.84);
+        border-radius: 4px;
+
+        &__header {
+          z-index: 1;
+          padding: 20px;
+          background-color: $white;
+          box-shadow: $projectStatisticsShadow;
+
+          &__title {
+            min-width: 100%;
+            max-width: 100px;
+            margin-bottom: 16px;
+            color: $primary;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 23px;
+          }
+        }
+
+        &__link-all {
+          margin: 15px 20px 25px auto;
+          color: $cornflowerBlue;
+        }
+
+        &:first-child {
+          margin-right: 20px;
+        }
+      }
+
+      .wrapper {
+        position: relative;
+        z-index: 1;
+        background-color: $white;
+      }
+
+      &__statistics-section {
+        display: flex;
+      }
     }
   }
 
