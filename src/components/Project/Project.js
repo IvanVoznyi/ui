@@ -8,11 +8,7 @@ import ProjectView from './ProjectView'
 
 import projectsAction from '../../actions/projects'
 import projectsApi from '../../api/projects-api'
-import {
-  launchIDEOptions,
-  getLinks,
-  getCreateNewOptions
-} from './project.utils'
+import { launchIDEOptions, getLinks } from './project.utils'
 
 import './project.scss'
 
@@ -36,19 +32,30 @@ const Project = ({
     }
   })
   const history = useHistory()
+  const inputRef = React.createRef(null)
 
   const statusClassName = classnames(
-    'project-container__left-panel-status__icon',
+    'general-info__status-icon',
     projectStore.project.data?.state
   )
 
   const { links, createNewOptions } = useMemo(() => {
     const links = getLinks(match)
-    const createNewOptions = getCreateNewOptions(
-      history,
-      match,
-      setIsPopupDialogOpen
-    )
+    const createNewOptions = [
+      {
+        label: 'Job',
+        id: 'job',
+        handler: () =>
+          history.push(
+            `/projects/${match.params.projectName}/jobs/monitor/create-new-job`
+          )
+      },
+      {
+        label: 'Register artifact',
+        id: 'registerArtifact',
+        handler: () => setIsPopupDialogOpen(true)
+      }
+    ]
     return {
       links,
       createNewOptions
@@ -94,11 +101,11 @@ const Project = ({
 
   const handleDocumentClick = useCallback(
     event => {
-      if (event.target.nodeName !== 'INPUT') {
+      if (inputRef.current && event.target !== inputRef.current) {
         handleSetProjectData()
       }
     },
-    [handleSetProjectData]
+    [handleSetProjectData, inputRef]
   )
 
   useEffect(() => {
@@ -157,6 +164,7 @@ const Project = ({
 
   return (
     <ProjectView
+      ref={inputRef}
       createNewOptions={createNewOptions}
       editProject={editProject}
       fetchProjectFunctions={fetchProjectFunctions}

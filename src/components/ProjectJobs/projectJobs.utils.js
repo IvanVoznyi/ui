@@ -49,8 +49,7 @@ export const getJobsTableData = (jobs, match) => {
         },
         type: {
           value: job.metadata.kind ?? '',
-          class:
-            'project__content__main-panel__table-body__row-value table-cell_small'
+          class: 'project-data-card__table-body-row__cell table-cell_small'
         },
         status: {
           value: job.status.state === 'error' ? 'failed' : job.status.state,

@@ -12,7 +12,7 @@
     font-size: 14px;
     line-height: 24px;
 
-    &__item {
+    &-cell {
       display: flex;
       flex: 1;
       padding: 20px 5px 10px 0;
@@ -29,13 +29,13 @@
     flex: 1;
     flex-direction: column;
 
-    &__row {
+    &-row {
       display: flex;
       flex: 1;
       flex-direction: row;
       border-bottom: $tableBorderSecond;
 
-      &-value {
+      &__cell {
         display: flex;
         padding: 10px 5px 10px 0;
         color: $primary;
@@ -52,7 +52,7 @@
           }
         }
 
-        &__link {
+        &-link {
           min-width: 100%;
           max-width: 50px;
           color: $cornflowerBlue;
@@ -74,7 +74,6 @@
   }
 
   .table-body__cell {
-    display: flex;
     align-items: center;
     border: none;
   }
@@ -99,8 +98,4 @@
     flex: 0.5;
     min-width: 50px;
   }
-}
-
-.capitalize {
-  text-transform: capitalize;
 }

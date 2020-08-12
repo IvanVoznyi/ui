@@ -15,11 +15,11 @@ const ProjectFunctions = ({ fetchProjectFunctions, functionsStore, match }) => {
 
   const functions = useMemo(() => {
     if (!functionsStore.data) return
-    const totalFunction = functionsStore.data.length
+    const functionsCount = functionsStore.data.length
 
     return {
-      ml: {
-        value: totalFunction,
+      data: {
+        value: functionsCount,
         label: 'ML',
         className: 'default',
         link: `/projects/${match.params.projectName}/functions`
@@ -48,8 +48,7 @@ const ProjectFunctions = ({ fetchProjectFunctions, functionsStore, match }) => {
         },
         type: {
           value: func.metadata.kind ?? '',
-          class:
-            'project__content__main-panel__table-body__row-value table-cell_small'
+          class: 'project-data-card__table-body-row__cell table-cell_small'
         },
         status: {
           value: func?.status?.state ?? '',
@@ -67,7 +66,7 @@ const ProjectFunctions = ({ fetchProjectFunctions, functionsStore, match }) => {
   return (
     <div className="project-data-card">
       <div className="project-data-card__header">
-        <div className="project-data-card__header__title data-ellipsis">
+        <div className="project-data-card__title data-ellipsis">
           Real-Time and ML functions
         </div>
         {!isEmpty(functionsStore.data) && (
@@ -88,7 +87,7 @@ const ProjectFunctions = ({ fetchProjectFunctions, functionsStore, match }) => {
         <>
           <ProjectTable match={match} table={functionsTable} />
           <Link
-            className="project-data-card__link-all"
+            className="project-data-card__see-all-link"
             to={`/projects/${match.params.projectName}/functions`}
           >
             See all

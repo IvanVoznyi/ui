@@ -13,7 +13,7 @@ const Select = ({
   disabled,
   disabledOptions,
   floatingLabel,
-  hideLabel,
+  hideSelectedOption,
   label,
   match,
   onClick,
@@ -59,7 +59,7 @@ const Select = ({
     <div className={selectClassName} onClick={() => toggleOpen(disabled)}>
       <div className="select__header">
         {label && <div className={selectLabelClassName}>{label}</div>}
-        {!hideLabel && (
+        {!hideSelectedOption && (
           <div className={selectValueClassName}>
             {selectedId && selectedOption?.label}
             {selectedOption?.subLabel && (
@@ -96,7 +96,7 @@ Select.defaultProps = {
   className: '',
   disabled: false,
   disabledOptions: [],
-  hideLabel: false,
+  hideSelectedOption: false,
   label: '',
   onClick: null,
   selectType: '',
@@ -108,7 +108,7 @@ Select.propTypes = {
   disabled: PropTypes.bool,
   disabledOptions: PropTypes.array,
   floatingLabel: PropTypes.bool,
-  hideLabel: PropTypes.bool,
+  hideSelectedOption: PropTypes.bool,
   label: PropTypes.string,
   onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   options: PropTypes.array.isRequired,

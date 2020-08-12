@@ -33,19 +33,3 @@ export const getLinks = match => [
     link: `/projects/${match.params.projectName}/functions`
   }
 ]
-
-export const getCreateNewOptions = (history, match, callback) => [
-  {
-    label: 'Job',
-    id: 'job',
-    handler: () =>
-      history.push(
-        `/projects/${match.params.projectName}/jobs/monitor/create-new-job`
-      )
-  },
-  {
-    label: 'Register artifact',
-    id: 'registerArtifact',
-    handler: () => callback(true)
-  }
-]

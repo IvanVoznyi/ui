@@ -17,7 +17,7 @@ const ProjectTable = ({ table }) => {
           {table.header.map(header => (
             <div
               key={header.value}
-              className={`project-data-card__table-header__item ${header.className}`}
+              className={`project-data-card__table-header-cell ${header.className}`}
             >
               <Tooltip template={<TextTooltipTemplate text={header.value} />}>
                 {header.value}
@@ -28,10 +28,10 @@ const ProjectTable = ({ table }) => {
         <div className="project-data-card__table-body">
           {table.body.map((body, index) => {
             return (
-              <div key={index} className="project-data-card__table-body__row">
+              <div key={index} className="project-data-card__table-body-row">
                 {Object.keys(body).map((key, index) => {
                   const tableValueClassName = classnames(
-                    'project-data-card__table-body__row-value',
+                    'project-data-card__table-body-row__cell',
                     body[key].className,
                     key === 'status' && `status_${body[key].value} capitalize`
                   )
@@ -48,7 +48,7 @@ const ProjectTable = ({ table }) => {
                     >
                       {key === 'name' ? (
                         <Link
-                          className="project-data-card__table-body__row-value__link"
+                          className="project-data-card__table-body-row__cell-link"
                           to={body[key].link}
                         >
                           <Tooltip

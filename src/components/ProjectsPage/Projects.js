@@ -37,7 +37,7 @@ const Projects = ({
 
   useEffect(() => {
     fetchProjects()
-  }, [fetchProjects, match.params.projectName])
+  }, [fetchProjects])
 
   const handleCreateProject = () => {
     if (projectStore.newProject.name.length === 0) {

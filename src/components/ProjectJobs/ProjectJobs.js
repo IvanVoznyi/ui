@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 
 import Loader from '../../common/Loader/Loader'
-import ProjectTable from '../ProjectTable/ProjectTable'
-import ProjectStatistics from '../../elements/ProjectStatistics/ProjectStatistics'
 import NoData from '../../common/NoData/NoData'
+import ProjectStatistics from '../../elements/ProjectStatistics/ProjectStatistics'
+import ProjectTable from '../ProjectTable/ProjectTable'
 
-import { getJobsStatistics, getJobsTableData } from './projectJobs.utils'
 import { Link } from 'react-router-dom'
+import { getJobsStatistics, getJobsTableData } from './projectJobs.utils'
 
 const ProjectJobs = ({ match, jobs, fetchProjectJobs }) => {
   useEffect(() => {
@@ -27,7 +27,7 @@ const ProjectJobs = ({ match, jobs, fetchProjectJobs }) => {
   return (
     <div className="project-data-card">
       <div className="project-data-card__header">
-        <div className="project-data-card__header__title data-ellipsis">
+        <div className="project-data-card__title data-ellipsis">
           Jobs and Workflows
         </div>
         {!isEmpty(jobs.data) && (
@@ -48,7 +48,7 @@ const ProjectJobs = ({ match, jobs, fetchProjectJobs }) => {
         <>
           <ProjectTable match={match} table={jobsData.table} />
           <Link
-            className="project-data-card__link-all"
+            className="project-data-card__see-all-link"
             to={`/projects/${match.params.projectName}/jobs/monitor`}
           >
             See all
