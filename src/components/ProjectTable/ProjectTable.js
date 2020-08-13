@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import classnames from 'classnames'
+import { Link } from 'react-router-dom'
 
 import TableTypeCell from '../../elements/TableTypeCell/TableTypeCell'
-import Tooltip from '../../common/Tooltip/Tooltip'
 import TextTooltipTemplate from '../../elements/TooltipTemplate/TextTooltipTemplate'
+import Tooltip from '../../common/Tooltip/Tooltip'
 
 import './projectTable.scss'
 
@@ -17,7 +17,7 @@ const ProjectTable = ({ table }) => {
           {table.header.map(header => (
             <div
               key={header.value}
-              className={`project-data-card__table-header-cell ${header.className}`}
+              className={`project-data-card__table-cell ${header.className} table-header__item`}
             >
               <Tooltip template={<TextTooltipTemplate text={header.value} />}>
                 {header.value}
@@ -28,10 +28,10 @@ const ProjectTable = ({ table }) => {
         <div className="project-data-card__table-body">
           {table.body.map((body, index) => {
             return (
-              <div key={index} className="project-data-card__table-body-row">
+              <div key={index} className="project-data-card__table-row">
                 {Object.keys(body).map((key, index) => {
                   const tableValueClassName = classnames(
-                    'project-data-card__table-body-row__cell',
+                    'project-data-card__table-cell',
                     body[key].className,
                     key === 'status' && `status_${body[key].value} capitalize`
                   )
@@ -48,7 +48,7 @@ const ProjectTable = ({ table }) => {
                     >
                       {key === 'name' ? (
                         <Link
-                          className="project-data-card__table-body-row__cell-link"
+                          className="project-data-card__table-link"
                           to={body[key].link}
                         >
                           <Tooltip

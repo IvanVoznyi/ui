@@ -171,16 +171,16 @@
           padding: 20px;
           background-color: $white;
           box-shadow: $projectStatisticsShadow;
-        }
 
-        &__title {
-          min-width: 100%;
-          max-width: 100px;
-          margin-bottom: 16px;
-          color: $primary;
-          font-weight: 500;
-          font-size: 20px;
-          line-height: 23px;
+          &-text {
+            min-width: 100%;
+            max-width: 100px;
+            margin-bottom: 16px;
+            color: $primary;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 23px;
+          }
         }
 
         &__see-all-link {

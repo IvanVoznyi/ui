@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import ProjectView from './ProjectView'
 
@@ -56,6 +56,7 @@ const Project = ({
         handler: () => setIsPopupDialogOpen(true)
       }
     ]
+
     return {
       links,
       createNewOptions
@@ -164,7 +165,6 @@ const Project = ({
 
   return (
     <ProjectView
-      ref={inputRef}
       createNewOptions={createNewOptions}
       editProject={editProject}
       fetchProjectFunctions={fetchProjectFunctions}
@@ -179,6 +179,7 @@ const Project = ({
       links={links}
       match={match}
       projectStore={projectStore}
+      ref={inputRef}
       setIsPopupDialogOpen={setIsPopupDialogOpen}
       statusClassName={statusClassName}
     />

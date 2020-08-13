@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { ReactComponent as Jupyter } from '../../images/jupyter.svg'
 import { ReactComponent as VSCode } from '../../images/vs-code.svg'
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 
 import Breadcrumbs from '../../common/Breadcrumbs/Breadcrumbs'
@@ -136,7 +136,6 @@ const ProjectView = React.forwardRef(
                   className="main-info__toolbar-menu launch-menu"
                   hideSelectedOption
                   label="Launch IDE"
-                  match={match}
                   onClick={handleLaunchIDE}
                   options={launchIDEOptions}
                 />
@@ -144,7 +143,6 @@ const ProjectView = React.forwardRef(
                   className="main-info__toolbar-menu create-new-menu"
                   hideSelectedOption
                   label="Create new"
-                  match={match}
                   options={createNewOptions}
                 />
               </div>

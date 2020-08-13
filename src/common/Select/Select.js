@@ -15,7 +15,6 @@ const Select = ({
   floatingLabel,
   hideSelectedOption,
   label,
-  match,
   onClick,
   options,
   selectType,
@@ -73,13 +72,19 @@ const Select = ({
         <>
           <div className="overall" />
           <div className="select__body" onClick={handleSelectValue}>
-            {options.map(item => {
+            {options.map(option => {
               return (
                 <SelectOption
-                  disabled={disabledOptions.includes(item.id.toLowerCase())}
-                  item={item}
-                  key={item.id}
-                  onClick={item => onClick(item)}
+                  disabled={disabledOptions.includes(option.id.toLowerCase())}
+                  item={option}
+                  key={option.id}
+                  onClick={selectedOption => {
+                    if (option.handler) {
+                      option.handler()
+                    } else {
+                      onClick(selectedOption)
+                    }
+                  }}
                   selectType={selectType}
                   selectedId={selectedId}
                 />
