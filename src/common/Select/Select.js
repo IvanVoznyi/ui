@@ -79,11 +79,8 @@ const Select = ({
                   item={option}
                   key={option.id}
                   onClick={selectedOption => {
-                    if (option.handler) {
-                      option.handler()
-                    } else {
-                      onClick(selectedOption)
-                    }
+                    option.handler && option.handler()
+                    onClick && onClick(selectedOption)
                   }}
                   selectType={selectType}
                   selectedId={selectedId}
