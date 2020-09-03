@@ -28,7 +28,6 @@ const ScheduleJob = ({ handleRunJob, match, setOpenScheduleJob }) => {
     initialState
   )
   const [error, setError] = useState('')
-  const [cronString, setCronString] = useState('*/10 * * * *')
   const startWeek = getWeekStart(decodeLocale(navigator.language))
   const daysOfWeek = getWeekDays(startWeek)
 
@@ -69,19 +68,16 @@ const ScheduleJob = ({ handleRunJob, match, setOpenScheduleJob }) => {
 
   const onSchedule = useCallback(
     event => {
-      const generateCron = activeTab === 'cronstring' ? cronString : cron
-
-      handleRunJob(event, generateCron)
+      handleRunJob(event, cron)
       setOpenScheduleJob(false)
     },
-    [activeTab, cron, cronString, handleRunJob, setOpenScheduleJob]
+    [cron, handleRunJob, setOpenScheduleJob]
   )
 
   return (
     <ScheduleJobView
       activeTab={activeTab}
       cron={cron}
-      cronString={cronString}
       date={date}
       daysOfWeek={daysOfWeek}
       error={error}
@@ -93,7 +89,6 @@ const ScheduleJob = ({ handleRunJob, match, setOpenScheduleJob }) => {
       recurringState={recurringState}
       setActiveTab={setActiveTab}
       setCron={setCron}
-      setCronString={setCronString}
       setDate={onHandleDateChange}
       setError={setError}
       setIsRecurring={setIsRecurring}

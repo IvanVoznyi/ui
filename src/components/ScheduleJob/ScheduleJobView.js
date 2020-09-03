@@ -12,7 +12,6 @@ import { selectOptions, tabs } from './scheduleJobData'
 const ScheduleJobView = ({
   activeTab,
   cron,
-  cronString,
   date,
   daysOfWeek,
   error,
@@ -24,7 +23,6 @@ const ScheduleJobView = ({
   recurringState,
   setActiveTab,
   setCron,
-  setCronString,
   setDate,
   setError,
   setIsRecurring,
@@ -75,9 +73,9 @@ const ScheduleJobView = ({
         )}
         {activeTab === tabs[1].id && (
           <ScheduleCron
-            cronString={cronString}
+            cron={cron}
             error={error}
-            setCronString={setCronString}
+            setCron={setCron}
             setError={setError}
           />
         )}
@@ -93,7 +91,6 @@ const ScheduleJobView = ({
 ScheduleJobView.propTypes = {
   activeTab: PropTypes.string.isRequired,
   cron: PropTypes.string.isRequired,
-  cronString: PropTypes.string.isRequired,
   date: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   daysOfWeek: PropTypes.array.isRequired,
   handleDaysOfWeek: PropTypes.func.isRequired,
@@ -104,7 +101,6 @@ ScheduleJobView.propTypes = {
   recurringState: PropTypes.shape({}).isRequired,
   setActiveTab: PropTypes.func.isRequired,
   setCron: PropTypes.func.isRequired,
-  setCronString: PropTypes.func.isRequired,
   setDate: PropTypes.func.isRequired,
   setIsRecurring: PropTypes.func.isRequired,
   setTime: PropTypes.func.isRequired,
