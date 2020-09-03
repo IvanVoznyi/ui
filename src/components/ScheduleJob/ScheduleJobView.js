@@ -16,8 +16,6 @@ const ScheduleJobView = ({
   date,
   daysOfWeek,
   error,
-  generateCronString,
-  getRangeInputValue,
   handleDaysOfWeek,
   isRecurring,
   match,
@@ -62,7 +60,6 @@ const ScheduleJobView = ({
             cron={cron}
             date={date}
             daysOfWeek={daysOfWeek}
-            getRangeInputValue={getRangeInputValue}
             handleDaysOfWeek={handleDaysOfWeek}
             isRecurring={isRecurring}
             match={match}
@@ -80,7 +77,6 @@ const ScheduleJobView = ({
           <ScheduleCron
             cronString={cronString}
             error={error}
-            generateCronString={generateCronString}
             setCronString={setCronString}
             setError={setError}
           />
@@ -96,12 +92,10 @@ const ScheduleJobView = ({
 
 ScheduleJobView.propTypes = {
   activeTab: PropTypes.string.isRequired,
-  cron: PropTypes.shape({}).isRequired,
+  cron: PropTypes.string.isRequired,
   cronString: PropTypes.string.isRequired,
   date: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   daysOfWeek: PropTypes.array.isRequired,
-  generateCronString: PropTypes.func.isRequired,
-  getRangeInputValue: PropTypes.func.isRequired,
   handleDaysOfWeek: PropTypes.func.isRequired,
   isRecurring: PropTypes.string.isRequired,
   match: PropTypes.shape({}).isRequired,
