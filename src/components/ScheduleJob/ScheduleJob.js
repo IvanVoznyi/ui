@@ -46,6 +46,7 @@ const ScheduleJob = ({ handleRunJob, match, setOpenScheduleJob }) => {
     let days = daysOfWeek
       .filter(day => distinctWeek.includes(day.id))
       .map(day => day.index)
+      .sort()
       .join(',')
 
     days = days ? days : '*'

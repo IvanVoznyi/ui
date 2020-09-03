@@ -43,6 +43,7 @@ const ScheduleRecurring = ({
           const days = daysOfWeek
             .filter(day => week.includes(day.id))
             .map(day => day.index)
+            .sort()
             .join(',')
 
           setCron(`0 0 * * ${days}`)
