@@ -23,6 +23,7 @@ const SelectOption = ({ disabled, item, onClick, selectType, selectedId }) => {
 
   return (
     <div
+      data-testid="select-option"
       className={selectClassName}
       onClick={() => {
         !disabled && onClick(item.id)
