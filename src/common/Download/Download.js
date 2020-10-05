@@ -65,8 +65,10 @@ const Download = ({
         })
         .catch(error => {
           if (axios.isCancel(error)) {
-            setDownload(false)
-            return setProgress(0)
+            if (downloadRef.current) {
+              setDownload(false)
+              return setProgress(0)
+            }
           }
           setNotificationDownload({
             status: 400,
@@ -105,7 +107,12 @@ const Download = ({
   }
 
   return (
-    <div className="download-container" ref={downloadRef} onClick={handleClick}>
+    <div
+      data-testid="download"
+      className="download-container"
+      ref={downloadRef}
+      onClick={handleClick}
+    >
       <ProgressRing
         radius={progressRingRadius}
         stroke={progressRingStroke}
